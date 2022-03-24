@@ -1,0 +1,41 @@
+.app-header {
+    position: absolute;
+    height: 88px;
+    width: 70%;
+    padding: 0 15%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+    background: #1C1C21;
+}
+
+.third {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 33.33%;
+}
+
+.third:first-child{
+    justify-content: left !important;
+    padding-left: 3.33%;
+}
+
+.third:last-child{
+    justify-content: right !important;
+}
+
+.menuItem {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.menuItem > p {
+    white-space:nowrap;
+}
