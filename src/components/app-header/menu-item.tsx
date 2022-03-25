@@ -27,7 +27,7 @@ function MenuItem(props: MenuItemProps) {
   };
 
   return (
-    <div className={styles.menuItem + " p-4"}>
+    <div className={styles.menuItem}> 
       { icon }
       <p className={"m-2 text text_type_main-default" + (props.active ? "" : " text_color_inactive")}>
         { text }

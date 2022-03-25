@@ -1,7 +1,7 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
 import {data} from '../../utils/data.js';
-import Ingredient from './ingredint'
+import ConstructorIngredient from './constructor-ingredint'
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const ORDER = [
@@ -26,7 +26,7 @@ function BurgerConstructor() {
           isLocked = i?true:false;
         }
         return (
-        <Ingredient
+        <ConstructorIngredient
           name={name}
           image={image}
           price={price}
@@ -38,9 +38,15 @@ function BurgerConstructor() {
        })
   return (
     <div className={styles['burger-constructor']}>
-      <ul className={styles.list}>
-        {ingredients}
-      </ul>
+
+      <div className={styles.list}>
+        {ingredients[0]}
+        <div className={styles.middle}>
+          {ingredients.slice(1, -1)}
+        </div>
+        {ingredients.slice(-1)[0]}
+      </div>
+
       <div className={styles.checkout}>
         <Button type="primary" size="medium">
           Оформить заказ
@@ -50,6 +56,7 @@ function BurgerConstructor() {
           <CurrencyIcon type="primary" />
         </div>
       </div>
+
     </div>
 
   );

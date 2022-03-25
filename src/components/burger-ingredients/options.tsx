@@ -2,22 +2,8 @@ import React from 'react';
 import styles from './burger-ingredients.module.css';
 import Ingredient from './ingredient';
 import Separator from './separator';
-import {data} from '../../utils/data.js'
-
-interface dataEl {
-  "_id":string,
-  "name":string,
-  "type":string,
-  "proteins":number,
-  "fat":number,
-  "carbohydrates":number,
-  "calories":number,
-  "price":number,
-  "image":string,
-  "image_mobile":string,
-  "image_large":string,
-  "__v":number
-}
+import { data } from '../../utils/data.js'
+import { dataEl } from '../../utils/types.js'
 
 function Options() {
   const orderFunc = (a:dataEl, b:dataEl) : number => {
@@ -54,7 +40,7 @@ function Options() {
           price={el.price}
           name={el.name}
           count={1}
-          key={i}
+          key={el._id}
         />
       )}
     </div>
