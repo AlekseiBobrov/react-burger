@@ -1,0 +1,38 @@
+.burger-constructor {
+    width: 50%;
+    padding-top: 100px;
+    height: calc(100vh - 200px);
+
+}
+
+.list {
+    height: calc(100% - 100px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    gap: 10px;
+}
+
+.middle {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow-y: auto;
+    min-height: 80px;
+}
+
+.ingredient {
+    display: flex;
+    align-items: center;
+}
+
+.checkout {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+    gap: 20px;
+    margin-top: 10px;
+    max-width: 560px;
+    padding-left: 40px;
+}

@@ -1,0 +1,42 @@
+.burger-ingredients {
+    width: 50%;
+}
+
+.header {
+    white-space:nowrap;
+    text-align: left;
+    padding: 40px 0 20px 0;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 30px;
+}
+
+.options {
+    height: calc(100vh - 300px);
+    display: flex;
+    flex-wrap: wrap;
+    flex-basis: 40%;
+    overflow-y: scroll;
+}
+
+.separator {
+    width: 100%;
+    text-align: left;
+}
+
+.ingredient {
+    position: relative;
+    width: calc(50% - var(--offset-base-size) * 10);
+    box-sizing: border-box;
+}
+
+.price {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    column-gap: 10px
+}
+

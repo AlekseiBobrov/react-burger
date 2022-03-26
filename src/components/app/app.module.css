@@ -1,0 +1,13 @@
+.app {
+  text-align: center;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  /* width: 66.66%; */
+  max-width: 1280px;
+  padding-top: 88px;
+  /*padding: 88px 15% 0 18.33% */
+}
