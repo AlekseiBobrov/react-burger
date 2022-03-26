@@ -1,0 +1,12 @@
+.order {
+    margin-top: 90px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-items: center;
+    gap: 40px;
+}
+
+.footer {
+    text-align: center;
+}
