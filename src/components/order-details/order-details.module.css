@@ -1,3 +1,8 @@
+.order-details {
+    width: 500px;
+    height: 500px;
+}
+
 .order {
     margin-top: 90px;
     display: flex;

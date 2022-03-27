@@ -1,10 +1,8 @@
-import ReactDOM from 'react-dom';
 import styles from './ingredient-details.module.css';
 
 import Modal from '../modal/modal'
-import ModalOverlay from '../modal/modal-overlay'
 import Fact from './fact'
-import type { IngredientShape,  FactNameType } from '../../utils/types.js'
+import type { IngredientShape } from '../../utils/types.js'
 
 interface IngredientDetailsProps {
   ingredient: IngredientShape,
@@ -13,27 +11,25 @@ interface IngredientDetailsProps {
 }
 
 const IngredientDetails = (props: IngredientDetailsProps) => {
-  const facts = ['calories', 'proteins', 'fat', 'carbohydrates'].map( 
+  const NUTRIENTS = ['calories', 'proteins', 'fat', 'carbohydrates'] as const;
+  const facts = NUTRIENTS.map( 
     name => (
-      <Fact name={name as FactNameType} value={Number(props.ingredient[name as keyof IngredientShape])} key={name}/>
+      <Fact name={name} value={Number(props.ingredient[name])} key={name}/>
     )
   )
-  const modal = (
-    <ModalOverlay closeModal={props.hideDetails}>
-      <Modal closeModal={props.hideDetails} width={640} height={540}>
-        <p className={styles.header + " text text_type_main-large"}>Детали ингредиента</p>
-        <div className={styles.details}>
-          <img src={props.ingredient.image_large} alt={`Тут должна быть картинка '${props.ingredient.name}'`}/>
-          <p className={styles.name + " text text_type_main-medium"}>{props.ingredient.name}</p>
-          <div className={styles.facts}>
-            {facts}
-          </div>
+
+  return (
+    <Modal isShow={props.isShow} closeModal={props.hideDetails} className={styles["ingredient-details"]}>
+      <p className={styles.header + " text text_type_main-large"}>Детали ингредиента</p>
+      <div className={styles.details}>
+        <img src={props.ingredient.image_large} alt={`Тут должна быть картинка '${props.ingredient.name}'`}/>
+        <p className={styles.name + " text text_type_main-medium"}>{props.ingredient.name}</p>
+        <div className={styles.facts}>
+          {facts}
         </div>
-        
-      </Modal>
-    </ModalOverlay>
+      </div>
+    </Modal>
   )
-  return props.isShow ? ReactDOM.createPortal(modal, document.body) : null;
 }
 
 export default IngredientDetails;

@@ -7,7 +7,7 @@ interface IngredientProps {
   price: number,
   name: string,
   count: number,
-  onClick: (id:string) => void, //React.MouseEventHandler,
+  onClick: (id:string) => void,
 }
 
 const Ingredient = (props: IngredientProps) => {

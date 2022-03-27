@@ -1,18 +1,12 @@
+import LOCALE from './facts-locale.js';
 import styles from './ingredient-details.module.css';
-import type { FactNameType } from '../../utils/types.js'
 
 interface FactProps {
-  name: FactNameType;
+  name: 'calories' | 'proteins' | 'fat' | 'carbohydrates';
   value: number;
 }
 
 const Fact = (props: FactProps) => {
-  const LOCALE = {
-    'calories': 'Калории, ккал',
-    'proteins': 'Белки, г',
-    'fat': 'Жиры, г',
-    'carbohydrates': 'Углеводы, г',
-  }
   return (
     <div className={styles.fact}>
       <p className="text text_type_main-default text_color_inactive">{LOCALE[props.name]}</p>

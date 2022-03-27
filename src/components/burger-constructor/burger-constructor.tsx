@@ -22,13 +22,6 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
     setShowDetails(false);
   }
 
-  const removeFromCart = (removeEl: IngredientShape) => { 
-    let newCart = props.cart.slice();
-    let removeIndex = newCart.findIndex( el => el._id === removeEl._id)
-    newCart.splice(removeIndex, 1)
-    props.setCart(newCart);
-  }
-
   const ingredients = props.cart.map(
     (el, i, arr) => {
         const { _id, name, image, price, ...otherProps} = el;
@@ -57,7 +50,7 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
       <OrderDetails
         isShow={showDetails}
         hideDetails={hideDetails}
-        order_num="034536"
+        orderNum="034536"
       />
       <div className={styles.list}>
         {ingredients[0]}

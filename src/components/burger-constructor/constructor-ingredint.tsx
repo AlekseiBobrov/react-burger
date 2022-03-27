@@ -13,7 +13,7 @@ interface IngredientProps {
 const ConstructorIngredient = (props: IngredientProps) => {
   const add_name = props.type?(props.type === "top"?" (верх)":" (низ)"):"";
   return (
-    <div className={styles.ingredient} data-_id={props._id}>
+    <div className={styles.ingredient}>
       {props.type ? <svg height={24} width={24}/> : <DragIcon type="primary" />}
       <ConstructorElement
         type={props.type}
