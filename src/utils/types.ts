@@ -1,5 +1,5 @@
 
-export interface dataEl {
+export interface IngredientShape {
   "_id": string,
   "name": string,
   "type": string,
@@ -13,3 +13,5 @@ export interface dataEl {
   "image_large": string,
   "__v": number
 }
+
+export type FactNameType = 'calories' | 'proteins' | 'fat' | 'carbohydrates';

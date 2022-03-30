@@ -1,24 +1,30 @@
 import React from 'react';
 import styles from './burger-constructor.module.css';
-import {data} from '../../utils/data.js';
 import ConstructorIngredient from './constructor-ingredint'
+import OrderDetails from '../order-details/order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import type { IngredientShape } from '../../utils/types.js'
+interface BurgerConstructorProps{
+  cart: IngredientShape[],
+  setCart: (newCart: IngredientShape[]|[]) => void,
+}
 
-const ORDER = [
-  "Краторная булка N-200i",
-  "Соус традиционный галактический",
-  "Мясо бессмертных моллюсков Protostomia",
-  "Плоды Фалленианского дерева",
-  "Хрустящие минеральные кольца",
-  "Хрустящие минеральные кольца",
-  "Краторная булка N-200i",
-]
+type Type = "top" | "bottom" | undefined;
 
-function BurgerConstructor() {
-  type Type = "top" | "bottom" | undefined;
-  const ingredients = ORDER.map( name => data.filter( el => el.name === name)[0] )
-       .map( (el, i, arr) => {
-        const { name, image, price, ...oterProps} = el;
+const BurgerConstructor = (props: BurgerConstructorProps) => {
+  const [showDetails, setShowDetails] = React.useState(false);
+
+  const handelButtonClick = () => {
+    setShowDetails(true);
+  }
+
+  const hideDetails = () => {
+    setShowDetails(false);
+  }
+
+  const ingredients = props.cart.map(
+    (el, i, arr) => {
+        const { _id, name, image, price, ...otherProps} = el;
         let type;
         let isLocked = false;
         if (i === 0 || i === arr.length - 1){
@@ -27,6 +33,7 @@ function BurgerConstructor() {
         }
         return (
         <ConstructorIngredient
+          _id={_id}
           name={name}
           image={image}
           price={price}
@@ -35,10 +42,16 @@ function BurgerConstructor() {
           key={i}
         />
         )
-       })
+  })
+
+  const SUM = props.cart.map( el => el.price ).reduce( (sum, el) => sum + el, 0);
   return (
     <div className={styles['burger-constructor']}>
-
+      <OrderDetails
+        isShow={showDetails}
+        hideDetails={hideDetails}
+        orderNum="034536"
+      />
       <div className={styles.list}>
         {ingredients[0]}
         <div className={styles.middle}>
@@ -48,11 +61,11 @@ function BurgerConstructor() {
       </div>
 
       <div className={styles.checkout}>
-        <Button type="primary" size="medium">
+        <Button type="primary" size="medium" onClick={handelButtonClick}>
           Оформить заказ
         </Button>
         <div className="text text_type_digits-medium">
-          {ORDER.map( name => data.filter( el => el.name === name)[0]['price'] ).reduce( (sum, el) => sum + el, 0)}
+          {SUM}
           <CurrencyIcon type="primary" />
         </div>
       </div>

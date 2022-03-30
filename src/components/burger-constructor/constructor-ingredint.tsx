@@ -1,8 +1,8 @@
-import React from 'react';
 import styles from './burger-constructor.module.css';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 interface IngredientProps {
+  _id: string;
   name: string;
   image: string;
   price: number;
@@ -10,7 +10,7 @@ interface IngredientProps {
   type?: "top" | "bottom";
 }
 
-function ConstructorIngredient(props: IngredientProps) {
+const ConstructorIngredient = (props: IngredientProps) => {
   const add_name = props.type?(props.type === "top"?" (верх)":" (низ)"):"";
   return (
     <div className={styles.ingredient}>

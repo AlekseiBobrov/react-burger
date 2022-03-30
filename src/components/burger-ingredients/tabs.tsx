@@ -1,4 +1,3 @@
-import React from 'react'; //, { Dispatch, SetStateAction }
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import styles from './burger-ingredients.module.css';
 

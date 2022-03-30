@@ -2,47 +2,61 @@ import React from 'react';
 import styles from './burger-ingredients.module.css';
 import Ingredient from './ingredient';
 import Separator from './separator';
-import { data } from '../../utils/data.js'
-import { dataEl } from '../../utils/types.js'
+import IngredientDetails from '../ingredient-details/ingredient-details';
+import type { IngredientShape } from '../../utils/types.js'
 
-function Options() {
-  const orderFunc = (a:dataEl, b:dataEl) : number => {
-    const ORDER = ['bun', 'sauce', 'main'];
-    const index_a = ORDER.indexOf(a.type);
-    const index_b = ORDER.indexOf(b.type);
-    if (index_a < index_b) { return -1; }
-    if (index_a > index_b) { return 1; }
-    return 0;
+interface BurgerIngredientsProps {
+  data: IngredientShape[],
+  cart: IngredientShape[],
+  setCart: (newCart: IngredientShape[]) => void,
+}
+
+type Sections = {
+  'bun': React.ReactNode[] | null,
+  'sauce': React.ReactNode[] | null,
+  'main': React.ReactNode[] | null,
+}
+
+const Options = (props: BurgerIngredientsProps) => {
+  const [detailsIngredient, setDetailsIngredient] = React.useState<IngredientShape | null>(null);
+  const [showDetails, setShowDetails] = React.useState(false);
+
+  const handelIngredientClick = (id: string) => {
+    let newIngredient = props.data.find(el => el._id === id);
+    setDetailsIngredient(newIngredient ? newIngredient : null);
+    setShowDetails(true);
   }
 
-  const SEP = [
-    {id: 'bun', name: 'Булки'},
-    {id: 'sauce', name: 'Соусы'},
-    {id: 'main', name: 'Начинки'},
-  ]
-
-  const template = Object.fromEntries( Object.entries(data[0]).map( (k, v) => [k, (typeof v == 'string'?"":0)]) );
-  let options = [ ...data ];
-  options.sort(orderFunc);
-
-  for (const sep of SEP) {
-    const idx = options.findIndex( el => el.type === sep.id );
-    options.splice(idx, 0, {...template, "_id":sep.id, "type":"separator", "name":sep.name});
+  const hideDetails = () => {
+    setShowDetails(false);
+    setDetailsIngredient({} as IngredientShape);
   }
-    
+
+  const sections = { 'bun': null, 'sauce': null, 'main': null } as Sections;
+  Object.keys(sections).forEach(section => {
+    sections[section as keyof Sections] = props.data.filter(el => el.type === section).map((el, i) =>
+      <Ingredient
+        id={el._id}
+        img={el.image}
+        price={el.price}
+        name={el.name}
+        count={props.cart.filter(cartEl => cartEl._id === el._id).length}
+        key={el._id}
+        onClick={handelIngredientClick}
+      />
+    )
+  }
+  )
+
   return (
     <div className={styles.options}>
-      {options.map( (el, i) =>
-        el.type === "separator"?
-        <Separator id={el._id} text={el.name} key={i}/>:
-        <Ingredient
-          img={el.image}
-          price={el.price}
-          name={el.name}
-          count={1}
-          key={el._id}
-        />
-      )}
+      {detailsIngredient && <IngredientDetails isShow={showDetails} ingredient={detailsIngredient} hideDetails={hideDetails} />}
+      <Separator id="bun" text="Булки" />
+      {sections['bun']}
+      <Separator id="sauce" text="Соусы" />
+      {sections['sauce']}
+      <Separator id="main" text="Начинки" />
+      {sections['main']}
     </div>
   );
 }

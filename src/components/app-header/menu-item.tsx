@@ -1,4 +1,3 @@
-import React from 'react';
 import styles from './app-header.module.css';
 import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 
@@ -7,7 +6,7 @@ interface MenuItemProps {
   type: "constructor" | "feed" | "profile";
 }
 
-function MenuItem(props: MenuItemProps) {
+const  MenuItem = (props: MenuItemProps) => {
   const icon_type = props.active ? "primary" : "secondary";
   let icon: JSX.Element;
   let text: string;
