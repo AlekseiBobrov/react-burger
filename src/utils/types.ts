@@ -14,4 +14,7 @@ export interface IngredientShape {
   "__v": number
 }
 
-export type FactNameType = 'calories' | 'proteins' | 'fat' | 'carbohydrates';
+export interface CartType {
+  buns: string[]
+  middle: string[],
+}

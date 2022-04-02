@@ -6,7 +6,7 @@ import styles from './order-details.module.css';
 interface OrderDetailsProps {
   isShow: boolean,
   hideDetails: () => void,
-  orderNum: string,
+  orderNum: number | null,
 }
 
 const OrderDetails = (props: OrderDetailsProps) => {

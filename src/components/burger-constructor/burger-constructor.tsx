@@ -1,78 +1,143 @@
 import React from 'react';
-import styles from './burger-constructor.module.css';
+
+import { IngredientsContext } from '../../services/appContext'
+
 import ConstructorIngredient from './constructor-ingredint'
 import OrderDetails from '../order-details/order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import type { IngredientShape } from '../../utils/types.js'
-interface BurgerConstructorProps{
-  cart: IngredientShape[],
-  setCart: (newCart: IngredientShape[]|[]) => void,
+import type { CartType } from '../../utils/types.js'
+
+import styles from './burger-constructor.module.css';
+
+interface BurgerConstructorProps {
+  cart: CartType,
+  setCart: (newCart: CartType) => void,
 }
 
-type Type = "top" | "bottom" | undefined;
+type BunType = "top" | "bottom" | undefined;
+
+const ORDER_API = "https://norma.nomoreparties.space/api/orders";
 
 const BurgerConstructor = (props: BurgerConstructorProps) => {
+  const { ingredients } = React.useContext(IngredientsContext);
   const [showDetails, setShowDetails] = React.useState(false);
+  const [order, setOrder] =  React.useState(null);
 
   const handelButtonClick = () => {
-    setShowDetails(true);
+    fetch(
+      ORDER_API,
+      {
+        method: 'POST', // или 'PUT'
+        body: JSON.stringify({"ingredients":[...props.cart.buns, ...props.cart.middle]}),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+      )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("HTTP error, status = " + response.status);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      setOrder(data.order.number);
+      setShowDetails(true);
+    })
+    .catch((error) => {
+      console.log('Igredients api error:', error)
+    })
+    
   }
 
   const hideDetails = () => {
     setShowDetails(false);
   }
 
-  const ingredients = props.cart.map(
-    (el, i, arr) => {
-        const { _id, name, image, price, ...otherProps} = el;
-        let type;
-        let isLocked = false;
-        if (i === 0 || i === arr.length - 1){
-          type = i?"bottom":"top" as Type;
-          isLocked = i?true:false;
-        }
-        return (
-        <ConstructorIngredient
-          _id={_id}
-          name={name}
-          image={image}
-          price={price}
-          type={type}
-          isLocked={isLocked}
-          key={i}
-        />
+  if (ingredients) {
+    var bunIngrediets;
+
+    if (props.cart.buns.length) {
+      const bun = ingredients.find(el => el._id === props.cart.buns[0]);
+      if (bun) {
+        bunIngrediets = props.cart.buns.map(
+          (id, i) => {
+            const bType = (i ? "bottom" : "top") as BunType;
+            return (
+            <ConstructorIngredient
+              _id={id}
+              name={bun.name}
+              image={bun.image}
+              price={bun.price}
+              type={bType}
+              isLocked={true}
+              key={i}
+            />
+            )
+          }
         )
-  })
+      }
+    }
 
-  const SUM = props.cart.map( el => el.price ).reduce( (sum, el) => sum + el, 0);
-  return (
-    <div className={styles['burger-constructor']}>
-      <OrderDetails
-        isShow={showDetails}
-        hideDetails={hideDetails}
-        orderNum="034536"
-      />
-      <div className={styles.list}>
-        {ingredients[0]}
-        <div className={styles.middle}>
-          {ingredients.slice(1, -1)}
+    const middleIngredients = props.cart.middle.map(
+      (el, i, arr) => {
+        const TEMPLATE = { _id: null, name: null, image: null, price: null };
+        const ingredient = ingredients.find(ingr => ingr._id === el);
+        const { _id, name, image, price } = ingredient ? ingredient : TEMPLATE;
+
+        if (_id) {
+          return (
+            <ConstructorIngredient
+              _id={_id}
+              name={name}
+              image={image}
+              price={price}
+              isLocked={false}
+              key={i}
+            />
+          )
+        } else {
+          return null;
+        }
+      })
+
+    const total = [...props.cart.buns, ...props.cart.middle].map(
+      el => {
+        const ingredient = ingredients.find(item => item._id === el);
+        return ingredient ? ingredient.price : 0
+      }).reduce((sum, el) => sum + el, 0);
+
+    return (
+      <div className={styles['burger-constructor']}>
+        <OrderDetails
+          isShow={showDetails}
+          hideDetails={hideDetails}
+          orderNum={order}
+        />
+        <div className={styles.list}>
+          {bunIngrediets && bunIngrediets[0]}
+          <div className={styles.middle}>
+            {middleIngredients}
+          </div>
+          {bunIngrediets && bunIngrediets[1]}
         </div>
-        {ingredients.slice(-1)[0]}
+
+        <div className={styles.checkout}>
+          <Button type="primary" size="medium" onClick={handelButtonClick}>
+            Оформить заказ
+          </Button>
+          <div className="text text_type_digits-medium">
+            {total}
+            <CurrencyIcon type="primary" />
+          </div>
+        </div>
+
       </div>
 
-      <div className={styles.checkout}>
-        <Button type="primary" size="medium" onClick={handelButtonClick}>
-          Оформить заказ
-        </Button>
-        <div className="text text_type_digits-medium">
-          {SUM}
-          <CurrencyIcon type="primary" />
-        </div>
-      </div>
-
-    </div>
-
-  );
+    );
+  } else {
+    return null
+  }
 }
 
 export default BurgerConstructor;

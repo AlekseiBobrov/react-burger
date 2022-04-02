@@ -1,14 +1,16 @@
 import React from 'react';
+
+import { IngredientsContext } from '../../services/appContext'
+
 import styles from './burger-ingredients.module.css';
 import Ingredient from './ingredient';
 import Separator from './separator';
 import IngredientDetails from '../ingredient-details/ingredient-details';
-import type { IngredientShape } from '../../utils/types.js'
 
-interface BurgerIngredientsProps {
-  data: IngredientShape[],
-  cart: IngredientShape[],
-  setCart: (newCart: IngredientShape[]) => void,
+import type { IngredientShape, CartType } from '../../utils/types.js'
+interface BurgerIngredientsProps{
+  cart: CartType,
+  setCart: (newCart: CartType) => void,
 }
 
 type Sections = {
@@ -18,11 +20,12 @@ type Sections = {
 }
 
 const Options = (props: BurgerIngredientsProps) => {
+  const { ingredients } = React.useContext(IngredientsContext);
   const [detailsIngredient, setDetailsIngredient] = React.useState<IngredientShape | null>(null);
   const [showDetails, setShowDetails] = React.useState(false);
 
   const handelIngredientClick = (id: string) => {
-    let newIngredient = props.data.find(el => el._id === id);
+    let newIngredient = ingredients ? ingredients.find(el => el._id === id) : null;
     setDetailsIngredient(newIngredient ? newIngredient : null);
     setShowDetails(true);
   }
@@ -33,20 +36,21 @@ const Options = (props: BurgerIngredientsProps) => {
   }
 
   const sections = { 'bun': null, 'sauce': null, 'main': null } as Sections;
-  Object.keys(sections).forEach(section => {
-    sections[section as keyof Sections] = props.data.filter(el => el.type === section).map((el, i) =>
-      <Ingredient
-        id={el._id}
-        img={el.image}
-        price={el.price}
-        name={el.name}
-        count={props.cart.filter(cartEl => cartEl._id === el._id).length}
-        key={el._id}
-        onClick={handelIngredientClick}
-      />
-    )
+  if (ingredients) {
+    Object.keys(sections).forEach(section => {
+      sections[section as keyof Sections] = ingredients.filter(el => el.type === section).map((el, i) =>
+        <Ingredient
+          id={el._id}
+          img={el.image}
+          price={el.price}
+          name={el.name}
+          count={[...props.cart.buns, ...props.cart.middle].filter(id => id === el._id).length}
+          key={el._id}
+          onClick={handelIngredientClick}
+        />
+      )
+    })
   }
-  )
 
   return (
     <div className={styles.options}>
