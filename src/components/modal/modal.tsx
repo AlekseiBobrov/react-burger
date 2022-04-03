@@ -7,7 +7,6 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import styles from './modal.module.css';
 
 interface ModalProps {
-  isShow: boolean;
   className: string;
   closeModal: () => void;
   children: React.ReactNode;
@@ -44,7 +43,7 @@ const Modal = (props: ModalProps) => {
   const modalRoot = document.getElementById('modal-root');
 
   return (
-    props.isShow && modalRoot ? ReactDOM.createPortal(modal, modalRoot) : null
+    modalRoot ? ReactDOM.createPortal(modal, modalRoot) : null
   )
 }
 

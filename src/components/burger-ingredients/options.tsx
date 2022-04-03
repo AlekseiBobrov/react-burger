@@ -5,6 +5,7 @@ import { IngredientsContext } from '../../services/appContext'
 import styles from './burger-ingredients.module.css';
 import Ingredient from './ingredient';
 import Separator from './separator';
+import Modal from '../modal/modal';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import type { IngredientShape, CartType } from '../../utils/types.js'
@@ -83,7 +84,11 @@ const Options = ({ cart, setCart, current_tab }: BurgerIngredientsProps) => {
 
   return (
     <div className={styles.options}>
-      {detailsIngredient && <IngredientDetails isShow={showDetails} ingredient={detailsIngredient} hideDetails={hideDetails} />}
+      {detailsIngredient && showDetails &&
+      <Modal closeModal={hideDetails} className={styles["ingredient-details"]}>
+        <IngredientDetails ingredient={detailsIngredient} />
+      </Modal>
+      }
       <Separator id="bun" text="Булки" ref={bunRef}/>
       {sections['bun']}
       <Separator id="sauce" text="Соусы"  ref={sauceRef}/>

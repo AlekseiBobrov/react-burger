@@ -1,13 +1,10 @@
-import styles from './ingredient-details.module.css';
-
-import Modal from '../modal/modal'
 import Fact from './fact'
 import type { IngredientShape } from '../../utils/types.js'
 
+import styles from './ingredient-details.module.css';
+
 interface IngredientDetailsProps {
   ingredient: IngredientShape,
-  isShow: boolean,
-  hideDetails: () => void,
 }
 
 const IngredientDetails = (props: IngredientDetailsProps) => {
@@ -19,7 +16,7 @@ const IngredientDetails = (props: IngredientDetailsProps) => {
   )
 
   return (
-    <Modal isShow={props.isShow} closeModal={props.hideDetails} className={styles["ingredient-details"]}>
+    <>
       <p className={styles.header + " text text_type_main-large"}>Детали ингредиента</p>
       <div className={styles.details}>
         <img src={props.ingredient.image_large} alt={`Тут должна быть картинка '${props.ingredient.name}'`}/>
@@ -28,7 +25,7 @@ const IngredientDetails = (props: IngredientDetailsProps) => {
           {facts}
         </div>
       </div>
-    </Modal>
+    </>
   )
 }
 

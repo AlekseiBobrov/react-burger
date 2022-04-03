@@ -1,20 +1,17 @@
-import Modal from '../modal/modal';
 import OrderConfirmImg from './order_confirm_img';
 
 import styles from './order-details.module.css';
 
 interface OrderDetailsProps {
-  isShow: boolean,
-  hideDetails: () => void,
   orderNum: number | null,
 }
 
-const OrderDetails = (props: OrderDetailsProps) => {
+const OrderDetails = ({orderNum}: OrderDetailsProps) => {
 
   return (
-    <Modal isShow={props.isShow} closeModal={props.hideDetails} className={styles["order-details"]}>
+    <>
       <div className={styles.order}>
-        <p className="text text_type_digits-large">{props.orderNum}</p>
+        <p className="text text_type_digits-large">{orderNum}</p>
         <p className="text text_type_main-medium">идентификатор заказа</p>
         <OrderConfirmImg />
         <div className={styles.footer}>
@@ -22,7 +19,7 @@ const OrderDetails = (props: OrderDetailsProps) => {
           <p className="text text_type_main-default text_color_inactive">Дождитесь готовности на орбитальной станции</p>
         </div>
       </div>
-    </Modal>
+    </>
   )
 }
 

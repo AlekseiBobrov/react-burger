@@ -2,7 +2,8 @@ import React from 'react';
 
 import { IngredientsContext } from '../../services/appContext'
 
-import ConstructorIngredient from './constructor-ingredint'
+import ConstructorIngredient from './constructor-ingredint';
+import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import type { CartType } from '../../utils/types.js'
@@ -95,11 +96,10 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
 
     return (
       <div className={styles['burger-constructor']}>
-        <OrderDetails
-          isShow={showDetails}
-          hideDetails={hideDetails}
-          orderNum={order}
-        />
+        {showDetails && 
+        <Modal closeModal={hideDetails} className={styles["order-details"]}>
+          <OrderDetails orderNum={order} />
+        </Modal>}
         <div className={styles.list}>
           {bunIngrediets && bunIngrediets[0]}
           <div className={styles.middle}>
