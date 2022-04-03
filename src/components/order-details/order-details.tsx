@@ -14,7 +14,7 @@ const OrderDetails = (props: OrderDetailsProps) => {
   return (
     <Modal isShow={props.isShow} closeModal={props.hideDetails} className={styles["order-details"]}>
       <div className={styles.order}>
-        <p className="text text_type_digits-medium">{props.orderNum}</p>
+        <p className="text text_type_digits-large">{props.orderNum}</p>
         <p className="text text_type_main-medium">идентификатор заказа</p>
         <OrderConfirmImg />
         <div className={styles.footer}>
