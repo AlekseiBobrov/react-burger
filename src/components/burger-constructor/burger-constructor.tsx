@@ -9,7 +9,8 @@ import type { CartType } from '../../utils/types.js'
 
 import styles from './burger-constructor.module.css';
 
-import { getOrder } from '../../utils/fake-api' //fakeAPI for test without internet
+import { getOrder } from '../../utils/api'
+// import { getOrder } from '../../utils/fake-api' //fakeAPI for test without internet
 
 interface BurgerConstructorProps {
   cart: CartType,
@@ -18,37 +19,19 @@ interface BurgerConstructorProps {
 
 type BunType = "top" | "bottom" | undefined;
 
-const ORDER_API = "https://norma.nomoreparties.space/api/orders";
-
 const BurgerConstructor = (props: BurgerConstructorProps) => {
   const { ingredients } = React.useContext(IngredientsContext);
   const [showDetails, setShowDetails] = React.useState(false);
   const [order, setOrder] =  React.useState(null);
 
   const handelButtonClick = () => {
-    // fetch(
-    //   ORDER_API,
-    //   {
-    //     method: 'POST', // или 'PUT'
-    //     body: JSON.stringify({"ingredients":[...props.cart.buns, ...props.cart.middle]}),
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     }
-    //   }
-    //   )
-    // .then((response) => {
-    //   if (!response.ok) {
-    //     throw new Error("HTTP error, status = " + response.status);
-    //   }
-    //   return response.json();
-    // })
-    getOrder()
-    .then((data) => {
-      setOrder(data.order.number);
+    getOrder([...props.cart.buns, ...props.cart.middle])
+    .then((number) => {
+      setOrder(number);
       setShowDetails(true);
     })
     .catch((error) => {
-      console.log('Igredients api error:', error)
+      console.log('order api error:', error)
     })
     
   }

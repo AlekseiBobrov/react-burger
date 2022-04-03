@@ -9,8 +9,8 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 
 import styles from './app.module.css';
 
-import { getIngredients } from '../../utils/fake-api' //fakeAPI for test without internet
-const API = "https://norma.nomoreparties.space/api/ingredients"
+import { getIngredients } from '../../utils/api';
+// import { getIngredients } from '../../utils/fake-api' //fakeAPI for test without internet
 
 //CART for develop in sprint2/step1
 const CART = {
@@ -33,17 +33,8 @@ const App = () => {
 
   React.useEffect(
     () => {
-      // fetch(API)
-      //   .then((response) => {
-      //     if (!response.ok) {
-      //       throw new Error("HTTP error, status = " + response.status);
-      //     }
-      //     return response.json();
-      //   })
-      getIngredients() //fake api for testin without internet
-        .then((data) => {
-          setIngredients(data.data); //
-        })
+      getIngredients()
+        .then(setIngredients)
         .catch((error) => {
           console.log('Igredients api error:', error)
         });
