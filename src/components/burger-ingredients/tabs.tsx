@@ -6,16 +6,16 @@ interface TabsProps {
     setCurrent: (text: string) => void;
   }
 
-const Tabs = (props: TabsProps) => {
+const Tabs = ({current, setCurrent}: TabsProps) => {
     return (
       <div className={styles.tabs}>
-        <Tab value='Булки' active={props.current === 'Булки'} onClick={props.setCurrent}>
+        <Tab value='Булки' active={current === 'Булки'} onClick={setCurrent}>
             Булки
         </Tab>
-        <Tab value='Соусы' active={props.current === 'Соусы'} onClick={props.setCurrent}>
+        <Tab value='Соусы' active={current === 'Соусы'} onClick={setCurrent}>
             Соусы
         </Tab>
-        <Tab value='Начинки' active={props.current === 'Начинки'} onClick={props.setCurrent}>
+        <Tab value='Начинки' active={current === 'Начинки'} onClick={setCurrent}>
             Начинки
         </Tab>
       </div>

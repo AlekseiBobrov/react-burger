@@ -8,9 +8,12 @@ import Separator from './separator';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import type { IngredientShape, CartType } from '../../utils/types.js'
-interface BurgerIngredientsProps{
+
+type TabType = 'Булки' | 'Соусы' | 'Начинки'
+interface BurgerIngredientsProps {
   cart: CartType,
   setCart: (newCart: CartType) => void,
+  current_tab: TabType,
 }
 
 type Sections = {
@@ -19,10 +22,34 @@ type Sections = {
   'main': React.ReactNode[] | null,
 }
 
-const Options = (props: BurgerIngredientsProps) => {
+const Options = ({ cart, setCart, current_tab }: BurgerIngredientsProps) => {
   const { ingredients } = React.useContext(IngredientsContext);
   const [detailsIngredient, setDetailsIngredient] = React.useState<IngredientShape | null>(null);
   const [showDetails, setShowDetails] = React.useState(false);
+  const bunRef = React.useRef<HTMLDivElement>(null);
+  const mainRef = React.useRef<HTMLDivElement>(null);
+  const sauceRef = React.useRef<HTMLDivElement>(null);
+
+  const tabScroll = (tab: TabType) => {
+    switch (tab) {
+      case 'Булки':
+        if (bunRef.current) bunRef.current.scrollIntoView({behavior: "smooth"});
+        break;
+      case 'Соусы':
+        if (sauceRef.current) sauceRef.current.scrollIntoView({behavior: "smooth"});
+        break;
+      case 'Начинки':
+        if (mainRef.current) mainRef.current.scrollIntoView({behavior: "smooth"});
+        break;
+      default:
+        break;
+    }
+  }
+
+  React.useEffect(
+    () => { tabScroll(current_tab) },
+    [current_tab]
+  )
 
   const handelIngredientClick = (id: string) => {
     let newIngredient = ingredients ? ingredients.find(el => el._id === id) : null;
@@ -32,8 +59,10 @@ const Options = (props: BurgerIngredientsProps) => {
 
   const hideDetails = () => {
     setShowDetails(false);
-    setDetailsIngredient({} as IngredientShape);
+    setDetailsIngredient(null);
   }
+
+
 
   const sections = { 'bun': null, 'sauce': null, 'main': null } as Sections;
   if (ingredients) {
@@ -44,7 +73,7 @@ const Options = (props: BurgerIngredientsProps) => {
           img={el.image}
           price={el.price}
           name={el.name}
-          count={[...props.cart.buns, ...props.cart.middle].filter(id => id === el._id).length}
+          count={[...cart.buns, ...cart.middle].filter(id => id === el._id).length}
           key={el._id}
           onClick={handelIngredientClick}
         />
@@ -55,11 +84,11 @@ const Options = (props: BurgerIngredientsProps) => {
   return (
     <div className={styles.options}>
       {detailsIngredient && <IngredientDetails isShow={showDetails} ingredient={detailsIngredient} hideDetails={hideDetails} />}
-      <Separator id="bun" text="Булки" />
+      <Separator id="bun" text="Булки" ref={bunRef}/>
       {sections['bun']}
-      <Separator id="sauce" text="Соусы" />
+      <Separator id="sauce" text="Соусы"  ref={sauceRef}/>
       {sections['sauce']}
-      <Separator id="main" text="Начинки" />
+      <Separator id="main" text="Начинки" ref={mainRef}/>
       {sections['main']}
     </div>
   );

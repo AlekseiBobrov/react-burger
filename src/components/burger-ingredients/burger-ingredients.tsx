@@ -11,14 +11,15 @@ interface BurgerIngredientsProps{
 }
 
 const BurgerIngredients = (props: BurgerIngredientsProps) => {
-  type Tab = 'Булки' | 'Соусы' | 'Начинки';
-  const [current_tab, setCurrent] = React.useState('Булки')
+  type TabType = 'Булки' | 'Соусы' | 'Начинки';
+  const [current_tab, setCurrent] = React.useState('Булки');
+
   return (
     <div className={styles['burger-ingredients']}>
       <p className={"text text_type_main-large " + styles['header']}>Соберите бургер</p>
       <div>
-        <Tabs current={current_tab as Tab} setCurrent={setCurrent}/>
-        <Options cart={props.cart} setCart={props.setCart}/>
+        <Tabs current={current_tab as TabType} setCurrent={setCurrent}/>
+        <Options cart={props.cart} setCart={props.setCart} current_tab={current_tab as TabType}/>
       </div>
     </div>
   );
