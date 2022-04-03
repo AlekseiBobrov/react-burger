@@ -9,6 +9,8 @@ import type { CartType } from '../../utils/types.js'
 
 import styles from './burger-constructor.module.css';
 
+import { getOrder } from '../../utils/fake-api' //fakeAPI for test without internet
+
 interface BurgerConstructorProps {
   cart: CartType,
   setCart: (newCart: CartType) => void,
@@ -24,22 +26,23 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
   const [order, setOrder] =  React.useState(null);
 
   const handelButtonClick = () => {
-    fetch(
-      ORDER_API,
-      {
-        method: 'POST', // или 'PUT'
-        body: JSON.stringify({"ingredients":[...props.cart.buns, ...props.cart.middle]}),
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-      )
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("HTTP error, status = " + response.status);
-      }
-      return response.json();
-    })
+    // fetch(
+    //   ORDER_API,
+    //   {
+    //     method: 'POST', // или 'PUT'
+    //     body: JSON.stringify({"ingredients":[...props.cart.buns, ...props.cart.middle]}),
+    //     headers: {
+    //       'Content-Type': 'application/json'
+    //     }
+    //   }
+    //   )
+    // .then((response) => {
+    //   if (!response.ok) {
+    //     throw new Error("HTTP error, status = " + response.status);
+    //   }
+    //   return response.json();
+    // })
+    getOrder()
     .then((data) => {
       setOrder(data.order.number);
       setShowDetails(true);
