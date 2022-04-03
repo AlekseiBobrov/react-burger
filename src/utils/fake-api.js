@@ -8,7 +8,7 @@ export const getIngredients = async () => {
   );
 };
 
-export const getOrder = async () => {
+export const getOrder = async (ingredient) => {
   return await new Promise(resolve =>
     setTimeout(() => {
       resolve(123456);
