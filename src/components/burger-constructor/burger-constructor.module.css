@@ -36,3 +36,8 @@
     max-width: 560px;
     padding-left: 40px;
 }
+
+.order-details {
+    width: 720px;
+    height: 720px;
+}

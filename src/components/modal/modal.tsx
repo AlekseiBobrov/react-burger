@@ -2,12 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import ModalOverlay from '../modal/modal-overlay'
-import Cross from './cross'
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './modal.module.css';
 
 interface ModalProps {
-  isShow: boolean;
   className: string;
   closeModal: () => void;
   children: React.ReactNode;
@@ -33,7 +32,9 @@ const Modal = (props: ModalProps) => {
   const modal = (
     <ModalOverlay closeModal={props.closeModal}>
       <div className={`${styles.modal} ${props.className}`} >
-        <Cross onClick={props.closeModal} />
+        <div onClick={props.closeModal} className={styles['modal-close']}>
+          <CloseIcon type="primary"/>
+        </div>
         {props.children}
       </div>
     </ModalOverlay>
@@ -42,7 +43,7 @@ const Modal = (props: ModalProps) => {
   const modalRoot = document.getElementById('modal-root');
 
   return (
-    props.isShow && modalRoot ? ReactDOM.createPortal(modal, modalRoot) : null
+    modalRoot ? ReactDOM.createPortal(modal, modalRoot) : null
   )
 }
 
