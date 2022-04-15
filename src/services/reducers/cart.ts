@@ -1,4 +1,4 @@
-import { ADD_INGREDIENT, REMOVE_INGREDIENT, UPDATE_CART } from '../actions/cart';
+import { ADD_INGREDIENT, REMOVE_INGREDIENT, UPDATE_CART, DROP_CART } from '../actions/cart';
 import type { CartType, IngredientShape } from '../../utils/types.js'
 
 interface CartActionType {
@@ -41,6 +41,10 @@ export const cartReducer = (state: CartType = initialState, action: CartActionTy
 
     case UPDATE_CART: {
       return action.middle?{ ...state, middle: action.middle}:state;
+    }
+
+    case DROP_CART: {
+      return { ...state, ...initialState};
     }
 
     default: {
