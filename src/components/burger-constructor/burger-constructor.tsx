@@ -6,7 +6,7 @@ import { v4 as uuid } from 'uuid';
 import BunIngredient from './bun-ingredient';
 import MiddleIngredient from './middle-ingredient';
 import Modal from '../modal/modal';
-import OrderDetails from '../order-details/order-details';
+import {Ordering, OrderDetails} from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import type { IngredientShape } from '../../utils/types.js'
 import { getOrder } from '../../services/actions/order';
@@ -20,7 +20,7 @@ const BurgerConstructor = () => {
   const dispatch = useDispatch();
   const { ingredients } = useSelector((state: any) => state.menu);
   const { cart } = useSelector((state: any) => state);
-  const { orderNumber } = useSelector((state: any) => state.order);
+  const { orderRequest, orderNumber } = useSelector((state: any) => state.order);
 
   const [showDetails, setShowDetails] = React.useState(false);
 
@@ -42,11 +42,11 @@ const BurgerConstructor = () => {
 
   React.useEffect(
     () => {
-      if (orderNumber) {
+      if (orderRequest || orderNumber) {
         setShowDetails(true);
       }
     },
-    [orderNumber]
+    [orderRequest, orderNumber]
   );
 
   const moveCard = useCallback((dragIndex, hoverIndex) => {
@@ -125,7 +125,7 @@ const BurgerConstructor = () => {
       <div className={styles['burger-constructor']}>
         {showDetails &&
           <Modal closeModal={hideDetails} className={styles["order-details"]}>
-            <OrderDetails orderNum={orderNumber} />
+            {orderRequest?<Ordering/>:<OrderDetails orderNum={orderNumber} />}
           </Modal>}
         <div className={styles.list} ref={dropTarget} style={{ borderColor }}>
           {bunIngrediets && bunIngrediets[0]}
