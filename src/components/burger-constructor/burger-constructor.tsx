@@ -64,7 +64,9 @@ const BurgerConstructor = () => {
 
 
   const handelButtonClick = () => {
-    dispatch(getOrder([...cart.buns, ...cart.middle]))
+    if(cart.buns.length){
+      dispatch(getOrder([...cart.buns, ...cart.middle]))
+    }
   }
 
   const hideDetails = () => {
