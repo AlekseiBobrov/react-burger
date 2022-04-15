@@ -1,40 +1,70 @@
-import React from 'react';
+import React, {useCallback} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from "react-dnd";
+import { v4 as uuid } from 'uuid';
 
-import { IngredientsContext } from '../../services/appContext'
-
-import ConstructorIngredient from './constructor-ingredint';
+import BunIngredient from './bun-ingredient';
+import MiddleIngredient from './middle-ingredient';
 import Modal from '../modal/modal';
 import OrderDetails from '../order-details/order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import type { CartType } from '../../utils/types.js'
+import type { IngredientShape } from '../../utils/types.js'
+import { getOrder } from '../../services/actions/order';
+import { ADD_INGREDIENT, UPDATE_CART } from '../../services/actions/cart';
 
 import styles from './burger-constructor.module.css';
 
-import { getOrder } from '../../utils/api'
-// import { getOrder } from '../../utils/fake-api' //fakeAPI for test without internet
+type BunType = "top" | "bottom";
 
-interface BurgerConstructorProps {
-  cart: CartType,
-  setCart: (newCart: CartType) => void,
-}
+const BurgerConstructor = () => {
+  const dispatch = useDispatch();
+  const { ingredients } = useSelector((state: any) => state.menu);
+  const { cart } = useSelector((state: any) => state);
+  const { orderNumber } = useSelector((state: any) => state.order);
 
-type BunType = "top" | "bottom" | undefined;
-
-const BurgerConstructor = (props: BurgerConstructorProps) => {
-  const { ingredients } = React.useContext(IngredientsContext);
   const [showDetails, setShowDetails] = React.useState(false);
-  const [order, setOrder] =  React.useState(null);
+
+  const [{ isHover }, dropTarget] = useDrop({
+    accept: "ingredient",
+    collect: monitor => ({
+      isHover: monitor.isOver(),
+    }),
+    drop(itemId: any) {
+      const ingredient = ingredients.find((ingr: IngredientShape) => ingr._id === itemId.id);
+      dispatch({
+        type: ADD_INGREDIENT,
+        ingredient
+      })
+    },
+  });
+
+  const borderColor = isHover ? 'lightgreen' : 'transparent';
+
+  React.useEffect(
+    () => {
+      if (orderNumber) {
+        setShowDetails(true);
+      }
+    },
+    [orderNumber]
+  );
+
+  const moveCard = useCallback((dragIndex, hoverIndex) => {
+    const dragCard = cart['middle'][dragIndex];
+    const middle = [...cart.middle];
+
+    middle.splice(dragIndex, 1)
+    middle.splice(hoverIndex, 0, dragCard)
+
+    dispatch({
+      type: UPDATE_CART,
+      middle,
+    })
+  }, [cart, dispatch]);
+
 
   const handelButtonClick = () => {
-    getOrder([...props.cart.buns, ...props.cart.middle])
-    .then((number) => {
-      setOrder(number);
-      setShowDetails(true);
-    })
-    .catch((error) => {
-      console.log('order api error:', error)
-    })
-    
+    dispatch(getOrder([...cart.buns, ...cart.middle]))
   }
 
   const hideDetails = () => {
@@ -44,43 +74,40 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
   if (ingredients) {
     var bunIngrediets;
 
-    if (props.cart.buns.length) {
-      const bun = ingredients.find(el => el._id === props.cart.buns[0]);
+    if (cart.buns.length) {
+      const bun = ingredients.find((el: IngredientShape) => el._id === cart.buns[0]);
       if (bun) {
-        bunIngrediets = props.cart.buns.map(
-          (id, i) => {
+        bunIngrediets = cart.buns.map(
+          (id: string, i: number) => {
             const bType = (i ? "bottom" : "top") as BunType;
             return (
-            <ConstructorIngredient
-              _id={id}
-              name={bun.name}
-              image={bun.image}
-              price={bun.price}
-              type={bType}
-              isLocked={true}
-              key={i}
-            />
+              <BunIngredient
+                {...bun}
+                bunType={bType}
+                key={bType}
+              />
             )
           }
         )
       }
     }
 
-    const middleIngredients = props.cart.middle.map(
-      (el, i, arr) => {
+    const middleIngredients = cart.middle.map(
+      (id: string, i: number) => {
         const TEMPLATE = { _id: null, name: null, image: null, price: null };
-        const ingredient = ingredients.find(ingr => ingr._id === el);
-        const { _id, name, image, price } = ingredient ? ingredient : TEMPLATE;
+        const ingredient = ingredients.find((ingr: IngredientShape) => ingr._id === id);
+        const { _id } = ingredient ? ingredient : TEMPLATE;
 
         if (_id) {
+          let id = uuid();
           return (
-            <ConstructorIngredient
-              _id={_id}
-              name={name}
-              image={image}
-              price={price}
+            <MiddleIngredient
+              id={id}
+              {...ingredient}
               isLocked={false}
-              key={i}
+              orderIndex={i}
+              moveCard={moveCard}
+              key={id}
             />
           )
         } else {
@@ -88,21 +115,21 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
         }
       })
 
-    const total = [...props.cart.buns, ...props.cart.middle].map(
-      el => {
-        const ingredient = ingredients.find(item => item._id === el);
+    const total = [...cart.buns, ...cart.middle].map(
+      id => {
+        const ingredient = ingredients.find((item: IngredientShape) => item._id === id);
         return ingredient ? ingredient.price : 0
       }).reduce((sum, el) => sum + el, 0);
 
     return (
       <div className={styles['burger-constructor']}>
-        {showDetails && 
-        <Modal closeModal={hideDetails} className={styles["order-details"]}>
-          <OrderDetails orderNum={order} />
-        </Modal>}
-        <div className={styles.list}>
+        {showDetails &&
+          <Modal closeModal={hideDetails} className={styles["order-details"]}>
+            <OrderDetails orderNum={orderNumber} />
+          </Modal>}
+        <div className={styles.list} ref={dropTarget} style={{ borderColor }}>
           {bunIngrediets && bunIngrediets[0]}
-          <div className={styles.middle}>
+          <div className={styles.middle}  > {/* ref={dropOrderTarget} */}
             {middleIngredients}
           </div>
           {bunIngrediets && bunIngrediets[1]}
@@ -119,7 +146,6 @@ const BurgerConstructor = (props: BurgerConstructorProps) => {
         </div>
 
       </div>
-
     );
   } else {
     return null

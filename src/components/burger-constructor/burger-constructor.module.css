@@ -2,7 +2,6 @@
     width: 50%;
     padding-top: 100px;
     height: calc(100vh - 200px);
-
 }
 
 .list {
@@ -12,6 +11,8 @@
     align-items: center;
     justify-items: center;
     gap: 10px;
+    border: 1px solid transparent;
+    border-radius: 5px;
 }
 
 .middle {

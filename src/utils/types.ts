@@ -18,3 +18,13 @@ export interface CartType {
   buns: string[]
   middle: string[],
 }
+
+export interface IngredientState {
+  ingredients: null | undefined | IngredientShape[],
+  ingredientsRequest: boolean,
+  ingredientsFailed: boolean,
+}
+
+export interface RootState {
+  ingredients: IngredientState,
+}

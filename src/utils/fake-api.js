@@ -1,4 +1,4 @@
-export const getIngredients = async () => {
+export const getIngredientsRequest = async () => {
   return await new Promise(resolve =>
     setTimeout(() => {
       resolve(JSON.parse(
