@@ -102,13 +102,10 @@ const Options = () => {
     Object.keys(sections).forEach(section => {
       sections[section as keyof Sections] = ingredients.filter((el: IngredientShape) => el.type === section).map((el: IngredientShape, i: number) =>
         <Ingredient
-          id={el._id}
-          image={el.image}
-          price={el.price}
-          name={el.name}
-          count={[...cart.buns, ...cart.middle].filter(id => id === el._id).length}
-          key={el._id}
+          {...el}
+          count={[...cart.buns, ...cart.middle].filter(item => item._id === el._id).length}
           onClick={handelIngredientClick}
+          key={el._id}
         />
       )
     })

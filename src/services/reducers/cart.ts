@@ -1,11 +1,12 @@
+import { v4 as uuid } from 'uuid';
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, UPDATE_CART, DROP_CART } from '../actions/cart';
-import type { CartType, IngredientShape } from '../../utils/types.js'
+import type { CartType, IngredientShape, CartIngredient } from '../../utils/types.js'
 
 interface CartActionType {
   type: string,
   ingredient: IngredientShape,
   orderIndex?: number,
-  middle?: string[],
+  middle?: CartIngredient[],
 }
 
 
@@ -19,10 +20,13 @@ export const cartReducer = (state: CartType = initialState, action: CartActionTy
 
     case ADD_INGREDIENT: {
       if (action.ingredient.type === 'bun'){
-          return { ...state, buns: [action.ingredient._id, action.ingredient._id]};
+          let uuidTop = uuid();
+          let uuidBot = uuid();
+          return { ...state, buns: [{...action.ingredient, uuid:uuidTop}, {...action.ingredient, uuid:uuidBot}]};
       } else {
+        let uuidMiddle = uuid();
         let middle = state.middle.slice();
-        middle.push(action.ingredient._id)
+        middle.push({...action.ingredient, uuid:uuidMiddle})
         return { ...state, middle: middle};
       }
     }
@@ -32,7 +36,7 @@ export const cartReducer = (state: CartType = initialState, action: CartActionTy
           return { ...state, buns: []};
       } else {
         console.log('action.orderIndex', action.orderIndex)
-        let index = action.orderIndex?action.orderIndex:state.middle.indexOf(action.ingredient._id);
+        let index = action.orderIndex?action.orderIndex:0;
         let middle = state.middle.slice();
         middle.splice(index, 1);
         return { ...state, middle: middle};
