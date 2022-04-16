@@ -9,7 +9,7 @@ import { Ordering, OrderDetails } from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import type { CartIngredient } from '../../utils/types.js'
 import { getOrder } from '../../services/actions/order';
-import { ADD_INGREDIENT, UPDATE_CART } from '../../services/actions/cart';
+import { addIngredient, UPDATE_CART } from '../../services/actions/cart';
 
 import styles from './burger-constructor.module.css';
 
@@ -28,10 +28,7 @@ const BurgerConstructor = () => {
       isHover: monitor.isOver(),
     }),
     drop(ingredient) {
-      dispatch({
-        type: ADD_INGREDIENT,
-        ingredient
-      })
+      dispatch(addIngredient(ingredient))
     },
   });
 

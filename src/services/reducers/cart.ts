@@ -1,10 +1,9 @@
-import { v4 as uuid } from 'uuid';
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, UPDATE_CART, DROP_CART } from '../actions/cart';
-import type { CartType, IngredientShape, CartIngredient } from '../../utils/types.js'
+import type { CartType, CartIngredient } from '../../utils/types.js'
 
 interface CartActionType {
   type: string,
-  ingredient: IngredientShape,
+  ingredient: CartIngredient,
   orderIndex?: number,
   middle?: CartIngredient[],
 }
@@ -20,13 +19,10 @@ export const cartReducer = (state: CartType = initialState, action: CartActionTy
 
     case ADD_INGREDIENT: {
       if (action.ingredient.type === 'bun'){
-          let uuidTop = uuid();
-          let uuidBot = uuid();
-          return { ...state, buns: [{...action.ingredient, uuid:uuidTop}, {...action.ingredient, uuid:uuidBot}]};
+          return { ...state, buns: [action.ingredient, action.ingredient]};
       } else {
-        let uuidMiddle = uuid();
         let middle = state.middle.slice();
-        middle.push({...action.ingredient, uuid:uuidMiddle})
+        middle.push(action.ingredient)
         return { ...state, middle: middle};
       }
     }
