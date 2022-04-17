@@ -1,25 +1,30 @@
-import React from 'react';
-import styles from './burger-ingredients.module.css';
+import { useDispatch, useSelector } from 'react-redux';
 import Tabs from './tabs'
 import Options from './options'
+import { SWITCH_TAB, CLICK_TAB } from '../../services/actions'
+import styles from './burger-ingredients.module.css';
 
-import type { CartType } from '../../utils/types.js'
-
-interface BurgerIngredientsProps{
-  cart: CartType,
-  setCart: (newCart: CartType) => void,
-}
-
-const BurgerIngredients = (props: BurgerIngredientsProps) => {
-  type TabType = 'Булки' | 'Соусы' | 'Начинки';
-  const [current_tab, setCurrent] = React.useState('Булки');
+const BurgerIngredients = () => {
+  const { currentTab } = useSelector( (state: any) => state.tab );
+  const dispatch = useDispatch();
+  
+  const setCurrent = (tab:string) => {
+    dispatch({
+      type: SWITCH_TAB,
+      tab
+    })
+    dispatch({
+      type:CLICK_TAB,
+      isClick: true,
+    })
+  }
 
   return (
     <div className={styles['burger-ingredients']}>
       <p className={"text text_type_main-large " + styles['header']}>Соберите бургер</p>
       <div>
-        <Tabs current={current_tab as TabType} setCurrent={setCurrent}/>
-        <Options cart={props.cart} setCart={props.setCart} current_tab={current_tab as TabType}/>
+        <Tabs current={currentTab} setCurrent={setCurrent}/>
+        <Options />
       </div>
     </div>
   );

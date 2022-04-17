@@ -1,60 +1,40 @@
 import React from 'react';
-
-import { IngredientsContext } from '../../services/appContext';
-import type { CartType } from '../../utils/types.js'
+import { useDispatch, useSelector } from 'react-redux';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import AppHeader from '../app-header/app-header'
 import BurgerIngredients from '../burger-ingredients/burger-ingredients'
 import BurgerConstructor from '../burger-constructor/burger-constructor'
 
+import { getIngredients } from '../../services/actions/ingredients';
+
 import styles from './app.module.css';
 
-import { getIngredients } from '../../utils/api';
-// import { getIngredients } from '../../utils/fake-api' //fakeAPI for test without internet
-
-//CART for develop in sprint2/step1
-const CART = {
-  buns: [
-    "60d3b41abdacab0026a733c6",
-    "60d3b41abdacab0026a733c6"
-  ],
-  middle: [
-    "60d3b41abdacab0026a733ce",
-    "60d3b41abdacab0026a733c8",
-    "60d3b41abdacab0026a733d1",
-    "60d3b41abdacab0026a733d0",
-    "60d3b41abdacab0026a733d0",
-  ]
-}
-
 const App = () => {
-  const [ingredients, setIngredients] = React.useState(null);
-  const [cart, setCart] = React.useState<CartType>(CART);
+  const { ingredients } = useSelector( (state: any) => state.menu );
+  const dispatch = useDispatch();
 
   React.useEffect(
     () => {
-      getIngredients()
-        .then(setIngredients)
-        .catch((error) => {
-          console.log('Igredients api error:', error)
-        });
+      dispatch( getIngredients() ); 
     },
-    []
-  )
+    [dispatch]
+  );
 
   return (
     <div className={styles.app}>
       <AppHeader />
-      <main className={styles.main}>
-
-        {ingredients &&
-          <IngredientsContext.Provider value={{ ingredients, setIngredients }}>
-            <BurgerIngredients cart={cart} setCart={setCart} />
-            <BurgerConstructor cart={cart} setCart={setCart} />
-          </IngredientsContext.Provider>
-        }
-
-      </main>
+      <DndProvider backend={HTML5Backend}>
+        <main className={styles.main}>
+          {ingredients &&
+            <>
+              <BurgerIngredients />
+              <BurgerConstructor />
+            </>
+          }
+        </main>
+      </DndProvider>
     </div>
   );
 }

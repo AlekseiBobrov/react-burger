@@ -1,4 +1,3 @@
-
 export interface IngredientShape {
   "_id": string,
   "name": string,
@@ -14,7 +13,20 @@ export interface IngredientShape {
   "__v": number
 }
 
+export interface CartIngredient extends IngredientShape {
+  uuid: string;
+}
 export interface CartType {
-  buns: string[]
-  middle: string[],
+  buns: CartIngredient[],
+  middle: CartIngredient[], 
+}
+
+export interface IngredientState {
+  ingredients: null | undefined | IngredientShape[],
+  ingredientsRequest: boolean,
+  ingredientsFailed: boolean,
+}
+
+export interface RootState {
+  ingredients: IngredientState,
 }

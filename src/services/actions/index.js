@@ -1,0 +1,5 @@
+export const DISPLAY_INGREDIENT = 'DISPLAY_INGREDIENT'
+export const HIDE_INGREDIENT = 'HIDE_INGREDIENT'
+
+export const SWITCH_TAB = 'SWITCH_TAB'
+export const CLICK_TAB = 'CLICK_TAB'
