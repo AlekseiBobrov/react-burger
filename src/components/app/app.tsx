@@ -1,4 +1,5 @@
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -25,16 +26,22 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <DndProvider backend={HTML5Backend}>
-        <main className={styles.main}>
-          {ingredients &&
-            <>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </>
-          }
-        </main>
-      </DndProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <DndProvider backend={HTML5Backend}>
+              <main className={styles.main}>
+                {ingredients &&
+                  <>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                  </>
+                }
+              </main>
+            </DndProvider>
+          </Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
