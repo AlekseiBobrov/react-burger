@@ -1,5 +1,4 @@
 .app-header {
-    position: absolute;
     box-sizing: border-box;
     height: 88px;
     width: 100%;
@@ -20,6 +19,7 @@
     align-items: center;
     width: 33.33%;
     gap: 20px;
+    box-sizing: border-box;
 }
 
 .third:first-child{
