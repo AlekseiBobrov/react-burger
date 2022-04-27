@@ -96,7 +96,7 @@ const BurgerConstructor = () => {
     })
 
   const total = [...cart.buns, ...cart.middle].map(item => item.price).reduce((sum, el) => sum + el, 0);
-
+  
   return (
     <div className={styles['burger-constructor']}>
       {

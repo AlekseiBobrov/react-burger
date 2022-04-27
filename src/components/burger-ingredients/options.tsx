@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { DISPLAY_INGREDIENT, HIDE_INGREDIENT, SWITCH_TAB, CLICK_TAB } from '../../services/actions';
@@ -20,10 +20,10 @@ type Sections = {
 }
 
 const Options = () => {
-  
+
   const { ingredients } = useSelector((state: any) => state.menu);
   const { detailsIngredient } = useSelector((state: any) => state.modal);
-  const { cart } = useSelector( (state: any) => state );
+  const { cart } = useSelector((state: any) => state);
   const { currentTab, tabClick } = useSelector((state: any) => state.tab);
   const dispatch = useDispatch();
 
@@ -57,7 +57,7 @@ const Options = () => {
   )
 
   const tabScroll = (tab: TabType, isClick: boolean) => {
-    if(isClick){
+    if (isClick) {
       switch (tab) {
         case 'Булки':
           bunRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -72,7 +72,7 @@ const Options = () => {
           break;
       }
       dispatch({
-        type:CLICK_TAB,
+        type: CLICK_TAB,
         isClick: false,
       })
     }
@@ -83,13 +83,16 @@ const Options = () => {
     [currentTab]
   )
 
-  const handelIngredientClick = (id: string) => {
-    let ingredient = ingredients?.find((el: IngredientShape) => el._id === id);
-    dispatch({
-      type: DISPLAY_INGREDIENT,
-      ingredient
-    });
-  }
+  const handelIngredientClick = useCallback(
+    (id: string) => {
+      let ingredient = ingredients?.find((el: IngredientShape) => el._id === id);
+      dispatch({
+        type: DISPLAY_INGREDIENT,
+        ingredient
+      })
+    },
+    [dispatch, ingredients]
+  )
 
   const hideDetails = () => {
     dispatch({
@@ -110,6 +113,7 @@ const Options = () => {
       )
     })
   }
+
 
   return (
     <div className={styles.options} ref={containerRef}>
