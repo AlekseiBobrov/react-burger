@@ -29,4 +29,40 @@ export const getOrderRequest = (ingredients) => {
       if (data?.success) return data.order.number;
       return Promise.reject(data);
     })
+}
+
+export const resetPasswordRequest = (email) => {
+  return fetch(
+    `${API_URL}/password-reset`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ "email": email }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+    .then(checkResponse)
+    .then(data => {
+      if (data?.success) return data.message;
+      return Promise.reject(data);
+    })
+}
+
+export const updatePasswordRequest = (password, token) => {
+  return fetch(
+    `${API_URL}/password-reset/reset`,
+    {
+      method: 'POST',
+      body: JSON.stringify({ password: password, token: token }),
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+  )
+    .then(checkResponse)
+    .then(data => {
+      if (data?.success) return data.message;
+      return Promise.reject(data);
+    })
 } 

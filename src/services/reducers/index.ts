@@ -4,6 +4,7 @@ import { ingredientReducer } from './ingredients'
 import { modalReducer } from './modal'
 import { cartReducer } from './cart'
 import { orderReducer } from './order'
+import { forgotPasswordReducer } from './forgot-password'
 
 import { SWITCH_TAB, CLICK_TAB } from '../actions';
 
@@ -38,4 +39,5 @@ export const rootReducer = combineReducers({
   modal: modalReducer,
   cart: cartReducer,
   order: orderReducer,
+  reset: forgotPasswordReducer,
 });
