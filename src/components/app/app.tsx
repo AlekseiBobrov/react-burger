@@ -10,7 +10,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 
 import { getIngredients } from '../../services/actions/ingredients';
 
-import { LoginPage, RegisterPage, ForgotPasswordPage } from '../pages'
+import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage } from '../pages'
 
 import styles from './app.module.css';
 
@@ -50,6 +50,9 @@ const App = () => {
           </Route>
           <Route exact path="/forgot-password">
             <ForgotPasswordPage/>
+          </Route>
+          <Route exact path="/reset-password">
+            <ResetPasswordPage/>
           </Route>
         </Switch>
       </Router>
