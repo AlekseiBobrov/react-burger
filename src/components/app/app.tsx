@@ -10,7 +10,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 
 import { getIngredients } from '../../services/actions/ingredients';
 
-import { LoginPage, RegisterPage } from '../pages'
+import { LoginPage, RegisterPage, ForgotPasswordPage } from '../pages'
 
 import styles from './app.module.css';
 
@@ -47,6 +47,9 @@ const App = () => {
           </Route>
           <Route exact path="/register">
             <RegisterPage/>
+          </Route>
+          <Route exact path="/forgot-password">
+            <ForgotPasswordPage/>
           </Route>
         </Switch>
       </Router>
