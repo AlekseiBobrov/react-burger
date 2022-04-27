@@ -10,6 +10,8 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 
 import { getIngredients } from '../../services/actions/ingredients';
 
+import { LoginPage } from '../pages'
+
 import styles from './app.module.css';
 
 const App = () => {
@@ -39,6 +41,9 @@ const App = () => {
                 }
               </main>
             </DndProvider>
+          </Route>
+          <Route exact path="/login">
+            <LoginPage/>
           </Route>
         </Switch>
       </Router>
