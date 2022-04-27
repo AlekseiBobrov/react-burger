@@ -2,8 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-
-import styles from './register.module.css';
+import styles from './index.module.css';
 
 const RegisterPage = () => {
   const [name, setName] = useState('');

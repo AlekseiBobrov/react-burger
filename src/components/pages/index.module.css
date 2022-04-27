@@ -1,6 +1,5 @@
 .container{
     width: 480px;
-    height: 430px;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './login.module.css';
+import styles from './index.module.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
