@@ -65,4 +65,22 @@ export const updatePasswordRequest = (password, token) => {
       if (data?.success) return data.message;
       return Promise.reject(data);
     })
+}
+
+export const registerRequest = (email, password, name) => {
+  return fetch(
+    `${API_URL}/auth/register`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email:email, password: password, name: name }),
+    }
+  )
+    .then(checkResponse)
+    .then(data => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    })
 } 

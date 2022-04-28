@@ -7,7 +7,7 @@ import { resetPassword } from '../../services/actions/forgot-password';
 import styles from './index.module.css';
 
 const ForgotPasswordPage = () => {
-  const history = useHistory()
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const { message } = useSelector((state: any) => state.reset);
   const dispatch = useDispatch();
