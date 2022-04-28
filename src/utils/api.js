@@ -102,3 +102,21 @@ export const loginRequest = (email, password) => {
       return Promise.reject(data);
     })
 } 
+
+export const logoutRequest = (token) => {
+  return fetch(
+    `${API_URL}/auth/logout`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({token: token}),
+    }
+  )
+    .then(checkResponse)
+    .then(data => {
+      if (data?.success) return data.message;
+      return Promise.reject(data);
+    })
+}

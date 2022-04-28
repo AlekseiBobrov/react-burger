@@ -1,11 +1,16 @@
 import React, { useState,  useRef } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { makeLogout } from '../../services/actions/auth';
 
 import pageStyles from './index.module.css';
 import styles from './profile.module.css';
 
 const ProfilePage = () => {
+  const history = useHistory();
+  const dispatch = useDispatch();
+
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
@@ -30,12 +35,17 @@ const ProfilePage = () => {
     setPassword(e.target.value)
   }
 
+  const handleLogoutClick = () => {
+    dispatch(makeLogout());
+    history.replace({pathname: '/login'})
+  }
+
   return (
     <div className="page">
       <div className={styles.side}>
         <NavLink to="/profile" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">Профиль</NavLink>
         <NavLink to="/orders" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">История заказов</NavLink>
-        <p className="text text_type_main-medium text_color_inactive">Выйти</p>
+        <p className={`text text_type_main-medium text_color_inactive ${styles.clickable}`} onClick={handleLogoutClick}>Выйти</p>
         <p className={`text text_type_main-default text_color_inactive ${pageStyles.bottom} ${styles.bottom}`}>
           В этом разделе вы можете<br/>изменить свои персональные данные
         </p>

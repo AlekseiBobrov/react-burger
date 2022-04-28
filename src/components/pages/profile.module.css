@@ -10,3 +10,7 @@
 .bottom{
     text-align: left;
 }
+
+.clickable {
+    cursor: pointer;
+}

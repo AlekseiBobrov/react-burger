@@ -5,6 +5,9 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+  LOGOUT_REQUEST,
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
 } from '../actions/auth';
 
 interface authActionType {
@@ -16,6 +19,8 @@ interface authStateType {
     registerFailed: boolean,
     loginRequest: boolean,
     loginFailed: boolean,
+    logoutRequest: boolean,
+    logoutFailed: boolean,
   }
 
 const initialState = {
@@ -23,6 +28,8 @@ const initialState = {
   registerFailed: false,
   loginRequest: false,
   loginFailed: false,
+  logoutRequest: false,
+  logoutFailed: false,
 };
 
 export const authReducer = (state: authStateType = initialState, action: authActionType): authStateType => {
@@ -44,6 +51,15 @@ export const authReducer = (state: authStateType = initialState, action: authAct
     }
     case  LOGIN_FAILED: {
       return { ...state, loginFailed: true, loginRequest: false };
+    }
+    case LOGOUT_REQUEST: {
+      return { ...state, logoutRequest: true };
+    }
+    case LOGOUT_SUCCESS: {
+      return { ...state, logoutFailed: false, logoutRequest: false };
+    }
+    case  LOGOUT_FAILED: {
+      return { ...state, logoutFailed: true, logoutRequest: false };
     }
     default: {
       return state;
