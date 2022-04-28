@@ -57,7 +57,7 @@ const BurgerConstructor = () => {
   }, [cart, dispatch]);
 
 
-  const handelButtonClick = () => {
+  const handleButtonClick = () => {
     if (cart.buns.length) {
       dispatch(getOrder([...cart.buns, ...cart.middle]))
     }
@@ -113,7 +113,7 @@ const BurgerConstructor = () => {
         {bunIngrediets && bunIngrediets[1]}
       </div>
       <div className={styles.checkout}>
-        <Button type="primary" size="medium" onClick={handelButtonClick}>
+        <Button type="primary" size="medium" onClick={handleButtonClick}>
           Оформить заказ
         </Button>
         <div className="text text_type_digits-medium">

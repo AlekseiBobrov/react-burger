@@ -20,7 +20,7 @@ const ResetPasswordPage = () => {
     setCode(e.target.value)
   }
 
-  const handelButtonClick = () => {
+  const handleButtonClick = () => {
     if (password && code) {
       dispatch(updatePassword(password, code));
     }
@@ -40,7 +40,7 @@ const ResetPasswordPage = () => {
           onIconClick={()=>setShowPassword(!showPassword)}
           />
         <Input type="text" onChange={onChangeCode} value={code} name={'code'} placeholder="Введите код из письма" />
-        <Button type="primary" size="medium" onClick={handelButtonClick}>Сохранить</Button>
+        <Button type="primary" size="medium" onClick={handleButtonClick}>Сохранить</Button>
         <div className={styles.bottom}>
           <p className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?&nbsp;

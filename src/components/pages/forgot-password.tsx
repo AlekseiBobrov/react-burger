@@ -24,7 +24,7 @@ const ForgotPasswordPage = () => {
     [message]
   )
 
-  const handelButtonClick = () => {
+  const handleButtonClick = () => {
     if (email) {
       dispatch(resetPassword(email))
     }
@@ -35,7 +35,7 @@ const ForgotPasswordPage = () => {
       <div className={styles.container}>
         <p className="text text_type_main-medium">Восстановление пароля</p>
         <Input type="email" onChange={onChangeEmail} value={email} name={'email'} placeholder="Укажите e-mail" />
-        <Button type="primary" size="medium" onClick={handelButtonClick}>Восстановить</Button>
+        <Button type="primary" size="medium" onClick={handleButtonClick}>Восстановить</Button>
         <div className={styles.bottom}>
           <p className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?&nbsp;
