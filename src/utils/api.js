@@ -83,4 +83,22 @@ export const registerRequest = (email, password, name) => {
       if (data?.success) return data;
       return Promise.reject(data);
     })
+}
+
+export const loginRequest = (email, password) => {
+  return fetch(
+    `${API_URL}/auth/login`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({email:email, password: password}),
+    }
+  )
+    .then(checkResponse)
+    .then(data => {
+      if (data?.success) return data;
+      return Promise.reject(data);
+    })
 } 
