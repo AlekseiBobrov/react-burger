@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -10,7 +10,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor'
 
 import { getIngredients } from '../../services/actions/ingredients';
 
-import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage } from '../pages'
+import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage } from '../pages'
 
 import styles from './app.module.css';
 
@@ -28,7 +28,6 @@ const App = () => {
   return (
     <div className={styles.app}>
       <AppHeader />
-      <Router>
         <Switch>
           <Route exact path="/">
             <DndProvider backend={HTML5Backend}>
@@ -54,8 +53,10 @@ const App = () => {
           <Route exact path="/reset-password">
             <ResetPasswordPage/>
           </Route>
+          <Route exact path="/profile">
+            <ProfilePage/>
+          </Route>
         </Switch>
-      </Router>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import styles from './index.module.css';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
-  const [password, setPassword] = React.useState('');
+  const [password, setPassword] = useState('');
 
   const onChangeEmail = (e:React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
@@ -23,14 +23,14 @@ const LoginPage = () => {
         <Input type="email" onChange={onChangeEmail} value={email} name={'email'} placeholder="E-mail"/>
         <PasswordInput onChange={onChangePassword} value={password} name={'password'} />
         <Button type="primary" size="medium" onClick={() => console.log('onClick Войти')}>Войти</Button>
-        <div className={styles['bottom-links']}>
+        <div className={styles.bottom}>
         <p className="text text_type_main-default text_color_inactive">
           Вы — новый пользователь?&nbsp;
-          <Link to='/register' className='link-nodecoration'>Зарегистрироваться</Link>
+          <Link to='/register' className={styles.link}>Зарегистрироваться</Link>
         </p>
         <p className="text text_type_main-default text_color_inactive">
           Забыли пароль?&nbsp;
-          <Link to='/forgot-password' className='link-nodecoration'>Восстановить пароль</Link>
+          <Link to='/forgot-password' className={styles.link}>Восстановить пароль</Link>
         </p>
         </div>
       </div>

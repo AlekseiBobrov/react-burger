@@ -29,10 +29,10 @@ const RegisterPage = () => {
         <Input type="email" onChange={onChangeEmail} value={email} name={'email'} placeholder="E-mail"/>
         <PasswordInput onChange={onChangePassword} value={password} name={'password'} />
         <Button type="primary" size="medium" onClick={() => console.log('onClick Зарегистрироваться')}>Зарегистрироваться</Button>
-        <div className={styles['bottom-links']}>
+        <div className={styles.bottom}>
           <p className="text text_type_main-default text_color_inactive">
             Уже зарегистрированы?&nbsp;
-            <Link to='/login' className='link-nodecoration'>Войти</Link>
+            <Link to='/login' className={styles.link}>Войти</Link>
           </p>
         </div>
       </div>

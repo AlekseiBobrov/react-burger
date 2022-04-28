@@ -41,10 +41,10 @@ const ResetPasswordPage = () => {
           />
         <Input type="text" onChange={onChangeCode} value={code} name={'code'} placeholder="Введите код из письма" />
         <Button type="primary" size="medium" onClick={handelButtonClick}>Сохранить</Button>
-        <div className={styles['bottom-links']}>
+        <div className={styles.bottom}>
           <p className="text text_type_main-default text_color_inactive">
             Вспомнили пароль?&nbsp;
-            <Link to='/login' className='link-nodecoration'>Войти</Link>
+            <Link to='/login' className={styles.link}>Войти</Link>
           </p>
         </div>
       </div>
