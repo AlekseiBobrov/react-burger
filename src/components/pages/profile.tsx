@@ -1,8 +1,8 @@
-import React, { useState,  useRef } from 'react'
+import React, { useState,  useRef, useEffect } from 'react'
 import { NavLink, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { makeLogout } from '../../services/actions/auth';
+import { useDispatch, useSelector } from 'react-redux';
+import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { makeLogout, getUserData, setUserData } from '../../services/actions/auth';
 
 import pageStyles from './index.module.css';
 import styles from './profile.module.css';
@@ -10,6 +10,8 @@ import styles from './profile.module.css';
 const ProfilePage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const serverName = useSelector( (state:any) => state.auth.name);
+  const serverEmail = useSelector( (state:any) => state.auth.email);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -22,6 +24,21 @@ const ProfilePage = () => {
   const [editName, setEditName] = useState(false);
   const [editEmail, setEditEmail] = useState(false);
   const [editPassword, setEditPassword] = useState(false);
+
+  useEffect(
+    () => {
+      dispatch( getUserData() );
+    },
+    [dispatch]
+  )
+
+  useEffect(
+    () => {
+      setName(serverName);
+      setEmail(serverEmail);
+    },
+    [serverName]
+  )
 
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value)
@@ -38,6 +55,16 @@ const ProfilePage = () => {
   const handleLogoutClick = () => {
     dispatch(makeLogout());
     history.replace({pathname: '/login'})
+  }
+
+  const handleSaveClick = () => {
+    dispatch(setUserData(name, email, password));
+  }
+
+  const handleCancelClick = () => {
+    setName(serverName);
+    setEmail(serverEmail);
+    setPassword('');
   }
 
   return (
@@ -87,6 +114,14 @@ const ProfilePage = () => {
           disabled={!editPassword}
           ref={passwordRef}
         />
+        <div className={styles.buttons}>
+          <Button type="primary" size="medium" onClick={handleSaveClick}>
+            Сохранить
+          </Button>
+          <Button type="primary" size="medium" onClick={handleCancelClick}>
+            Отмена
+          </Button>
+        </div>
       </div>
       <div className={styles.side} />
     </div>

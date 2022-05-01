@@ -27,3 +27,8 @@ export function getCookie(name) {
   );
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
+
+export function saveTokens(response) {
+  setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
+  window.localStorage.setItem('refreshToken', response.refreshToken);
+}

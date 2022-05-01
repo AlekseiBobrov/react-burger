@@ -1,7 +1,41 @@
+import { getCookie, saveTokens } from ".";
 const API_URL = "https://norma.nomoreparties.space/api"
 
 const checkResponse = (res) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+}
+
+export const refreshToken = () => {
+  const token = window.localStorage.getItem('refreshToken');
+  return fetch(
+    `${API_URL}/auth/token`,
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify({token: token})
+    }
+  )
+  .then(checkResponse)
+}
+
+export const fetchWithRefresh = async (url, options) => {
+  console.log(url, options)
+  try {
+    const res = await fetch(url, options)
+    return res
+  } catch(err) {
+    if (err.message === 'jwt expired'){
+      const refreshData = await refreshToken();
+      saveTokens(refreshData);
+      options.headers.authorization = refreshData.accessToken;
+      const res = await fetch(url, options)
+      return res
+    } else {
+      return Promise.reject(err)
+    }
+  }
 }
 
 export const getIngredientsRequest = () => {
@@ -20,7 +54,7 @@ export const getOrderRequest = (ingredients) => {
       method: 'POST',
       body: JSON.stringify({ "ingredients": ingredients }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json;charset=utf-8'
       }
     }
   )
@@ -38,7 +72,7 @@ export const resetPasswordRequest = (email) => {
       method: 'POST',
       body: JSON.stringify({ "email": email }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json;charset=utf-8'
       }
     }
   )
@@ -56,7 +90,7 @@ export const updatePasswordRequest = (password, token) => {
       method: 'POST',
       body: JSON.stringify({ password: password, token: token }),
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json;charset=utf-8'
       }
     }
   )
@@ -73,7 +107,7 @@ export const registerRequest = (email, password, name) => {
     {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify({email:email, password: password, name: name }),
     }
@@ -91,7 +125,7 @@ export const loginRequest = (email, password) => {
     {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify({email:email, password: password}),
     }
@@ -103,13 +137,14 @@ export const loginRequest = (email, password) => {
     })
 } 
 
-export const logoutRequest = (token) => {
+export const logoutRequest = () => {
+  const token =  window.localStorage.getItem('refreshToken');
   return fetch(
     `${API_URL}/auth/logout`,
     {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify({token: token}),
     }
@@ -119,4 +154,47 @@ export const logoutRequest = (token) => {
       if (data?.success) return data.message;
       return Promise.reject(data);
     })
+}
+
+export const getUserDataRequest = () => {
+  return fetchWithRefresh(
+    `${API_URL}/auth/user`,
+    {
+      method: 'GET',
+      headers: {
+        authorization: 'Bearer ' + getCookie('accessToken'),
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+    }
+  )
+  .then(checkResponse)
+  .then(data => {
+    if (data?.success) return data.user;
+    return Promise.reject(data);
+  })
+}
+
+export const setUserDataRequest = (name, email, password) => {
+  let user = {
+    name: name,
+    email: email
+  }
+  if (password) user = {...user, password: password};
+
+  return fetchWithRefresh(
+    `${API_URL}/auth/user`,
+    {
+      method: 'PATCH',
+      headers: {
+        authorization: 'Bearer ' + getCookie('accessToken'),
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(user)
+    }
+  )
+  .then(checkResponse)
+  .then(data => {
+    if (data?.success) return data.user;
+    return Promise.reject(data);
+  })
 }
