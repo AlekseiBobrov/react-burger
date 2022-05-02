@@ -1,5 +1,5 @@
-import React, { useState } from 'react'
-import { Link, Redirect, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updatePassword } from '../../services/actions/forgot-password';
@@ -13,12 +13,21 @@ interface StateType {
 const ResetPasswordPage = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector( (state:any) => state.auth.isAuth );
+  const message = useSelector( (state:any) => state.reset.message );
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [code, setCode] = useState('');
   const { state } = useLocation<StateType>();
+  const history = useHistory();
   
-
+  useEffect(()=>{
+      if(message === "Password successfully reset"){
+        history.replace('/login');
+      }
+    },
+    [message]
+  )
+  
   const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value)
   }
