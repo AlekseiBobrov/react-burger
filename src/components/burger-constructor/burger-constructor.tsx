@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from "react-dnd";
+import { useHistory } from 'react-router-dom';
 
 import BunIngredient from './bun-ingredient';
 import MiddleIngredient from './middle-ingredient';
@@ -16,7 +17,9 @@ import styles from './burger-constructor.module.css';
 type BunType = "top" | "bottom";
 
 const BurgerConstructor = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const isAuth = useSelector( (state:any) => state.auth.isAuth )
   const { cart } = useSelector((state: any) => state);
   const { orderRequest, orderNumber } = useSelector((state: any) => state.order);
 
@@ -59,7 +62,11 @@ const BurgerConstructor = () => {
 
   const handleButtonClick = () => {
     if (cart.buns.length) {
-      dispatch(getOrder([...cart.buns, ...cart.middle]))
+      if (isAuth){
+        dispatch(getOrder([...cart.buns, ...cart.middle]))
+      } else {
+        history.push('/login')
+      }
     }
   }
 
@@ -100,7 +107,7 @@ const BurgerConstructor = () => {
   return (
     <div className={styles['burger-constructor']}>
       {
-        showDetails &&
+        (showDetails && isAuth) &&
         <Modal closeModal={hideDetails} className={styles["order-details"]}>
           {orderRequest ? <Ordering /> : <OrderDetails orderNum={orderNumber} />}
         </Modal>
