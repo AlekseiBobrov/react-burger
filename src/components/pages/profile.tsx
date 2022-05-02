@@ -1,5 +1,5 @@
 import React, { useState,  useRef, useEffect } from 'react'
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { makeLogout, getUserData, setUserData } from '../../services/actions/auth';
@@ -8,7 +8,6 @@ import pageStyles from './index.module.css';
 import styles from './profile.module.css';
 
 const ProfilePage = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
   const serverName = useSelector( (state:any) => state.auth.name );
   const serverEmail = useSelector( (state:any) => state.auth.email );
@@ -54,7 +53,6 @@ const ProfilePage = () => {
 
   const handleLogoutClick = () => {
     dispatch(makeLogout());
-    history.replace({pathname: '/login'})
   }
 
   const handleSaveClick = () => {
