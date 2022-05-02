@@ -10,8 +10,8 @@ import styles from './profile.module.css';
 const ProfilePage = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const serverName = useSelector( (state:any) => state.auth.name);
-  const serverEmail = useSelector( (state:any) => state.auth.email);
+  const serverName = useSelector( (state:any) => state.auth.name );
+  const serverEmail = useSelector( (state:any) => state.auth.email );
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);

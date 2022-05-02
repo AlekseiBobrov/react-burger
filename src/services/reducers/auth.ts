@@ -36,7 +36,7 @@ interface authStateType {
   }
 
 const initialState = {
-  isAuth: false,
+  isAuth: window.localStorage.getItem('refreshToken') !== null,
   email: '',
   name: '',
   registerRequest: false,
@@ -73,7 +73,7 @@ export const authReducer = (state: authStateType = initialState, action: authAct
       return { ...state, logoutRequest: true };
     }
     case LOGOUT_SUCCESS: {
-      return { ...state, logoutFailed: false, logoutRequest: false };
+      return { ...state, logoutFailed: false, logoutRequest: false, ...action.payload };
     }
     case  LOGOUT_FAILED: {
       return { ...state, logoutFailed: true, logoutRequest: false };

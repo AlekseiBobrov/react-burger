@@ -4,9 +4,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
-import AppHeader from '../app-header/app-header'
-import BurgerIngredients from '../burger-ingredients/burger-ingredients'
-import BurgerConstructor from '../burger-constructor/burger-constructor'
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { ProtectedRoute } from '../protected-route';
 
 import { getIngredients } from '../../services/actions/ingredients';
 
@@ -53,9 +54,9 @@ const App = () => {
           <Route exact path="/reset-password">
             <ResetPasswordPage/>
           </Route>
-          <Route exact path="/profile">
+          <ProtectedRoute exact path="/profile">
             <ProfilePage/>
-          </Route>
+          </ProtectedRoute>
         </Switch>
     </div>
   );
