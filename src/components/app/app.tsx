@@ -11,7 +11,7 @@ import { ProtectedRoute } from '../protected-route';
 
 import { getIngredients } from '../../services/actions/ingredients';
 
-import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage } from '../pages'
+import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../pages'
 
 import styles from './app.module.css';
 
@@ -57,6 +57,9 @@ const App = () => {
           <ProtectedRoute exact path="/profile">
             <ProfilePage/>
           </ProtectedRoute>
+          <Route>
+            <NotFound404 />
+          </Route>
         </Switch>
     </div>
   );
