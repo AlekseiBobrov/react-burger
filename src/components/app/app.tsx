@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
+import { LocationState } from 'history';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -14,10 +15,6 @@ import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, Profile
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import styles from './app.module.css';
-
-interface StateType {
-  background: string;
-}
 
 const App = () => {
   const { ingredients } = useSelector((state: any) => state.menu);
@@ -34,25 +31,16 @@ const App = () => {
     history.goBack();
   }
 
-  const location = useLocation<StateType>();
   const history = useHistory();
-  let background = location.state && location.state.background;
+  let location = useLocation();
+  // @ts-ignore
+  let { background } =  location.state?location.state:{};
 
   if (ingredients) {
     return (
       <div className={styles.app}>
         <AppHeader />
-        <Switch>
-          {background && (
-            <Route
-              path='/ingredients/:ingredientId'
-              children={
-                <Modal closeModal={hideModal} className={styles["ingredient-details"]}>
-                  <IngredientDetails />
-                </Modal>
-              }
-            />
-          )}
+        <Switch location={ background || location } >
           <Route exact path="/">
             <DndProvider backend={HTML5Backend}>
               <main className={styles.main}>
@@ -87,6 +75,15 @@ const App = () => {
             <NotFound404 />
           </Route>
         </Switch>
+
+        {background && (
+            <Route path='/ingredients/:ingredientId'>
+              <Modal closeModal={hideModal} className={styles["ingredient-details"]}>
+                <IngredientDetails />
+              </Modal>
+            </Route>
+          )}
+
       </div>
     );
   } else {
