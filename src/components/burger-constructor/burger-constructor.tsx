@@ -9,7 +9,7 @@ import Modal from '../modal/modal';
 import { Ordering, OrderDetails } from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import type { CartIngredient } from '../../utils/types.js'
-import { getOrder } from '../../services/actions/order';
+import { getOrder, GET_ORDER_RESET } from '../../services/actions/order';
 import { addIngredient, UPDATE_CART } from '../../services/actions/cart';
 
 import styles from './burger-constructor.module.css';
@@ -72,6 +72,9 @@ const BurgerConstructor = () => {
 
   const hideDetails = () => {
     setShowDetails(false);
+    dispatch({
+      type: GET_ORDER_RESET
+    })
   }
 
   const bunIngrediets = cart.buns.map(
@@ -107,7 +110,7 @@ const BurgerConstructor = () => {
   return (
     <div className={styles['burger-constructor']}>
       {
-        (showDetails && isAuth) &&
+        showDetails &&
         <Modal closeModal={hideDetails} className={styles["order-details"]}>
           {orderRequest ? <Ordering /> : <OrderDetails orderNum={orderNumber} />}
         </Modal>

@@ -12,3 +12,8 @@
 .modal-root {
   overflow: hidden;
 }
+
+.ingredient-details {
+  width: 640px;
+  height: 540px;
+}

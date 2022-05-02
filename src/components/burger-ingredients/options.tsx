@@ -1,7 +1,7 @@
-import React, { useCallback } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { DISPLAY_INGREDIENT, HIDE_INGREDIENT, SWITCH_TAB, CLICK_TAB } from '../../services/actions';
+import {SWITCH_TAB, CLICK_TAB } from '../../services/actions'; // DISPLAY_INGREDIENT, HIDE_INGREDIENT, 
 
 import Ingredient from './ingredient';
 import Separator from './separator';
@@ -22,7 +22,6 @@ type Sections = {
 const Options = () => {
 
   const { ingredients } = useSelector((state: any) => state.menu);
-  const { detailsIngredient } = useSelector((state: any) => state.modal);
   const { cart } = useSelector((state: any) => state);
   const { currentTab, tabClick } = useSelector((state: any) => state.tab);
   const dispatch = useDispatch();
@@ -82,24 +81,6 @@ const Options = () => {
     () => { tabScroll(currentTab, tabClick) },
     [currentTab]
   )
-
-  const handelIngredientClick = useCallback(
-    (id: string) => {
-      let ingredient = ingredients?.find((el: IngredientShape) => el._id === id);
-      dispatch({
-        type: DISPLAY_INGREDIENT,
-        ingredient
-      })
-    },
-    [dispatch, ingredients]
-  )
-
-  const hideDetails = () => {
-    dispatch({
-      type: HIDE_INGREDIENT
-    });
-  }
-
   const sections = { 'bun': null, 'sauce': null, 'main': null } as Sections;
   if (ingredients) {
     Object.keys(sections).forEach(section => {
@@ -107,21 +88,15 @@ const Options = () => {
         <Ingredient
           {...el}
           count={[...cart.buns, ...cart.middle].filter(item => item._id === el._id).length}
-          onClick={handelIngredientClick}
           key={el._id}
         />
       )
     })
   }
 
-
   return (
     <div className={styles.options} ref={containerRef}>
-      {detailsIngredient &&
-        <Modal closeModal={hideDetails} className={styles["ingredient-details"]}>
-          <IngredientDetails ingredient={detailsIngredient} />
-        </Modal>
-      }
+
       <Separator id="bun" text="Булки" ref={bunRef} />
       {sections['bun']}
       <Separator id="sauce" text="Соусы" ref={sauceRef} />

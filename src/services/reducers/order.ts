@@ -2,6 +2,7 @@ import {
   GET_ORDER_REQUEST,
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
+  GET_ORDER_RESET,
 } from '../actions/order';
 
 
@@ -32,6 +33,9 @@ export const orderReducer = (state:OrderStateType = initialState, action: OrderA
     }
     case  GET_ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
+    }
+    case GET_ORDER_RESET: {
+      return { ...state, orderNumber: undefined };
     }
     default: {
       return state;
