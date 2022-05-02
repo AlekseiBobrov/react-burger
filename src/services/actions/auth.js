@@ -1,5 +1,5 @@
 import { registerRequest, loginRequest, logoutRequest, getUserDataRequest, setUserDataRequest  } from '../../utils/api'; //'../../utils/fake-api' //fakeAPI for test without internet
-import { saveTokens } from '../../utils'
+import { saveTokens, deleteTokens } from '../../utils'
 
 export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
@@ -31,7 +31,7 @@ export function makeRegister(email, password, name) {
         saveTokens(data);
         dispatch({
           type: REGISTER_SUCCESS,
-          payload: data.user,
+          payload: { ...data.user, isAuth: true }
         });
       })
       .catch(err => {
@@ -53,7 +53,7 @@ export function makeLogin(email, password) {
         saveTokens(data);
         dispatch({
           type: LOGIN_SUCCESS,
-          payload: data.user,
+          payload: { ...data.user, isAuth: true },
         });
       })
       .catch(err => {
@@ -73,8 +73,10 @@ export function makeLogout() {
     logoutRequest()
       .then(data => {
         dispatch({
-          type: LOGOUT_SUCCESS ,
+          type: LOGOUT_SUCCESS,
+          payload: { name: '', email: '', isAuth: false }
         });
+        deleteTokens();
       })
       .catch(err => {
         console.log('makeLogout ERROR:', err);

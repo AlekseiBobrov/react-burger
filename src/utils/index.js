@@ -28,7 +28,16 @@ export function getCookie(name) {
   return matches ? decodeURIComponent(matches[1]) : undefined;
 }
 
+export function deleteCookie(name) {
+  setCookie(name, null, { expires: -1 });
+} 
+
 export function saveTokens(response) {
   setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
   window.localStorage.setItem('refreshToken', response.refreshToken);
+}
+
+export function deleteTokens() {
+  deleteCookie('accessToken');
+  window.localStorage.removeItem('refreshToken');
 }

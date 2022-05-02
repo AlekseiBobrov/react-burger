@@ -21,7 +21,6 @@ export const refreshToken = () => {
 }
 
 export const fetchWithRefresh = async (url, options) => {
-  console.log(url, options)
   try {
     const res = await fetch(url, options)
     return res

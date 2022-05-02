@@ -18,10 +18,11 @@ import {
 
 interface authActionType {
   type: string,
-  payload?: {email: string, name:string}
+  payload?: {email: string, name:string, isAuth?: boolean}
 }
 
 interface authStateType {
+    isAuth: boolean,
     email: string,
     name: string,
     registerRequest: boolean,
@@ -35,6 +36,7 @@ interface authStateType {
   }
 
 const initialState = {
+  isAuth: false,
   email: '',
   name: '',
   registerRequest: false,
