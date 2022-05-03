@@ -24,6 +24,8 @@ const ProfilePage = () => {
   const [editEmail, setEditEmail] = useState(false);
   const [editPassword, setEditPassword] = useState(false);
 
+  const [showButtons, setShowButtons] = useState(false);
+
   useEffect(
     () => {
       dispatch( getUserData() );
@@ -37,6 +39,21 @@ const ProfilePage = () => {
       setEmail(serverEmail);
     },
     [serverName]
+  )
+
+  useEffect(
+    () => {
+      if (
+        name !== serverName ||
+        email !== serverEmail ||
+        password !== ''
+      ){
+        setShowButtons(true)
+      } else {
+        setShowButtons(false)
+      }
+    },
+    [name, serverName, serverEmail, email, password]
   )
 
   const onChangeName = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -112,14 +129,16 @@ const ProfilePage = () => {
           disabled={!editPassword}
           ref={passwordRef}
         />
-        <div className={styles.buttons}>
-          <Button type="primary" size="medium" onClick={handleSaveClick}>
-            Сохранить
-          </Button>
-          <Button type="primary" size="medium" onClick={handleCancelClick}>
-            Отмена
-          </Button>
-        </div>
+        { showButtons &&
+          <div className={styles.buttons}>
+            <Button type="primary" size="medium" onClick={handleSaveClick}>
+              Сохранить
+            </Button>
+            <Button type="primary" size="medium" onClick={handleCancelClick}>
+              Отмена
+            </Button>
+          </div>
+        }
       </div>
       <div className={styles.side} />
     </div>
