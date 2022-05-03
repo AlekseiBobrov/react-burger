@@ -1,45 +1,26 @@
-import { useRouteMatch } from 'react-router-dom';
-import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import styles from './app-header.module.css';
+import * as Icons from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons'
 interface MenuItemProps {
-  active?: boolean;
-  type: "constructor" | "orders" | "profile";
+  text: string;
+  icon?: "CurrencyIcon" | "BurgerIcon" | "LockIcon" | "DragIcon" | "DeleteIcon" | "ArrowUpIcon" | "ArrowDownIcon" | "MenuIcon" | "CloseIcon" | "CheckMarkIcon" | "ListIcon" | "ProfileIcon";
+  path: string;
 }
 
-const MenuItem = (props: MenuItemProps) => {
-  const PATHS = {
-    "constructor": "/",
-    "orders": "/orders",
-    "profile": "/profile",
-  }
-
-  const match = useRouteMatch({path:PATHS[props.type], exact:true});
+const MenuItem = ({text, path, icon}:MenuItemProps) => {
+  const match = useRouteMatch({path: path, exact: true});
   const icon_type = match ? "primary" : "secondary";
-
-  let icon: JSX.Element;
-  let text: string;
-  switch (props.type) {
-    case 'constructor':
-      icon = <BurgerIcon type={icon_type} />;
-      text = "Конструктор";
-      break;
-    case 'orders':
-      icon = <ListIcon type={icon_type} />;
-      text = "Лента заказов";
-      break;
-    case 'profile':
-      icon = <ProfileIcon type={icon_type} />;
-      text = "Личный кабинет";
-      break;
-  };
+  const Icon = icon && Icons[icon];
 
   return (
-    <div className={styles.menuItem}>
-      {icon}
-      <p className="m-2 text text_type_main-default">
-        {text}
-      </p>
-    </div>
+    <NavLink exact to={path} className="text_color_inactive" activeClassName="disable-link">
+      <div className={styles.menuItem}>
+        {Icon && <Icon type={icon_type} /> }
+        <p className="m-2 text text_type_main-default">
+          {text}
+        </p>
+      </div>
+    </NavLink>
   )
 }
 
