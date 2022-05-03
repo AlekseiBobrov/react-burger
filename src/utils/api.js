@@ -23,9 +23,9 @@ export const refreshToken = () => {
 export const fetchWithRefresh = async (url, options) => {
   try {
     const res = await fetch(url, options)
-    return res
+    return await checkResponse(res)
   } catch(err) {
-    if (err.message === 'jwt expired'){
+    if (err.message === "jwt expired"){
       const refreshData = await refreshToken();
       saveTokens(refreshData);
       options.headers.authorization = refreshData.accessToken;
@@ -166,7 +166,6 @@ export const getUserDataRequest = () => {
       }
     }
   )
-  .then(checkResponse)
   .then(data => {
     if (data?.success) return data.user;
     return Promise.reject(data);
@@ -191,7 +190,6 @@ export const setUserDataRequest = (name, email, password) => {
       body: JSON.stringify(user)
     }
   )
-  .then(checkResponse)
   .then(data => {
     if (data?.success) return data.user;
     return Promise.reject(data);
