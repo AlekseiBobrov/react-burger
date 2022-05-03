@@ -1,16 +1,14 @@
 import React from 'react';
-import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
+import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
+import { ProtectedRoute } from '../protected-route';
 
 import { getIngredients } from '../../services/actions/ingredients';
 import AppHeader from '../app-header/app-header';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
 import Modal from '../modal/modal';
-import { ProtectedRoute } from '../protected-route';
-import { LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../pages'
+import { MainPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../pages'
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import styles from './app.module.css';
@@ -42,14 +40,7 @@ const App = () => {
         <Switch location={ background || location } >
           <Route exact path="/">
             <DndProvider backend={HTML5Backend}>
-              <main className={styles.main}>
-                {ingredients &&
-                  <>
-                    <BurgerIngredients />
-                    <BurgerConstructor />
-                  </>
-                }
-              </main>
+              <MainPage />
             </DndProvider>
           </Route>
           <Route exact path="/login">
