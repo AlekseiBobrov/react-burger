@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
-import { LocationState } from 'history';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -32,9 +31,9 @@ const App = () => {
   }
 
   const history = useHistory();
-  let location = useLocation();
+  const location = useLocation();
   // @ts-ignore
-  let { background } =  location.state?location.state:{};
+  const { background } =  location.state?location.state:{};
 
   if (ingredients) {
     return (

@@ -5,8 +5,6 @@ import {SWITCH_TAB, CLICK_TAB } from '../../services/actions'; // DISPLAY_INGRED
 
 import Ingredient from './ingredient';
 import Separator from './separator';
-import Modal from '../modal/modal';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import type { IngredientShape } from '../../utils/types.js'
 import styles from './burger-ingredients.module.css';
@@ -32,13 +30,13 @@ const Options = () => {
   const containerRef = React.useRef<HTMLDivElement>(null);
 
   const switchTab = () => {
-    let containerTop = containerRef.current ? containerRef.current.getBoundingClientRect().top : 0;
-    let distance = [
+    const containerTop = containerRef.current ? containerRef.current.getBoundingClientRect().top : 0;
+    const distance = [
       ['Булки', Math.abs(containerTop - (bunRef.current ? bunRef.current.getBoundingClientRect().top : 0))],
       ['Соусы', Math.abs(containerTop - (sauceRef.current ? sauceRef.current.getBoundingClientRect().top : 0))],
       ['Начинки', Math.abs(containerTop - (mainRef.current ? mainRef.current.getBoundingClientRect().top : 0))],
     ]
-    let tab = distance.reduce((min, el) => el[1] < min[1] ? el : min, ['', window.innerHeight])[0];
+    const tab = distance.reduce((min, el) => el[1] < min[1] ? el : min, ['', window.innerHeight])[0];
     dispatch({
       type: SWITCH_TAB,
       tab
@@ -47,9 +45,9 @@ const Options = () => {
 
   React.useEffect(
     () => {
-      if (containerRef.current) containerRef.current.addEventListener("scroll", switchTab);
+      containerRef.current?.addEventListener("scroll", switchTab);
       return () => {
-        if (containerRef.current) containerRef.current.removeEventListener("scroll", switchTab)
+        containerRef.current?.removeEventListener("scroll", switchTab)
       }
     },
     []
