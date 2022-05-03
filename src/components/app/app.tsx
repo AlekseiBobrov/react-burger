@@ -67,6 +67,9 @@ const App = () => {
           <ProtectedRoute exact path="/profile">
             <ProfilePage />
           </ProtectedRoute>
+          <ProtectedRoute exact path="/profile/orders">
+            <NotFound404 />
+          </ProtectedRoute>
           <Route exact path='/ingredients/:ingredientId'>
             <IngredientDetails />
           </Route>

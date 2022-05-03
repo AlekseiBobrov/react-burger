@@ -69,7 +69,7 @@ const ProfilePage = () => {
     <div className="page">
       <div className={styles.side}>
         <NavLink to="/profile" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">Профиль</NavLink>
-        <NavLink to="/orders" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">История заказов</NavLink>
+        <NavLink to="/profile/orders" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">История заказов</NavLink>
         <p className={`text text_type_main-medium text_color_inactive ${styles.clickable}`} onClick={handleLogoutClick}>Выйти</p>
         <p className={`text text_type_main-default text_color_inactive ${pageStyles.bottom} ${styles.bottom}`}>
           В этом разделе вы можете<br/>изменить свои персональные данные
