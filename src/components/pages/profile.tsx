@@ -72,11 +72,13 @@ const ProfilePage = () => {
     dispatch(makeLogout());
   }
 
-  const handleSaveClick = () => {
+  const handleSaveClick = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     dispatch(setUserData(name, email, password));
   }
 
-  const handleCancelClick = () => {
+  const handleCancelClick = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     setName(serverName);
     setEmail(serverEmail);
     setPassword('');
@@ -92,7 +94,7 @@ const ProfilePage = () => {
           В этом разделе вы можете<br/>изменить свои персональные данные
         </p>
       </div>
-      <div className={pageStyles.container}>
+      <form className={pageStyles.container} onSubmit={handleSaveClick}>
         <Input
           type="text"
           onChange={onChangeName}
@@ -131,7 +133,7 @@ const ProfilePage = () => {
         />
         { showButtons &&
           <div className={styles.buttons}>
-            <Button type="primary" size="medium" onClick={handleSaveClick}>
+            <Button type="primary" size="medium">
               Сохранить
             </Button>
             <Button type="primary" size="medium" onClick={handleCancelClick}>
@@ -139,7 +141,7 @@ const ProfilePage = () => {
             </Button>
           </div>
         }
-      </div>
+      </form>
       <div className={styles.side} />
     </div>
   );
