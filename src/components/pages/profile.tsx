@@ -2,7 +2,7 @@ import React, { useState,  useRef, useEffect } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { makeLogout, getUserData, setUserData } from '../../services/actions/auth';
+import { makeLogout, setUserData } from '../../services/actions/auth';
 
 import pageStyles from './index.module.css';
 import styles from './profile.module.css';
@@ -25,13 +25,6 @@ const ProfilePage = () => {
   const [editPassword, setEditPassword] = useState(false);
 
   const [showButtons, setShowButtons] = useState(false);
-
-  useEffect(
-    () => {
-      dispatch( getUserData() );
-    },
-    [dispatch]
-  )
 
   useEffect(
     () => {

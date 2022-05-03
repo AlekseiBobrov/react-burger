@@ -6,6 +6,7 @@ import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route';
 
 import { getIngredients } from '../../services/actions/ingredients';
+import { getUserData } from '../../services/actions/auth';
 import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
 import { MainPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../pages'
@@ -20,6 +21,7 @@ const App = () => {
   React.useEffect(
     () => {
       dispatch(getIngredients());
+      dispatch( getUserData() );
     },
     [dispatch]
   );
