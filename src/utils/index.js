@@ -33,7 +33,7 @@ export function deleteCookie(name) {
 } 
 
 export function saveTokens(response) {
-  setCookie('accessToken', response.accessToken.split('Bearer ')[1]);
+  setCookie('accessToken', response.accessToken.split('Bearer ')[1], { expires: 1200 });
   window.localStorage.setItem('refreshToken', response.refreshToken);
 }
 
