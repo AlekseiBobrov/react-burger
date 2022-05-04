@@ -8,10 +8,12 @@ const AppHeader = () => {
       <div className={styles.third}>
         <MenuItem
           text="Конструктор"
+          exact={true}
           path="/"
           icon="BurgerIcon"
         />
         <MenuItem
+          exact={true}
           text="Лента заказов"
           path="/orders"
           icon="ListIcon"
@@ -21,7 +23,8 @@ const AppHeader = () => {
         <Logo />
       </div>
       <div className={styles.third}>
-        <MenuItem 
+        <MenuItem
+          exact={false}
           text="Личный кабинет"
           path="/profile"
           icon="ProfileIcon"

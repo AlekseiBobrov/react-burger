@@ -4,16 +4,22 @@ import * as Icons from '@ya.praktikum/react-developer-burger-ui-components/dist/
 interface MenuItemProps {
   text: string;
   icon?: "CurrencyIcon" | "BurgerIcon" | "LockIcon" | "DragIcon" | "DeleteIcon" | "ArrowUpIcon" | "ArrowDownIcon" | "MenuIcon" | "CloseIcon" | "CheckMarkIcon" | "ListIcon" | "ProfileIcon";
+  exact: boolean;
   path: string;
 }
 
-const MenuItem = ({text, path, icon}:MenuItemProps) => {
+const MenuItem = ({text, exact, path, icon}:MenuItemProps) => {
   const match = useRouteMatch({path: path, exact: true});
   const icon_type = match ? "primary" : "secondary";
   const Icon = icon && Icons[icon];
 
   return (
-    <NavLink exact to={path} className="text_color_inactive" activeClassName="disable-link">
+    <NavLink
+      exact={exact}
+      to={path}
+      className="text_color_inactive"
+      activeClassName="disable-link"
+    >
       <div className={styles.menuItem}>
         {Icon && <Icon type={icon_type} /> }
         <p className="m-2 text text_type_main-default">
