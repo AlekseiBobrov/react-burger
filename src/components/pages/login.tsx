@@ -25,7 +25,8 @@ const LoginPage = () => {
     setPassword(e.target.value)
   }
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     if (email && password) {
       dispatch(makeLogin(email, password));
     }
@@ -36,7 +37,7 @@ const LoginPage = () => {
   } else {
     return (
       <div className="page">
-        <div className={styles.container}>
+        <form className={styles.container}>
           <p className="text text_type_main-medium">Вход</p>
           <Input type="email" onChange={onChangeEmail} value={email} name={'email'} placeholder="E-mail"/>
           <PasswordInput onChange={onChangePassword} value={password} name={'password'} />
@@ -51,7 +52,7 @@ const LoginPage = () => {
             <Link to={{ pathname: '/forgot-password', state: { from: '/login' } }}  className={styles.link}>Восстановить пароль</Link>
           </p>
           </div>
-        </div>
+        </form>
       </div>
     );
   }

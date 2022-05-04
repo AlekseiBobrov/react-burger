@@ -30,7 +30,8 @@ const ForgotPasswordPage = () => {
     [message]
   )
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     if (email) {
       dispatch(resetPassword(email))
     }
@@ -42,7 +43,7 @@ const ForgotPasswordPage = () => {
     if (state?.from === '/login'){
       return (
         <div className="page">
-          <div className={styles.container}>
+          <form className={styles.container}>
             <p className="text text_type_main-medium">Восстановление пароля</p>
             <Input type="email" onChange={onChangeEmail} value={email} name={'email'} placeholder="Укажите e-mail" />
             <Button type="primary" size="medium" onClick={handleButtonClick}>Восстановить</Button>
@@ -52,7 +53,7 @@ const ForgotPasswordPage = () => {
                 <Link to='/login' className='link-nodecoration'>Войти</Link>
               </p>
             </div>
-          </div>
+          </form>
         </div>
       );
     } else {

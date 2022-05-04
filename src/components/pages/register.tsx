@@ -25,7 +25,8 @@ const RegisterPage = () => {
     setPassword(e.target.value)
   }
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     if (email && password && name) {
       dispatch(makeRegister(email, password, name));
     }
@@ -35,7 +36,7 @@ const RegisterPage = () => {
   } else {
     return (
       <div className="page">
-        <div className={styles.container}>
+        <form className={styles.container}>
           <p className="text text_type_main-medium">Регистрация</p>
           <Input onChange={onChangeName} value={name} name={'name'} placeholder="Имя" />
           <Input type="email" onChange={onChangeEmail} value={email} name={'email'} placeholder="E-mail" />
@@ -47,7 +48,7 @@ const RegisterPage = () => {
               <Link to='/login' className={styles.link}>Войти</Link>
             </p>
           </div>
-        </div>
+        </form>
       </div>
     );
   }

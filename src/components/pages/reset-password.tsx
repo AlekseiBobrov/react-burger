@@ -36,7 +36,8 @@ const ResetPasswordPage = () => {
     setCode(e.target.value)
   }
 
-  const handleButtonClick = () => {
+  const handleButtonClick = (e: React.SyntheticEvent) => {
+    e.preventDefault();
     if (password && code) {
       dispatch(updatePassword(password, code));
     }
@@ -48,7 +49,7 @@ const ResetPasswordPage = () => {
     if (state?.from === '/forgot-password'){
       return (
         <div className="page">
-          <div className={styles.container}>
+          <form className={styles.container}>
             <p className="text text_type_main-medium">Восстановление пароля</p>
             <Input
               type={showPassword?"text":"password"}
@@ -67,7 +68,7 @@ const ResetPasswordPage = () => {
                 <Link to='/login' className={styles.link}>Войти</Link>
               </p>
             </div>
-          </div>
+          </form>
         </div>
       );
     } else {
