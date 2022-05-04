@@ -22,15 +22,16 @@ export const refreshToken = () => {
 
 export const fetchWithRefresh = async (url, options) => {
   try {
-    const res = await fetch(url, options)
-    return await checkResponse(res)
+    if (options.headers.authorization === undefined) throw new Error("jwt expired");
+    const res = await fetch(url, options);
+    return await checkResponse(res);
   } catch(err) {
     if (err.message === "jwt expired"){
       const refreshData = await refreshToken();
       saveTokens(refreshData);
       options.headers.authorization = refreshData.accessToken;
-      const res = await fetch(url, options)
-      return res
+      const res = await fetch(url, options);
+      return await checkResponse(res);
     } else {
       return Promise.reject(err)
     }
@@ -156,12 +157,14 @@ export const logoutRequest = () => {
 }
 
 export const getUserDataRequest = () => {
+  const accessToken = getCookie('accessToken');
+
   return fetchWithRefresh(
     `${API_URL}/auth/user`,
     {
       method: 'GET',
       headers: {
-        authorization: 'Bearer ' + getCookie('accessToken'),
+        authorization: accessToken?('Bearer ' + accessToken):accessToken,
         'Content-Type': 'application/json;charset=utf-8'
       }
     }
@@ -173,10 +176,8 @@ export const getUserDataRequest = () => {
 }
 
 export const setUserDataRequest = (name, email, password) => {
-  let user = {
-    name: name,
-    email: email
-  }
+  const accessToken = getCookie('accessToken');
+  let user = { name: name, email: email }
   if (password) user = {...user, password: password};
 
   return fetchWithRefresh(
@@ -184,7 +185,7 @@ export const setUserDataRequest = (name, email, password) => {
     {
       method: 'PATCH',
       headers: {
-        authorization: 'Bearer ' + getCookie('accessToken'),
+        authorization: accessToken?('Bearer ' + accessToken):accessToken,
         'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify(user)
