@@ -1,17 +1,15 @@
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import styles from './app-header.module.css';
-import * as Icons from '@ya.praktikum/react-developer-burger-ui-components/dist/ui/icons'
 interface MenuItemProps {
   text: string;
-  icon?: "CurrencyIcon" | "BurgerIcon" | "LockIcon" | "DragIcon" | "DeleteIcon" | "ArrowUpIcon" | "ArrowDownIcon" | "MenuIcon" | "CloseIcon" | "CheckMarkIcon" | "ListIcon" | "ProfileIcon";
+  Icon?: any;
   exact: boolean;
   path: string;
 }
 
-const MenuItem = ({text, exact, path, icon}:MenuItemProps) => {
+const MenuItem = ({text, exact, path, Icon}:MenuItemProps) => {
   const match = useRouteMatch({path: path, exact: true});
   const icon_type = match ? "primary" : "secondary";
-  const Icon = icon && Icons[icon];
 
   return (
     <NavLink

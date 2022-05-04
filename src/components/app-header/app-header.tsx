@@ -1,4 +1,4 @@
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import MenuItem from './menu-item';
 import styles from './app-header.module.css';
 
@@ -10,13 +10,13 @@ const AppHeader = () => {
           text="Конструктор"
           exact={true}
           path="/"
-          icon="BurgerIcon"
+          Icon={BurgerIcon}
         />
         <MenuItem
           exact={true}
           text="Лента заказов"
           path="/orders"
-          icon="ListIcon"
+          Icon={ListIcon}
         />
       </div>
       <div className={styles.third}>
@@ -27,7 +27,7 @@ const AppHeader = () => {
           exact={false}
           text="Личный кабинет"
           path="/profile"
-          icon="ProfileIcon"
+          Icon={ProfileIcon}
         />
       </div>
     </header>
