@@ -49,7 +49,7 @@ const ResetPasswordPage = () => {
     if (state?.from === '/forgot-password'){
       return (
         <div className="page">
-          <form className={styles.container}>
+          <form className={styles.container} onSubmit={handleButtonClick}>
             <p className="text text_type_main-medium">Восстановление пароля</p>
             <Input
               type={showPassword?"text":"password"}
@@ -61,7 +61,7 @@ const ResetPasswordPage = () => {
               onIconClick={()=>setShowPassword(!showPassword)}
               />
             <Input type="text" onChange={onChangeCode} value={code} name={'code'} placeholder="Введите код из письма" />
-            <Button type="primary" size="medium" onClick={handleButtonClick}>Сохранить</Button>
+            <Button type="primary" size="medium">Сохранить</Button>
             <div className={styles.bottom}>
               <p className="text text_type_main-default text_color_inactive">
                 Вспомнили пароль?&nbsp;

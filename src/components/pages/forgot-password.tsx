@@ -43,10 +43,10 @@ const ForgotPasswordPage = () => {
     if (state?.from === '/login'){
       return (
         <div className="page">
-          <form className={styles.container}>
+          <form className={styles.container}  onSubmit={handleButtonClick}>
             <p className="text text_type_main-medium">Восстановление пароля</p>
             <Input type="email" onChange={onChangeEmail} value={email} name={'email'} placeholder="Укажите e-mail" />
-            <Button type="primary" size="medium" onClick={handleButtonClick}>Восстановить</Button>
+            <Button type="primary" size="medium">Восстановить</Button>
             <div className={styles.bottom}>
               <p className="text text_type_main-default text_color_inactive">
                 Вспомнили пароль?&nbsp;

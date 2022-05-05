@@ -37,11 +37,11 @@ const LoginPage = () => {
   } else {
     return (
       <div className="page">
-        <form className={styles.container}>
+        <form className={styles.container} onSubmit={handleButtonClick}>
           <p className="text text_type_main-medium">Вход</p>
           <Input type="email" onChange={onChangeEmail} value={email} name={'email'} placeholder="E-mail"/>
           <PasswordInput onChange={onChangePassword} value={password} name={'password'} />
-          <Button type="primary" size="medium" onClick={handleButtonClick}>Войти</Button>
+          <Button type="primary" size="medium">Войти</Button>
           <div className={styles.bottom}>
           <p className="text text_type_main-default text_color_inactive">
             Вы — новый пользователь?&nbsp;

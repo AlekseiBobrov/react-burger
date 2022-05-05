@@ -36,12 +36,12 @@ const RegisterPage = () => {
   } else {
     return (
       <div className="page">
-        <form className={styles.container}>
+        <form className={styles.container} onSubmit={handleButtonClick}>
           <p className="text text_type_main-medium">Регистрация</p>
           <Input onChange={onChangeName} value={name} name={'name'} placeholder="Имя" />
           <Input type="email" onChange={onChangeEmail} value={email} name={'email'} placeholder="E-mail" />
           <PasswordInput onChange={onChangePassword} value={password} name={'password'} />
-          <Button type="primary" size="medium" onClick={handleButtonClick}>Зарегистрироваться</Button>
+          <Button type="primary" size="medium">Зарегистрироваться</Button>
           <div className={styles.bottom}>
             <p className="text text_type_main-default text_color_inactive">
               Уже зарегистрированы?&nbsp;
