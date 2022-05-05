@@ -1,8 +1,9 @@
+import React from 'react'
 import { NavLink, useRouteMatch } from 'react-router-dom';
 import styles from './app-header.module.css';
 interface MenuItemProps {
   text: string;
-  Icon?: any;
+  Icon?: React.ComponentType<any>;
   exact: boolean;
   path: string;
 }
