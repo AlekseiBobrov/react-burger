@@ -1,19 +1,34 @@
-import styles from './app-header.module.css';
+import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import MenuItem from './menu-item';
-import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
+import styles from './app-header.module.css';
 
 const AppHeader = () => {
   return (
     <header className={styles['app-header']} >
       <div className={styles.third}>
-        <MenuItem type={'constructor'} active={true} />
-        <MenuItem type={'feed'} active={false} />
+        <MenuItem
+          text="Конструктор"
+          exact={true}
+          path="/"
+          Icon={BurgerIcon}
+        />
+        <MenuItem
+          exact={true}
+          text="Лента заказов"
+          path="/orders"
+          Icon={ListIcon}
+        />
       </div>
       <div className={styles.third}>
         <Logo />
       </div>
       <div className={styles.third}>
-        <MenuItem type={'profile'} active={false} />
+        <MenuItem
+          exact={false}
+          text="Личный кабинет"
+          path="/profile"
+          Icon={ProfileIcon}
+        />
       </div>
     </header>
   );

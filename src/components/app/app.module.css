@@ -2,14 +2,11 @@
   text-align: center;
 }
 
-.main {
-  display: flex;
-  flex-direction: row;
-  margin: 0 auto;
-  max-width: 1280px;
-  padding-top: 88px;
-}
-
 .modal-root {
   overflow: hidden;
+}
+
+.ingredient-details {
+  width: 640px;
+  height: 540px;
 }

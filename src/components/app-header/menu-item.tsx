@@ -1,37 +1,31 @@
+import React from 'react'
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import styles from './app-header.module.css';
-import { BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-
 interface MenuItemProps {
-  active: boolean;
-  type: "constructor" | "feed" | "profile";
+  text: string;
+  Icon?: React.ComponentType<any>;
+  exact: boolean;
+  path: string;
 }
 
-const  MenuItem = (props: MenuItemProps) => {
-  const icon_type = props.active ? "primary" : "secondary";
-  let icon: JSX.Element;
-  let text: string;
-  switch (props.type){
-    case 'constructor':
-      icon = <BurgerIcon type={icon_type} />;
-      text = "Конструктор";
-      break;
-    case 'feed':
-      icon = <ListIcon type={icon_type} />;
-      text = "Лента заказов";
-      break;
-    case 'profile':
-      icon = <ProfileIcon type={icon_type}/>;
-      text = "Личный кабинет";
-      break;
-  };
+const MenuItem = ({text, exact, path, Icon}:MenuItemProps) => {
+  const match = useRouteMatch({path: path, exact: true});
+  const icon_type = match ? "primary" : "secondary";
 
   return (
-    <div className={styles.menuItem}> 
-      { icon }
-      <p className={"m-2 text text_type_main-default" + (props.active ? "" : " text_color_inactive")}>
-        { text }
-      </p>
-    </div>
+    <NavLink
+      exact={exact}
+      to={path}
+      className="text_color_inactive"
+      activeClassName="disable-link"
+    >
+      <div className={styles.menuItem}>
+        {Icon && <Icon type={icon_type} /> }
+        <p className="m-2 text text_type_main-default">
+          {text}
+        </p>
+      </div>
+    </NavLink>
   )
 }
 

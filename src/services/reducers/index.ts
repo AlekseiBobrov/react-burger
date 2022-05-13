@@ -1,9 +1,10 @@
 import { combineReducers } from 'redux';
 
 import { ingredientReducer } from './ingredients'
-import { modalReducer } from './modal'
 import { cartReducer } from './cart'
 import { orderReducer } from './order'
+import { forgotPasswordReducer } from './forgot-password'
+import { authReducer } from './auth'
 
 import { SWITCH_TAB, CLICK_TAB } from '../actions';
 
@@ -35,7 +36,8 @@ const tabReducer = (state = initialState, action:TabActionType) => {
 export const rootReducer = combineReducers({
   menu: ingredientReducer,
   tab: tabReducer,
-  modal: modalReducer,
   cart: cartReducer,
   order: orderReducer,
+  reset: forgotPasswordReducer,
+  auth: authReducer, 
 });

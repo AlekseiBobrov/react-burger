@@ -21,7 +21,7 @@ export const cartReducer = (state: CartType = initialState, action: CartActionTy
       if (action.ingredient.type === 'bun'){
           return { ...state, buns: [action.ingredient, action.ingredient]};
       } else {
-        let middle = state.middle.slice();
+        const middle = state.middle.slice();
         middle.push(action.ingredient)
         return { ...state, middle: middle};
       }
@@ -32,8 +32,8 @@ export const cartReducer = (state: CartType = initialState, action: CartActionTy
           return { ...state, buns: []};
       } else {
         console.log('action.orderIndex', action.orderIndex)
-        let index = action.orderIndex?action.orderIndex:0;
-        let middle = state.middle.slice();
+        const index = action.orderIndex?action.orderIndex:0;
+        const middle = state.middle.slice();
         middle.splice(index, 1);
         return { ...state, middle: middle};
       }

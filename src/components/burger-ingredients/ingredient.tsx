@@ -1,31 +1,39 @@
-import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { Link, useLocation } from 'react-router-dom'
 import { useDrag } from "react-dnd";
+import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { IngredientShape } from '../../utils/types'
 
 import styles from './burger-ingredients.module.css';
 
 interface IngredientProps extends IngredientShape {
   count: number,
-  onClick: (id:string) => void,
 }
 
-const Ingredient = ({count, onClick, ...ingredient}: IngredientProps) => {
-
+const Ingredient = ({count, ...ingredient}: IngredientProps) => {
+  const location = useLocation();
   const [, dragRef] = useDrag({
       type: "ingredient",
       item: ingredient
   });
 
-  return ( 
-    <div className={"m-5 " + styles.ingredient} onClick={() => onClick(ingredient._id)} ref={dragRef}>
-      {count?<Counter count={count} size="default" />:null}
-      <img src={ingredient.image} alt={`Тут должна быть картинка '${ingredient.name}'`}/>
-      <div className={styles.price}>
-        <p className="text text_type_digits-default">{ingredient.price}</p>
-        <CurrencyIcon type="primary" />
+  return (
+    <Link ref={dragRef}
+      className={styles.ingredient}
+      to={{
+        pathname: `/ingredients/${ingredient._id}`,
+        state: { background: location },
+      }}
+    >
+      <div className={"m-5 "}>
+        {count?<Counter count={count} size="default" />:null}
+        <img src={ingredient.image} alt={`Тут должна быть картинка '${ingredient.name}'`}/>
+        <div className={styles.price}>
+          <p className="text text_type_digits-default">{ingredient.price}</p>
+          <CurrencyIcon type="primary" />
+        </div>
+        <p className="text text_type_main-default">{ingredient.name}</p>
       </div>
-      <p className="text text_type_main-default">{ingredient.name}</p>
-    </div>
+    </Link>
   );
 }
 

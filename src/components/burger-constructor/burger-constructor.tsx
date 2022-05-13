@@ -1,6 +1,7 @@
 import React, { useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from "react-dnd";
+import { useHistory } from 'react-router-dom';
 
 import BunIngredient from './bun-ingredient';
 import MiddleIngredient from './middle-ingredient';
@@ -8,7 +9,7 @@ import Modal from '../modal/modal';
 import { Ordering, OrderDetails } from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import type { CartIngredient } from '../../utils/types.js'
-import { getOrder } from '../../services/actions/order';
+import { getOrder, GET_ORDER_RESET } from '../../services/actions/order';
 import { addIngredient, UPDATE_CART } from '../../services/actions/cart';
 
 import styles from './burger-constructor.module.css';
@@ -16,7 +17,9 @@ import styles from './burger-constructor.module.css';
 type BunType = "top" | "bottom";
 
 const BurgerConstructor = () => {
+  const history = useHistory();
   const dispatch = useDispatch();
+  const isAuth = useSelector( (state:any) => state.auth.isAuth )
   const { cart } = useSelector((state: any) => state);
   const { orderRequest, orderNumber } = useSelector((state: any) => state.order);
 
@@ -57,14 +60,21 @@ const BurgerConstructor = () => {
   }, [cart, dispatch]);
 
 
-  const handelButtonClick = () => {
+  const handleButtonClick = () => {
     if (cart.buns.length) {
-      dispatch(getOrder([...cart.buns, ...cart.middle]))
+      if (isAuth){
+        dispatch(getOrder([...cart.buns, ...cart.middle]))
+      } else {
+        history.push('/login')
+      }
     }
   }
 
   const hideDetails = () => {
     setShowDetails(false);
+    dispatch({
+      type: GET_ORDER_RESET
+    })
   }
 
   const bunIngrediets = cart.buns.map(
@@ -96,7 +106,7 @@ const BurgerConstructor = () => {
     })
 
   const total = [...cart.buns, ...cart.middle].map(item => item.price).reduce((sum, el) => sum + el, 0);
-
+  
   return (
     <div className={styles['burger-constructor']}>
       {
@@ -113,7 +123,7 @@ const BurgerConstructor = () => {
         {bunIngrediets && bunIngrediets[1]}
       </div>
       <div className={styles.checkout}>
-        <Button type="primary" size="medium" onClick={handelButtonClick}>
+        <Button type="primary" size="medium" onClick={handleButtonClick}>
           Оформить заказ
         </Button>
         <div className="text text_type_digits-medium">
