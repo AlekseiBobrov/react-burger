@@ -164,7 +164,7 @@ export const getUserDataRequest = () => {
     {
       method: 'GET',
       headers: {
-        authorization: accessToken?('Bearer ' + accessToken):accessToken,
+        authorization: accessToken && 'Bearer ' + accessToken,
         'Content-Type': 'application/json;charset=utf-8'
       }
     }
@@ -185,7 +185,7 @@ export const setUserDataRequest = (name, email, password) => {
     {
       method: 'PATCH',
       headers: {
-        authorization: accessToken?('Bearer ' + accessToken):accessToken,
+        authorization: accessToken && 'Bearer ' + accessToken,
         'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify(user)
