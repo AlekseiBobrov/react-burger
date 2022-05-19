@@ -14,6 +14,11 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import styles from './app.module.css';
 
+import { Location } from "history";
+interface LocationState {
+  background: Location
+}
+
 const App = () => {
   const { ingredients } = useSelector((state: any) => state.menu);
   const dispatch = useDispatch();
@@ -31,9 +36,8 @@ const App = () => {
   }
 
   const history = useHistory();
-  const location = useLocation();
-  // @ts-ignore
-  const { background } =  location.state?location.state:{};
+  const location = useLocation<LocationState>();
+  const background =  location.state?.background;
 
   if (ingredients) {
     return (
