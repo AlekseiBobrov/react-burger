@@ -20,7 +20,7 @@ const App = () => {
 
   React.useEffect(
     () => {
-      dispatch(getIngredients());
+      dispatch( getIngredients() );
       dispatch( getUserData() );
     },
     [dispatch]

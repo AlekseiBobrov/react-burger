@@ -1,21 +1,20 @@
-import React from 'react';
+import React, { FC } from 'react';
 import styles from './modal.module.css';
 
 interface ModalOverlayProps {
-    children: React.ReactNode;
     closeModal: () => void;
 }
 
-const ModalOverlay = (props: ModalOverlayProps) => {
-    const closeModal = (e: React.SyntheticEvent) => {
+const ModalOverlay: FC<ModalOverlayProps> = ( { closeModal, children} ) => {
+    const onClickHandler = (e: React.SyntheticEvent) => {
         if (e.target === e.currentTarget){
-            props.closeModal()
+            closeModal();
         }
     }
 
     return (
-        <div className={styles['modal-overlay']} onClick={closeModal}> 
-            {props.children}
+        <div className={styles['modal-overlay']} onClick={onClickHandler}> 
+            {children}
         </div>
     )
 }

@@ -21,6 +21,10 @@ export interface CartType {
   middle: CartIngredient[], 
 }
 
+export type BunType = "top" | "bottom";
+
+export type TabType = 'Булки' | 'Соусы' | 'Начинки';
+
 export interface IngredientState {
   ingredients: null | undefined | IngredientShape[],
   ingredientsRequest: boolean,
@@ -30,3 +34,4 @@ export interface IngredientState {
 export interface RootState {
   ingredients: IngredientState,
 }
+
