@@ -35,3 +35,12 @@ export interface RootState {
   ingredients: IngredientState,
 }
 
+export interface authResponse {
+  success: boolean,
+  accessToken: string,
+  refreshToken: string,
+  user: {
+    email: string,
+    name: string
+  }
+} 
