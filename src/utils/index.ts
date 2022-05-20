@@ -9,7 +9,7 @@ export interface CookieAttributes {
   [property: string]: any
 }
 
-export function setCookie(name: string, value: any, props: CookieAttributes) {
+export function setCookie(name: string, value: string, props: CookieAttributes) {
   props = props || {};
   let exp = props.expires;
   if (typeof exp == 'number' && exp) {
@@ -40,7 +40,7 @@ export function getCookie(name: string) {
 }
 
 export function deleteCookie(name: string) {
-  setCookie(name, null, { expires: -1 });
+  setCookie(name, '', { expires: -1 });
 }
 
 export function saveTokens(response: authResponse) {
