@@ -8,13 +8,13 @@ import MiddleIngredient from './middle-ingredient';
 import Modal from '../modal/modal';
 import { Ordering, OrderDetails } from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import type { CartIngredient } from '../../utils/types.js'
 import { getOrder, GET_ORDER_RESET } from '../../services/actions/order';
 import { addIngredient, UPDATE_CART } from '../../services/actions/cart';
+import type { CartIngredient, BunType } from '../../utils/types.js'
 
 import styles from './burger-constructor.module.css';
 
-type BunType = "top" | "bottom";
+
 
 const BurgerConstructor = () => {
   const history = useHistory();

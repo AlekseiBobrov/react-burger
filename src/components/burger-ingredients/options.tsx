@@ -6,10 +6,8 @@ import {SWITCH_TAB, CLICK_TAB } from '../../services/actions'; // DISPLAY_INGRED
 import Ingredient from './ingredient';
 import Separator from './separator';
 
-import type { IngredientShape } from '../../utils/types.js'
+import type { IngredientShape, TabType } from '../../utils/types.js'
 import styles from './burger-ingredients.module.css';
-
-type TabType = 'Булки' | 'Соусы' | 'Начинки'
 
 type Sections = {
   'bun': React.ReactNode[] | null,

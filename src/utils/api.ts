@@ -1,7 +1,16 @@
 import { getCookie, saveTokens } from ".";
+
+import { IngredientShape } from "./types";
+
+type HeadersType = HeadersInit & { authorization?: string }
+
+interface OptionsType extends RequestInit {
+  headers: HeadersType
+}
+
 const API_URL = "https://norma.nomoreparties.space/api"
 
-const checkResponse = (res) => {
+const checkResponse = (res: Response) => {
   return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 }
 
@@ -20,18 +29,21 @@ export const refreshToken = () => {
   .then(checkResponse)
 }
 
-export const fetchWithRefresh = async (url, options) => {
+export const fetchWithRefresh = async (url: string, options: OptionsType) => {
+  console.log('fetchWithRefresh', options.headers.authorization, typeof options.headers.authorization)
   try {
-    if (options.headers.authorization === undefined) throw new Error("jwt expired");
+    if (options.headers?.authorization === undefined) throw new Error("jwt expired");
     const res = await fetch(url, options);
     return await checkResponse(res);
   } catch(err) {
-    if (err.message === "jwt expired"){
-      const refreshData = await refreshToken();
-      saveTokens(refreshData);
-      options.headers.authorization = refreshData.accessToken;
-      const res = await fetch(url, options);
-      return await checkResponse(res);
+    if(err instanceof Error) {
+      if (err.message === "jwt expired"){
+        const refreshData = await refreshToken();
+        saveTokens(refreshData);
+        options.headers.authorization = refreshData.accessToken;
+        const res = await fetch(url, options);
+        return await checkResponse(res);
+      }
     } else {
       return Promise.reject(err)
     }
@@ -47,7 +59,7 @@ export const getIngredientsRequest = () => {
     })
 }
 
-export const getOrderRequest = (ingredients) => {
+export const getOrderRequest = (ingredients: IngredientShape[]) => {
   return fetch(
     `${API_URL}/orders`,
     {
@@ -65,7 +77,7 @@ export const getOrderRequest = (ingredients) => {
     })
 }
 
-export const resetPasswordRequest = (email) => {
+export const resetPasswordRequest = (email:string) => {
   return fetch(
     `${API_URL}/password-reset`,
     {
@@ -83,7 +95,7 @@ export const resetPasswordRequest = (email) => {
     })
 }
 
-export const updatePasswordRequest = (password, token) => {
+export const updatePasswordRequest = (password:string, token:string) => {
   return fetch(
     `${API_URL}/password-reset/reset`,
     {
@@ -101,7 +113,7 @@ export const updatePasswordRequest = (password, token) => {
     })
 }
 
-export const registerRequest = (email, password, name) => {
+export const registerRequest = (email:string, password:string, name:string) => {
   return fetch(
     `${API_URL}/auth/register`,
     {
@@ -119,7 +131,7 @@ export const registerRequest = (email, password, name) => {
     })
 }
 
-export const loginRequest = (email, password) => {
+export const loginRequest = (email:string, password:string) => {
   return fetch(
     `${API_URL}/auth/login`,
     {
@@ -164,7 +176,7 @@ export const getUserDataRequest = () => {
     {
       method: 'GET',
       headers: {
-        authorization: accessToken && 'Bearer ' + accessToken,
+        authorization: (accessToken && 'Bearer ' + accessToken) as string,
         'Content-Type': 'application/json;charset=utf-8'
       }
     }
@@ -175,17 +187,20 @@ export const getUserDataRequest = () => {
   })
 }
 
-export const setUserDataRequest = (name, email, password) => {
+export const setUserDataRequest = (name:string, email:string, password:string) => {
   const accessToken = getCookie('accessToken');
-  let user = { name: name, email: email }
-  if (password) user = {...user, password: password};
-
+  let user = {
+    name: name,
+    email: email,
+    ...(password && { password: password })
+  }
+  console.log('setUserDataRequest user:', user)
   return fetchWithRefresh(
     `${API_URL}/auth/user`,
     {
       method: 'PATCH',
       headers: {
-        authorization: accessToken && 'Bearer ' + accessToken,
+        authorization: (accessToken && 'Bearer ' + accessToken) as string,
         'Content-Type': 'application/json;charset=utf-8'
       },
       body: JSON.stringify(user)

@@ -1,11 +1,10 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import type { IngredientShape } from '../../utils/types.js'
+import type { IngredientShape, BunType } from '../../utils/types.js'
 import styles from './burger-constructor.module.css';
 
 interface BunIngredientProps extends IngredientShape {
-  bunType: "top" | "bottom";
+  bunType: BunType;
 }
-
 
 const BunIngredient = ({bunType, ...ingredient}: BunIngredientProps) => {
   const addName = bunType ? (bunType === "top" ? " (верх)" : " (низ)") : "";

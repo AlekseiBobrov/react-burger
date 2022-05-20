@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import ReactDOM from 'react-dom';
 
 import ModalOverlay from '../modal/modal-overlay'
@@ -9,13 +9,12 @@ import styles from './modal.module.css';
 interface ModalProps {
   className: string;
   closeModal: () => void;
-  children: React.ReactNode;
 }
 
-const Modal = (props: ModalProps) => {
+const Modal: FC<ModalProps> = ({closeModal, className, children}) => {
   const escListner = (e: KeyboardEvent) => {
     if (e.key === "Escape") {
-      props.closeModal()
+      closeModal()
     }
   }
 
@@ -30,12 +29,12 @@ const Modal = (props: ModalProps) => {
   )
 
   const modal = (
-    <ModalOverlay closeModal={props.closeModal}>
-      <div className={`${styles.modal} ${props.className}`} >
-        <div onClick={props.closeModal} className={styles['modal-close']}>
+    <ModalOverlay closeModal={closeModal}>
+      <div className={`${styles.modal} ${className}`} >
+        <div onClick={closeModal} className={styles['modal-close']}>
           <CloseIcon type="primary"/>
         </div>
-        {props.children}
+        {children}
       </div>
     </ModalOverlay>
   )

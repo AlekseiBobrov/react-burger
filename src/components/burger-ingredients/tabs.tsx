@@ -1,8 +1,9 @@
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
+import type { TabType } from '../../utils/types.js'
 import styles from './burger-ingredients.module.css';
 
 interface TabsProps {
-    current: 'Булки' | 'Соусы' | 'Начинки';
+    current: TabType;
     setCurrent: (text: string) => void;
   }
 
