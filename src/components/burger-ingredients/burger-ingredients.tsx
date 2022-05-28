@@ -1,10 +1,11 @@
+import { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Tabs from './tabs'
 import Options from './options'
 import { SWITCH_TAB, CLICK_TAB } from '../../services/actions'
 import styles from './burger-ingredients.module.css';
 
-const BurgerIngredients = () => {
+const BurgerIngredients: FC = () => {
   const { currentTab } = useSelector( (state: any) => state.tab );
   const dispatch = useDispatch();
   

@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { FC } from 'react'
 import { Route, Redirect, RouteProps } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-export function ProtectedRoute({ children, ...rest }: RouteProps) {
+export const ProtectedRoute: FC<RouteProps> = ({ children, ...rest }) => {
   const { isAuth } = useSelector( (state:any) => state.auth );
 
   return (
@@ -17,4 +17,4 @@ export function ProtectedRoute({ children, ...rest }: RouteProps) {
       }
     />
   );
-} 
+}

@@ -1,6 +1,7 @@
+import { FC } from 'react'
 import styles from './not-found-404.module.css'
 
-const NotFound404 = () => {
+const NotFound404: FC = () => {
   return (
     <div className={styles.main}>
       <svg xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink" width="470" height="290" viewBox="0 0 470 290">

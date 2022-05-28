@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, FC } from 'react'
 import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector} from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,7 +10,7 @@ interface StateType {
   from: string;
 }
  
-const ResetPasswordPage = () => {
+const ResetPasswordPage: FC = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector( (state:any) => state.auth.isAuth );
   const message = useSelector( (state:any) => state.reset.message );

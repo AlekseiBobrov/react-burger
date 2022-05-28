@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useDrag } from "react-dnd";
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
@@ -9,7 +10,7 @@ interface IngredientProps extends IngredientShape {
   count: number,
 }
 
-const Ingredient = ({count, ...ingredient}: IngredientProps) => {
+const Ingredient: FC<IngredientProps> = ({count, ...ingredient}) => {
   const location = useLocation();
   const [, dragRef] = useDrag({
       type: "ingredient",

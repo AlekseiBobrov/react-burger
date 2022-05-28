@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
 import type { TabType } from '../../utils/types.js'
 import styles from './burger-ingredients.module.css';
@@ -7,7 +8,7 @@ interface TabsProps {
     setCurrent: (text: string) => void;
   }
 
-const Tabs = ({current, setCurrent}: TabsProps) => {
+const Tabs: FC<TabsProps> = ({current, setCurrent}) => {
     return (
       <div className={styles.tabs}>
         <Tab value='Булки' active={current === 'Булки'} onClick={setCurrent}>

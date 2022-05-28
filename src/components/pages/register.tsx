@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -6,7 +6,7 @@ import { makeRegister } from '../../services/actions/auth';
 
 import styles from './index.module.css';
 
-const RegisterPage = () => {
+const RegisterPage: FC = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector( (state:any) => state.auth.isAuth )
   const [name, setName] = useState('');

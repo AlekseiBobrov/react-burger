@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop } from "react-dnd";
 import { useHistory } from 'react-router-dom';
@@ -16,10 +16,10 @@ import styles from './burger-constructor.module.css';
 
 
 
-const BurgerConstructor = () => {
+const BurgerConstructor: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const isAuth = useSelector( (state:any) => state.auth.isAuth )
+  const isAuth = useSelector((state: any) => state.auth.isAuth)
   const { cart } = useSelector((state: any) => state);
   const { orderRequest, orderNumber } = useSelector((state: any) => state.order);
 
@@ -62,7 +62,7 @@ const BurgerConstructor = () => {
 
   const handleButtonClick = () => {
     if (cart.buns.length) {
-      if (isAuth){
+      if (isAuth) {
         dispatch(getOrder([...cart.buns, ...cart.middle]))
       } else {
         history.push('/login')
@@ -106,7 +106,7 @@ const BurgerConstructor = () => {
     })
 
   const total = [...cart.buns, ...cart.middle].map(item => item.price).reduce((sum, el) => sum + el, 0);
-  
+
   return (
     <div className={styles['burger-constructor']}>
       {

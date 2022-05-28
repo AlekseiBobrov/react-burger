@@ -1,4 +1,4 @@
-import { useRef } from 'react'
+import { useRef, FC } from 'react'
 import { useDispatch } from 'react-redux';
 import { useDrag, useDrop } from "react-dnd";
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -20,7 +20,7 @@ interface DragItem {
   type: string
 }
 
-const MiddleIngredient = ({id, orderIndex, isLocked, moveCard, ...ingredient }: MiddleIngredientProps) => {
+const MiddleIngredient:FC<MiddleIngredientProps> = ({id, orderIndex, isLocked, moveCard, ...ingredient }) => {
   const ref = useRef<HTMLDivElement>(null)
   const dispatch = useDispatch();
 

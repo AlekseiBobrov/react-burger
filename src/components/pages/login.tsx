@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -10,7 +10,7 @@ interface StateType {
   from: string;
 }
 
-const LoginPage = () => {
+const LoginPage: FC = () => {
   const { state } = useLocation<StateType>();
   const dispatch = useDispatch();
   const isAuth = useSelector( (state:any) => state.auth.isAuth )

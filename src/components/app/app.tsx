@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
@@ -19,7 +19,7 @@ interface LocationState {
   background: Location
 }
 
-const App = () => {
+const App: FC = () => {
   const { ingredients } = useSelector((state: any) => state.menu);
   const dispatch = useDispatch();
 

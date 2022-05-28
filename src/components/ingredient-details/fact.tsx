@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import LOCALE from './facts-locale';
 import styles from './ingredient-details.module.css';
 
@@ -6,7 +7,7 @@ interface FactProps {
   value: number;
 }
 
-const Fact = ({name, value}: FactProps) => {
+const Fact: FC<FactProps> = ({name, value}) => {
   return (
     <div className={styles.fact}>
       <p className="text text_type_main-default text_color_inactive">{LOCALE[name]}</p>

@@ -1,6 +1,7 @@
+import { FC } from 'react'
 import styles from './order-details.module.css';
 
-const Ordering = () => {
+const Ordering: FC = () => {
   return (
     <>
       <div className={styles.order}>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import {SWITCH_TAB, CLICK_TAB } from '../../services/actions'; // DISPLAY_INGREDIENT, HIDE_INGREDIENT, 
@@ -15,7 +15,7 @@ type Sections = {
   'main': React.ReactNode[] | null,
 }
 
-const Options = () => {
+const Options: FC = () => {
 
   const { ingredients } = useSelector((state: any) => state.menu);
   const { cart } = useSelector((state: any) => state);

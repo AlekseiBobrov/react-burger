@@ -1,4 +1,4 @@
-import React, { useState,  useRef, useEffect } from 'react'
+import React, { useState,  useRef, useEffect, FC } from 'react'
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,7 +7,7 @@ import { makeLogout, setUserData } from '../../services/actions/auth';
 import pageStyles from './index.module.css';
 import styles from './profile.module.css';
 
-const ProfilePage = () => {
+const ProfilePage: FC = () => {
   const dispatch = useDispatch();
   const serverName = useSelector( (state:any) => state.auth.name );
   const serverEmail = useSelector( (state:any) => state.auth.email );

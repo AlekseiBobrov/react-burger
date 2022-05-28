@@ -1,3 +1,4 @@
+import { FC } from 'react'
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router'
 import Fact from './fact'
@@ -9,7 +10,7 @@ interface ParamsType {
   ingredientId: string,
 }
 
-const IngredientDetails = () => {
+const IngredientDetails: FC = () => {
   const { ingredients } = useSelector( (state: any) => state.menu );
   const { ingredientId } = useParams<ParamsType>();
   const ingredient = ingredients.find( (el:IngredientShape) => el._id === ingredientId )
