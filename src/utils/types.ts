@@ -1,9 +1,10 @@
 import { Dispatch } from 'redux';
-import { TCartActions, TIngredientsActions } from '../services/actions'
+import { TCartActions, TIngredientsActions, TTabActions } from '../services/actions'
 
 type TApplicationActions =
   |TCartActions
-  |TIngredientsActions;
+  |TIngredientsActions
+  |TTabActions;
 
 export type AppDispatch = Dispatch<TApplicationActions>; 
 
@@ -37,6 +38,11 @@ export interface IngredientState {
   readonly ingredients:  null | undefined | ReadonlyArray<IngredientShape>,
   readonly ingredientsRequest: boolean,
   readonly ingredientsFailed: boolean,
+}
+
+export interface TabState {
+  readonly currentTab: TabType,
+  readonly isClick: boolean,
 }
 
 export interface RootState {

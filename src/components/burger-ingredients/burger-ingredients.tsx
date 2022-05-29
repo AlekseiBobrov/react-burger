@@ -2,22 +2,17 @@ import { FC } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Tabs from './tabs'
 import Options from './options'
-import { SWITCH_TAB, CLICK_TAB } from '../../services/actions'
+import { switchTab, clickTab } from '../../services/actions/tab'
+import { TabType } from '../../utils/types';
 import styles from './burger-ingredients.module.css';
 
 const BurgerIngredients: FC = () => {
   const { currentTab } = useSelector( (state: any) => state.tab );
   const dispatch = useDispatch();
   
-  const setCurrent = (tab:string) => {
-    dispatch({
-      type: SWITCH_TAB,
-      tab
-    })
-    dispatch({
-      type:CLICK_TAB,
-      isClick: true,
-    })
+  const setCurrent = (tab:TabType) => {
+    dispatch( switchTab(tab) )
+    dispatch( clickTab(true) )
   }
 
   return (

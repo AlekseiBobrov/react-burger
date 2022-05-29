@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import {SWITCH_TAB, CLICK_TAB } from '../../services/actions'; // DISPLAY_INGREDIENT, HIDE_INGREDIENT, 
+import {switchTab, clickTab } from '../../services/actions/tab'; // DISPLAY_INGREDIENT, HIDE_INGREDIENT, 
 
 import Ingredient from './ingredient';
 import Separator from './separator';
@@ -19,7 +19,7 @@ const Options: FC = () => {
 
   const { ingredients } = useSelector((state: any) => state.menu);
   const { cart } = useSelector((state: any) => state);
-  const { currentTab, tabClick } = useSelector((state: any) => state.tab);
+  const { currentTab, isClick } = useSelector((state: any) => state.tab);
   const dispatch = useDispatch();
 
   const bunRef = React.useRef<HTMLDivElement>(null);
@@ -27,25 +27,22 @@ const Options: FC = () => {
   const sauceRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
-  const switchTab = () => {
+  const switchTabOnScroll = () => {
     const containerTop = containerRef.current ? containerRef.current.getBoundingClientRect().top : 0;
     const distance = [
       ['Булки', Math.abs(containerTop - (bunRef.current ? bunRef.current.getBoundingClientRect().top : 0))],
       ['Соусы', Math.abs(containerTop - (sauceRef.current ? sauceRef.current.getBoundingClientRect().top : 0))],
       ['Начинки', Math.abs(containerTop - (mainRef.current ? mainRef.current.getBoundingClientRect().top : 0))],
     ]
-    const tab = distance.reduce((min, el) => el[1] < min[1] ? el : min, ['', window.innerHeight])[0];
-    dispatch({
-      type: SWITCH_TAB,
-      tab
-    })
+    const tab = distance.reduce((min, el) => el[1] < min[1] ? el : min, ['', window.innerHeight])[0] as TabType;
+    dispatch( switchTab(tab) )
   }
 
   React.useEffect(
     () => {
-      containerRef.current?.addEventListener("scroll", switchTab);
+      containerRef.current?.addEventListener("scroll", switchTabOnScroll);
       return () => {
-        containerRef.current?.removeEventListener("scroll", switchTab)
+        containerRef.current?.removeEventListener("scroll", switchTabOnScroll)
       }
     },
     []
@@ -66,15 +63,12 @@ const Options: FC = () => {
         default:
           break;
       }
-      dispatch({
-        type: CLICK_TAB,
-        isClick: false,
-      })
+      dispatch( clickTab(false) )
     }
   }
 
   React.useEffect(
-    () => { tabScroll(currentTab, tabClick) },
+    () => { tabScroll(currentTab, isClick) },
     [currentTab]
   )
   const sections = { 'bun': null, 'sauce': null, 'main': null } as Sections;
