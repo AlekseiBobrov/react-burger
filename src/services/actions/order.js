@@ -1,5 +1,5 @@
 import { getOrderRequest } from '../../utils/api'; //'../../utils/fake-api' //fakeAPI for test without internet
-import { DROP_CART } from '../actions/cart';
+import { dropCart } from '../actions/cart';
 
 export const GET_ORDER_REQUEST = 'GET_ORDER_REQUEST';
 export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
@@ -17,9 +17,7 @@ export function getOrder(ingredients) {
           type: GET_ORDER_SUCCESS ,
           orderNumber: data
         });
-        dispatch({
-          type: DROP_CART,
-        });
+        dispatch( dropCart() );
       })
       .catch(err => {
         console.log('getOrder ERROR:', err);

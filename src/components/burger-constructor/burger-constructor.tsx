@@ -9,8 +9,8 @@ import Modal from '../modal/modal';
 import { Ordering, OrderDetails } from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getOrder, GET_ORDER_RESET } from '../../services/actions/order';
-import { addIngredient, UPDATE_CART } from '../../services/actions/cart';
-import type { CartIngredient, BunType } from '../../utils/types.js'
+import { addIngredient, updateCart } from '../../services/actions/cart';
+import type { IngredientShape, CartIngredient, BunType } from '../../utils/types.js'
 
 import styles from './burger-constructor.module.css';
 
@@ -25,12 +25,12 @@ const BurgerConstructor: FC = () => {
 
   const [showDetails, setShowDetails] = React.useState(false);
 
-  const [{ isHover }, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop<IngredientShape, void, { isHover: boolean }>({
     accept: "ingredient",
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
-    drop(ingredient) {
+    drop( ingredient) {
       dispatch(addIngredient(ingredient))
     },
   });
@@ -53,10 +53,7 @@ const BurgerConstructor: FC = () => {
     middle.splice(dragIndex, 1)
     middle.splice(hoverIndex, 0, dragCard)
 
-    dispatch({
-      type: UPDATE_CART,
-      middle,
-    })
+    dispatch( updateCart(middle) )
   }, [cart, dispatch]);
 
 

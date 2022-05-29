@@ -1,22 +1,14 @@
-import { ADD_INGREDIENT, REMOVE_INGREDIENT, UPDATE_CART, DROP_CART } from '../actions/cart';
-import type { CartType, CartIngredient } from '../../utils/types.js'
+import { ADD_INGREDIENT, REMOVE_INGREDIENT, UPDATE_CART, DROP_CART } from '../constants';
+import { TCartActions } from '../actions/cart';
+import type { CartType } from '../../utils/types.js'
 
-interface CartActionType {
-  type: string,
-  ingredient: CartIngredient,
-  orderIndex?: number,
-  middle?: CartIngredient[],
-}
-
-
-const initialState = {
+const initialState: CartType = {
   buns: [],
   middle: [],
 };
 
-export const cartReducer = (state: CartType = initialState, action: CartActionType): CartType => {
+export const cartReducer = (state = initialState, action: TCartActions): CartType => {
   switch (action.type) {
-
     case ADD_INGREDIENT: {
       if (action.ingredient.type === 'bun'){
           return { ...state, buns: [action.ingredient, action.ingredient]};
@@ -31,8 +23,7 @@ export const cartReducer = (state: CartType = initialState, action: CartActionTy
       if (action.ingredient.type === 'bun'){
           return { ...state, buns: []};
       } else {
-        console.log('action.orderIndex', action.orderIndex)
-        const index = action.orderIndex?action.orderIndex:0;
+        const index = action.orderIndex;
         const middle = state.middle.slice();
         middle.splice(index, 1);
         return { ...state, middle: middle};
