@@ -1,3 +1,12 @@
+import { Dispatch } from 'redux';
+import { TCartActions, TIngredientsActions } from '../services/actions'
+
+type TApplicationActions =
+  |TCartActions
+  |TIngredientsActions;
+
+export type AppDispatch = Dispatch<TApplicationActions>; 
+
 export interface IngredientShape {
   "_id": string,
   "name": string,
@@ -13,22 +22,21 @@ export interface IngredientShape {
   "__v": number
 }
 
+export type BunType = "top" | "bottom";
+
+export type TabType = 'Булки' | 'Соусы' | 'Начинки';
 export interface CartIngredient extends IngredientShape {
   uuid: string;
 }
 export interface CartType {
-  buns: CartIngredient[],
-  middle: CartIngredient[], 
+  readonly buns: ReadonlyArray<CartIngredient>,
+  readonly middle: ReadonlyArray<CartIngredient>, 
 }
 
-export type BunType = "top" | "bottom";
-
-export type TabType = 'Булки' | 'Соусы' | 'Начинки';
-
 export interface IngredientState {
-  ingredients: null | undefined | IngredientShape[],
-  ingredientsRequest: boolean,
-  ingredientsFailed: boolean,
+  readonly ingredients:  null | undefined | ReadonlyArray<IngredientShape>,
+  readonly ingredientsRequest: boolean,
+  readonly ingredientsFailed: boolean,
 }
 
 export interface RootState {

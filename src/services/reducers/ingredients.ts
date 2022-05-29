@@ -1,24 +1,20 @@
-import type { IngredientShape, IngredientState } from '../../utils/types.js'
-
 import {
   GET_INGREDIENTS_REQUEST,
   GET_INGREDIENTS_SUCCESS,
   GET_INGREDIENTS_FAILED,
-} from '../actions/ingredients';
+} from '../constants';
 
+import { TIngredientsActions } from '../actions';
 
-interface IngredientActionType {
-  type: string,
-  ingredients?: IngredientShape[]
-}
+import type { IngredientShape, IngredientState } from '../../utils/types.js'
 
-const initialState = {
+const initialState: IngredientState  = {
   ingredients: null,
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
 
-export const ingredientReducer = (state:IngredientState = initialState, action: IngredientActionType):IngredientState => {
+export const ingredientReducer = (state = initialState, action: TIngredientsActions):IngredientState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
