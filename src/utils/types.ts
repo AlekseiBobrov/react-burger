@@ -1,12 +1,7 @@
-import { Dispatch } from 'redux';
-import { TCartActions, TIngredientsActions, TTabActions } from '../services/actions'
-
-type TApplicationActions =
-  |TCartActions
-  |TIngredientsActions
-  |TTabActions;
-
-export type AppDispatch = Dispatch<TApplicationActions>; 
+import { Dispatch, Action, ActionCreator} from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import { TCartActions, TIngredientsActions, TTabActions, TForgotPasswordActions } from '../services/actions';
+import store from '../services/store';
 
 export interface IngredientShape {
   "_id": string,
@@ -45,9 +40,7 @@ export interface TabState {
   readonly isClick: boolean,
 }
 
-export interface RootState {
-  ingredients: IngredientState,
-}
+export type RootState = ReturnType<typeof store.getState>;
 
 export interface authResponse {
   success: boolean,
@@ -58,3 +51,16 @@ export interface authResponse {
     name: string
   }
 } 
+
+type TApplicationActions =
+  |TCartActions
+  |TIngredientsActions
+  |TTabActions
+  |TForgotPasswordActions;
+
+export type AppDispatch = Dispatch<TApplicationActions>;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>
+

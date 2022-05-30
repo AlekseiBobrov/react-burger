@@ -1,6 +1,6 @@
 import React, { useState, useEffect, FC } from 'react'
 import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector} from 'react-redux';
+import { useDispatch, useSelector} from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updatePassword } from '../../services/actions/forgot-password';
 

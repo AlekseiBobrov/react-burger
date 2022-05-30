@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 
 import {switchTab, clickTab } from '../../services/actions/tab'; // DISPLAY_INGREDIENT, HIDE_INGREDIENT, 
 

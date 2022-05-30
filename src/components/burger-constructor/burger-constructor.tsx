@@ -1,5 +1,5 @@
 import React, { useCallback, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { useDrop } from "react-dnd";
 import { useHistory } from 'react-router-dom';
 

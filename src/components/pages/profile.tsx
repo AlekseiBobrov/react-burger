@@ -1,6 +1,6 @@
 import React, { useState,  useRef, useEffect, FC } from 'react'
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { makeLogout, setUserData } from '../../services/actions/auth';
 

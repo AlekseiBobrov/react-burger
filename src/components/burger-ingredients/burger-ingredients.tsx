@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import Tabs from './tabs'
 import Options from './options'
 import { switchTab, clickTab } from '../../services/actions/tab'
