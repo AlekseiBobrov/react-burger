@@ -1,4 +1,4 @@
-import { Dispatch, Action, ActionCreator} from 'redux';
+import { Dispatch, Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
 import { TCartActions, TIngredientsActions, TTabActions, TForgotPasswordActions } from '../services/actions';
 import store from '../services/store';
@@ -24,24 +24,43 @@ export type TabType = 'Булки' | 'Соусы' | 'Начинки';
 export interface CartIngredient extends IngredientShape {
   uuid: string;
 }
-export interface CartType {
+export interface ICartState {
   readonly buns: ReadonlyArray<CartIngredient>,
-  readonly middle: ReadonlyArray<CartIngredient>, 
+  readonly middle: ReadonlyArray<CartIngredient>,
 }
 
-export interface IngredientState {
-  readonly ingredients:  null | undefined | ReadonlyArray<IngredientShape>,
+export interface IIngredientState {
+  readonly ingredients: null | undefined | ReadonlyArray<IngredientShape>,
   readonly ingredientsRequest: boolean,
   readonly ingredientsFailed: boolean,
 }
 
-export interface TabState {
+export interface ITabState {
   readonly currentTab: TabType,
   readonly isClick: boolean,
 }
 
+export interface IForgotPasswordState {
+  message: string,
+  resetPasswordRequest: boolean,
+  resetPasswordFailed: boolean,
+  updatePasswordRequest: boolean,
+  updatePasswordFailed: boolean,
+}
+
 export type RootState = ReturnType<typeof store.getState>;
 
+type TApplicationActions =
+  | TCartActions
+  | TIngredientsActions
+  | TTabActions
+  | TForgotPasswordActions;
+
+export type AppDispatch = Dispatch<TApplicationActions>;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>
 export interface authResponse {
   success: boolean,
   accessToken: string,
@@ -50,17 +69,4 @@ export interface authResponse {
     email: string,
     name: string
   }
-} 
-
-type TApplicationActions =
-  |TCartActions
-  |TIngredientsActions
-  |TTabActions
-  |TForgotPasswordActions;
-
-export type AppDispatch = Dispatch<TApplicationActions>;
-
-export type AppThunk<TReturn = void> = ActionCreator<
-  ThunkAction<TReturn, Action, RootState, TApplicationActions>
->
-
+}

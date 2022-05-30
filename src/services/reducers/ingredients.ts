@@ -6,15 +6,15 @@ import {
 
 import { TIngredientsActions } from '../actions';
 
-import type { IngredientShape, IngredientState } from '../../utils/types.js'
+import type { IIngredientState } from '../../utils/types.js'
 
-const initialState: IngredientState  = {
+const initialState: IIngredientState = {
   ingredients: null,
   ingredientsRequest: false,
   ingredientsFailed: false,
 };
 
-export const ingredientReducer = (state = initialState, action: TIngredientsActions):IngredientState => {
+export const ingredientReducer = (state = initialState, action: TIngredientsActions): IIngredientState => {
   switch (action.type) {
     case GET_INGREDIENTS_REQUEST: {
       return {
@@ -25,7 +25,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientsActi
     case GET_INGREDIENTS_SUCCESS: {
       return { ...state, ingredientsFailed: false, ingredientsRequest: false, ingredients: action.ingredients };
     }
-    case  GET_INGREDIENTS_FAILED: {
+    case GET_INGREDIENTS_FAILED: {
       return { ...state, ingredientsFailed: true, ingredientsRequest: false };
     }
     default: {

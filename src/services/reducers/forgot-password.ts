@@ -5,25 +5,13 @@ import {
   UPDATE_PASSWORD_REQUEST,
   UPDATE_PASSWORD_SUCCESS,
   UPDATE_PASSWORD_FAILED,
-} from '../actions/forgot-password';
+} from '../constants';
 
-interface forgotPasswordActionType {
-  type: string,
-  message?: string,
-  email?: string,
-  password?: string,
-  token?: string,
-}
+import { TForgotPasswordActions } from '../actions'
 
-interface forgotPasswordStateType {
-  message: string | undefined,
-  resetPasswordRequest: boolean,
-  resetPasswordFailed: boolean,
-  updatePasswordRequest: boolean,
-  updatePasswordFailed: boolean,
-}
+import { IForgotPasswordState } from '../../utils/types';
 
-const initialState = {
+const initialState:  IForgotPasswordState = {
   message: '',
   resetPasswordRequest: false,
   resetPasswordFailed: false,
@@ -31,7 +19,7 @@ const initialState = {
   updatePasswordFailed: false,
 };
 
-export const forgotPasswordReducer = (state: forgotPasswordStateType = initialState, action: forgotPasswordActionType): forgotPasswordStateType => {
+export const forgotPasswordReducer = (state = initialState, action: TForgotPasswordActions): IForgotPasswordState => {
   switch (action.type) {
     case RESET_PASSWORD_REQUEST: {
       return { ...state, message: '', resetPasswordRequest: true };

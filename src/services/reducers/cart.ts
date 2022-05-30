@@ -1,13 +1,13 @@
 import { ADD_INGREDIENT, REMOVE_INGREDIENT, UPDATE_CART, DROP_CART } from '../constants';
 import { TCartActions } from '../actions/cart';
-import type { CartType } from '../../utils/types.js'
+import type { ICartState } from '../../utils/types.js'
 
-const initialState: CartType = {
+const initialState: ICartState = {
   buns: [],
   middle: [],
 };
 
-export const cartReducer = (state = initialState, action: TCartActions): CartType => {
+export const cartReducer = (state = initialState, action: TCartActions): ICartState => {
   switch (action.type) {
     case ADD_INGREDIENT: {
       if (action.ingredient.type === 'bun'){
