@@ -8,7 +8,7 @@ import MiddleIngredient from './middle-ingredient';
 import Modal from '../modal/modal';
 import { Ordering, OrderDetails } from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getOrder, GET_ORDER_RESET } from '../../services/actions/order';
+import { getOrder, getOrderResetAction } from '../../services/actions/order';
 import { addIngredient, updateCart } from '../../services/actions/cart';
 import type { IngredientShape, CartIngredient, BunType } from '../../utils/types.js'
 
@@ -69,9 +69,7 @@ const BurgerConstructor: FC = () => {
 
   const hideDetails = () => {
     setShowDetails(false);
-    dispatch({
-      type: GET_ORDER_RESET
-    })
+    dispatch( getOrderResetAction() )
   }
 
   const bunIngrediets = cart.buns.map(
