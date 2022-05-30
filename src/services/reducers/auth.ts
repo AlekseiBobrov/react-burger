@@ -14,28 +14,13 @@ import {
   SET_USER_REQUEST,
   SET_USER_SUCCESS,
   SET_USER_FAILED,
-} from '../actions/auth';
+} from '../constants';
 
-interface authActionType {
-  type: string,
-  payload?: {email: string, name:string, isAuth?: boolean}
-}
+import { TAuthActions } from '../actions/auth'
 
-interface authStateType {
-    isAuth: boolean,
-    email: string,
-    name: string,
-    registerRequest: boolean,
-    registerFailed: boolean,
-    loginRequest: boolean,
-    loginFailed: boolean,
-    logoutRequest: boolean,
-    logoutFailed: boolean,
-    getUserRequest: boolean,
-    getUserFailed: boolean,
-  }
+import { IAuthState } from '../../utils/types'
 
-const initialState = {
+const initialState: IAuthState = {
   isAuth: false,
   email: '',
   name: '',
@@ -49,13 +34,13 @@ const initialState = {
   getUserFailed: false,
 }
 
-export const authReducer = (state: authStateType = initialState, action: authActionType): authStateType => {
+export const authReducer = (state = initialState, action: TAuthActions): IAuthState => {
   switch (action.type) {
     case REGISTER_REQUEST: {
       return { ...state, registerRequest: true };
     }
     case REGISTER_SUCCESS: {
-      return { ...state, registerFailed: false, registerRequest: false, isAuth: true, ...action.payload };
+      return { ...state, registerFailed: false, registerRequest: false, ...action.payload };
     }
     case  REGISTER_FAILED: {
       return { ...state, registerFailed: true, registerRequest: false };
@@ -64,7 +49,7 @@ export const authReducer = (state: authStateType = initialState, action: authAct
       return { ...state, loginRequest: true };
     }
     case LOGIN_SUCCESS: {
-      return { ...state, loginFailed: false, loginRequest: false, isAuth: true, ...action.payload };
+      return { ...state, loginFailed: false, loginRequest: false, ...action.payload };
     }
     case  LOGIN_FAILED: {
       return { ...state, loginFailed: true, loginRequest: false };
@@ -73,7 +58,7 @@ export const authReducer = (state: authStateType = initialState, action: authAct
       return { ...state, logoutRequest: true };
     }
     case LOGOUT_SUCCESS: {
-      return { ...state, logoutFailed: false, logoutRequest: false, isAuth: false, ...action.payload };
+      return { ...state, logoutFailed: false, logoutRequest: false, ...action.payload };
     }
     case  LOGOUT_FAILED: {
       return { ...state, logoutFailed: true, logoutRequest: false };
@@ -82,7 +67,7 @@ export const authReducer = (state: authStateType = initialState, action: authAct
       return { ...state, getUserRequest: true };
     }
     case GET_USER_SUCCESS: {
-      return { ...state, getUserFailed: false, getUserRequest: false, isAuth: true, ...action.payload};
+      return { ...state, getUserFailed: false, getUserRequest: false, ...action.payload};
     }
     case  GET_USER_FAILED: {
       return { ...state, getUserFailed: true, getUserRequest: false };

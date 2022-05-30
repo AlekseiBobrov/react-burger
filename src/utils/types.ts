@@ -1,6 +1,6 @@
 import { Dispatch, Action, ActionCreator } from 'redux';
 import { ThunkAction } from 'redux-thunk';
-import { TCartActions, TIngredientsActions, TTabActions, TForgotPasswordActions, TGetOrderActions } from '../services/actions';
+import { TCartActions, TIngredientsActions, TTabActions, TForgotPasswordActions, TGetOrderActions, TAuthActions } from '../services/actions';
 import store from '../services/store';
 
 export interface IngredientShape {
@@ -54,6 +54,20 @@ export interface IOrderState {
   orderFailed: boolean,
 }
 
+export interface IAuthState {
+  isAuth: boolean,
+  email: string,
+  name: string,
+  registerRequest: boolean,
+  registerFailed: boolean,
+  loginRequest: boolean,
+  loginFailed: boolean,
+  logoutRequest: boolean,
+  logoutFailed: boolean,
+  getUserRequest: boolean,
+  getUserFailed: boolean,
+}
+
 export type RootState = ReturnType<typeof store.getState>;
 
 type TApplicationActions =
@@ -61,7 +75,8 @@ type TApplicationActions =
   | TIngredientsActions
   | TTabActions
   | TForgotPasswordActions
-  | TGetOrderActions;
+  | TGetOrderActions
+  | TAuthActions;
 
 export type AppDispatch = Dispatch<TApplicationActions>;
 
