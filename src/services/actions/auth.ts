@@ -79,6 +79,7 @@ export interface IGetUserRequestAction {
 export interface IGetUserSuccessAction {
   readonly type: typeof GET_USER_SUCCESS
   readonly payload: {
+    readonly isAuth: boolean,
     readonly email: string,
     readonly name: string,
   }
@@ -164,9 +165,9 @@ export const getUserRequestAction = (): IGetUserRequestAction => ({
   type: GET_USER_REQUEST
 })
 
-export const getUserSuccessAction = (response: authResponse): IGetUserSuccessAction => ({
+export const getUserSuccessAction = (response: authResponse['user']): IGetUserSuccessAction => ({
   type: GET_USER_SUCCESS,
-  payload: { ...response.user },
+  payload: { isAuth: true, ...response },
 })
 
 export const getUserFailedAction = (): IGetUserFailedAction => ({

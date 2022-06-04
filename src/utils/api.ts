@@ -30,7 +30,6 @@ export const refreshToken = () => {
 }
 
 export const fetchWithRefresh = async (url: string, options: OptionsType) => {
-  console.log('fetchWithRefresh', options.headers.authorization, typeof options.headers.authorization)
   try {
     if (options.headers?.authorization === undefined) throw new Error("jwt expired");
     const res = await fetch(url, options);
