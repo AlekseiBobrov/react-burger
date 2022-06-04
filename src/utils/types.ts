@@ -49,7 +49,7 @@ export interface IForgotPasswordState {
 }
 
 export interface IOrderState {
-  orderNumber: undefined | string,
+  orderNumber: undefined | number,
   orderRequest: boolean,
   orderFailed: boolean,
 }

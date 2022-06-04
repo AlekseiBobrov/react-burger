@@ -10,7 +10,7 @@ import { Ordering, OrderDetails } from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getOrder, getOrderResetAction } from '../../services/actions/order';
 import { addIngredient, updateCart } from '../../services/actions/cart';
-import type { IngredientShape, CartIngredient, BunType } from '../../utils/types.js'
+import type { IngredientShape, CartIngredient, BunType, RootState } from '../../utils/types.js'
 
 import styles from './burger-constructor.module.css';
 
@@ -19,9 +19,9 @@ import styles from './burger-constructor.module.css';
 const BurgerConstructor: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const isAuth = useSelector((state: any) => state.auth.isAuth)
-  const { cart } = useSelector((state: any) => state);
-  const { orderRequest, orderNumber } = useSelector((state: any) => state.order);
+  const isAuth = useSelector((state: RootState) => state.auth.isAuth)
+  const { cart } = useSelector((state: RootState) => state);
+  const { orderRequest, orderNumber } = useSelector((state: RootState) => state.order);
 
   const [showDetails, setShowDetails] = React.useState(false);
 

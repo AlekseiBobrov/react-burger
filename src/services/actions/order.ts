@@ -16,7 +16,7 @@ export interface IGetOrderRequestAction {
 
 export interface IGetOrderSuccessAction {
   readonly type: typeof GET_ORDER_SUCCESS;
-  readonly orderNumber: string
+  readonly orderNumber: number
 }
 
 export interface IGetOrderFailedAction {
@@ -37,7 +37,7 @@ export const getOrderRequestAction = (): IGetOrderRequestAction => ({
   type: GET_ORDER_REQUEST
 })
 
-export const getOrderSuccessAction = (orderNumber: string): IGetOrderSuccessAction => ({
+export const getOrderSuccessAction = (orderNumber: number): IGetOrderSuccessAction => ({
   type: GET_ORDER_SUCCESS,
   orderNumber: orderNumber
 })

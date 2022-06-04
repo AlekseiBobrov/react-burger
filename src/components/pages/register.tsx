@@ -3,12 +3,13 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import { Link, Redirect } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { makeRegister } from '../../services/actions/auth';
+import { RootState } from '../../utils/types';
 
 import styles from './index.module.css';
 
 const RegisterPage: FC = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector( (state:any) => state.auth.isAuth )
+  const isAuth = useSelector((state: RootState) => state.auth.isAuth)
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = React.useState('');
@@ -31,7 +32,7 @@ const RegisterPage: FC = () => {
       dispatch(makeRegister(email, password, name));
     }
   }
-  if (isAuth){
+  if (isAuth) {
     return <Redirect to="/" />
   } else {
     return (
