@@ -14,9 +14,9 @@ const AppHeader: FC = () => {
           Icon={BurgerIcon}
         />
         <MenuItem
-          exact={true}
+          exact={false}
           text="Лента заказов"
-          path="/orders"
+          path="/feed"
           Icon={ListIcon}
         />
       </div>

@@ -1,0 +1,17 @@
+.title{
+  margin: 40px auto 20px auto;
+  max-width: 1280px;
+  text-align: left;
+}
+
+.main {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+  max-width: 1280px;
+  height: calc( 100% - 200px );
+}
+
+.middle{
+  width: 40px;
+}
