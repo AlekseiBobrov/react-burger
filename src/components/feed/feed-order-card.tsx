@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from '../../utils/hooks';
 import IngredientIcon from './ingredient-icon'
 import DateString from './date-string'
@@ -17,11 +18,12 @@ interface IFeedOrderCardProp {
 }
 
 const FeedOrderCard: FC<IFeedOrderCardProp> = (props) => {
+  const location = useLocation();
   const { ingredients } = useSelector((state: RootState) => state.menu);
 
-  let totalPrice: number = props.ingredients.reduce( (summ, id) => {
+  const totalPrice: number = props.ingredients.reduce((summ, id) => {
     const ingredient = ingredients?.find((el: IngredientShape) => el._id === id);
-    return summ + (ingredient?ingredient.price:0);
+    return summ + (ingredient ? ingredient.price : 0);
   }, 0)
 
   const icons = Array.from(new Set(props.ingredients)).map((id, ix, arr) => {
@@ -37,10 +39,16 @@ const FeedOrderCard: FC<IFeedOrderCardProp> = (props) => {
   })
 
   return (
-    <div className={styles['order-card']}>
+    <Link
+      className={styles['order-card']}
+      to={{
+        pathname: `/feed/${props.number}`,
+        state: { background: location },
+      }}
+    >
       <div className={styles.first}>
         <p className="text text_type_digits-default">#{props.number}</p>
-        <DateString sdate={props.createdAt}/>
+        <DateString sdate={props.createdAt} />
       </div>
       <div className={styles.second}>
         <p className="text text_type_main-medium">
@@ -57,7 +65,8 @@ const FeedOrderCard: FC<IFeedOrderCardProp> = (props) => {
           <CurrencyIcon type="primary" />
         </div>
       </div>
-    </div>
+
+    </Link>
   )
 }
 

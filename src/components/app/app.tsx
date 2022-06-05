@@ -11,6 +11,7 @@ import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
 import { MainPage, FeedPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../pages'
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import OrderInfo from '../order-info/order-info';
 import { RootState } from '../../utils/types';
 import styles from './app.module.css';
 
@@ -52,6 +53,11 @@ const App: FC = () => {
           <Route exact path="/feed">
             <FeedPage />
           </Route>
+          <Route exact path='/feed/:id'>
+            <main>
+              <OrderInfo />
+            </main>
+          </Route>
           <Route exact path="/login">
             <LoginPage />
           </Route>
@@ -79,11 +85,18 @@ const App: FC = () => {
         </Switch>
 
         {background && (
-          <Route path='/ingredients/:ingredientId'>
-            <Modal closeModal={hideModal} className={styles["ingredient-details"]}>
-              <IngredientDetails />
-            </Modal>
-          </Route>
+          <>
+            <Route path='/ingredients/:ingredientId'>
+              <Modal closeModal={hideModal} className={styles["ingredient-details"]}>
+                <IngredientDetails />
+              </Modal>
+            </Route>
+            <Route path='/feed/:id'>
+              <Modal closeModal={hideModal} className={styles.order_info}>
+                <OrderInfo />
+              </Modal>
+            </Route>
+          </>
         )}
 
       </div>

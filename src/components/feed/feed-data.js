@@ -5,14 +5,14 @@ export const FEED_DATA = {
         "ingredients": [
           "60d3b41abdacab0026a733c6",
           "60d3b41abdacab0026a733c6",
-          "60d3b41abdacab0026a733ce",
+          "60d3b41abdacab0026a733c8",
           "60d3b41abdacab0026a733c9"
         ],
         "_id": "",
-        "status": "done",
-        "number": 34525,
-        "createdAt": "2021-06-23T14:43:22.587Z",
-        "updatedAt": "2021-06-23T14:43:22.603Z"
+        "status": "created",
+        "number": 345256,
+        "createdAt": "2022-06-04T14:43:22.587Z",
+        "updatedAt": "2022-06-04T14:43:22.603Z"
       },
       {
         "ingredients": [
@@ -22,11 +22,12 @@ export const FEED_DATA = {
           "60d3b41abdacab0026a733c9"
         ],
         "_id": "",
-        "status": "created",
-        "number": 345256,
-        "createdAt": "2021-06-23T14:43:22.587Z",
+        "status": "done",
+        "number": 34525,
+        "createdAt": "2022-06-05T14:43:22.587Z",
         "updatedAt": "2021-06-23T14:43:22.603Z"
       },
+
       {
         "ingredients": [
           "60d3b41abdacab0026a733c6",
@@ -37,7 +38,7 @@ export const FEED_DATA = {
         "_id": "",
         "status": "done",
         "number": 34526,
-        "createdAt": "2021-06-23T14:43:22.587Z",
+        "createdAt": "2022-06-03T14:43:22.587Z",
         "updatedAt": "2021-06-23T14:43:22.603Z"
       },
       {
