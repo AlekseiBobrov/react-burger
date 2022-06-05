@@ -1,0 +1,41 @@
+.side{
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap:24px
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.buttons {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.container{
+    width: 480px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap:24px
+}
+
+.bottom{
+    text-align: left;
+    padding-top: 56px;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap:16px
+}
+
+.link{
+    color: #4C4CFF;
+}
