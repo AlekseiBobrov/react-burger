@@ -1,5 +1,5 @@
 import { FC } from 'react'
-import styles from './feed-orders.module.css'
+import styles from './order-card.module.css'
 
 interface IIngredientIconProps {
   img: string;

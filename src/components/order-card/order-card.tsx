@@ -2,12 +2,12 @@ import { FC } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import { useSelector } from '../../utils/hooks';
 import IngredientIcon from './ingredient-icon'
-import DateString from './date-string'
+import { DateString } from '../date-string'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { RootState, IngredientShape } from '../../utils/types'
-import styles from './feed-orders.module.css'
+import styles from './order-card.module.css'
 
-interface IFeedOrderCardProp {
+interface IOrderCardProp {
   ingredients: string[];
   _id: string;
   status: string;
@@ -17,7 +17,7 @@ interface IFeedOrderCardProp {
   name: string;
 }
 
-const FeedOrderCard: FC<IFeedOrderCardProp> = (props) => {
+const OrderCard: FC<IOrderCardProp> = (props) => {
   const location = useLocation();
   const { ingredients } = useSelector((state: RootState) => state.menu);
 
@@ -70,4 +70,4 @@ const FeedOrderCard: FC<IFeedOrderCardProp> = (props) => {
   )
 }
 
-export default FeedOrderCard
+export default OrderCard

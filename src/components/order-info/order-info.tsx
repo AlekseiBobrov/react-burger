@@ -1,6 +1,6 @@
 import { FC } from 'react'
 import { useParams } from 'react-router'
-import DateString from '../feed/date-string'
+import { DateString } from '../date-string'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useSelector } from '../../utils/hooks';
 import IngredientInfo from './ingredient-info'
