@@ -54,9 +54,7 @@ const App: FC = () => {
             <FeedPage />
           </Route>
           <Route exact path='/feed/:id'>
-            <main>
-              <OrderInfo />
-            </main>
+            <OrderInfo />
           </Route>
           <Route exact path="/login">
             <LoginPage />
@@ -70,11 +68,11 @@ const App: FC = () => {
           <Route exact path="/reset-password">
             <ResetPasswordPage />
           </Route>
-          <ProtectedRoute exact path="/profile">
-            <ProfilePage />
+          <ProtectedRoute exact path='/profile/orders/:id'>
+            <OrderInfo />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/profile/orders">
-            <NotFound404 />
+          <ProtectedRoute path="/profile">
+            <ProfilePage />
           </ProtectedRoute>
           <Route exact path='/ingredients/:ingredientId'>
             <IngredientDetails />
@@ -96,6 +94,11 @@ const App: FC = () => {
                 <OrderInfo />
               </Modal>
             </Route>
+            <ProtectedRoute path='/profile/orders/:id'>
+              <Modal closeModal={hideModal} className={styles.order_info}>
+                <OrderInfo />
+              </Modal>
+            </ProtectedRoute>
           </>
         )}
 

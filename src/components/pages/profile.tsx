@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect, FC } from 'react'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../utils/hooks';
+import { Orders } from '../orders'
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { makeLogout, setUserData } from '../../services/actions/auth';
 import { RootState } from '../../utils/types';
@@ -9,6 +10,7 @@ import pageStyles from './index.module.css';
 import styles from './profile.module.css';
 
 const ProfilePage: FC = () => {
+  const isOrders = useRouteMatch({ path: '/profile/orders', exact: false });
   const dispatch = useDispatch();
   const serverName = useSelector((state: RootState) => state.auth.name);
   const serverEmail = useSelector((state: RootState) => state.auth.email);
@@ -81,62 +83,69 @@ const ProfilePage: FC = () => {
   return (
     <div className="page">
       <div className={styles.side}>
-        <NavLink to="/profile" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">Профиль</NavLink>
+        <NavLink exact to="/profile" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">Профиль</NavLink>
         <NavLink to="/profile/orders" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">История заказов</NavLink>
         <p className={`text text_type_main-medium text_color_inactive ${styles.clickable}`} onClick={handleLogoutClick}>Выйти</p>
         <p className={`text text_type_main-default text_color_inactive ${pageStyles.bottom} ${styles.bottom}`}>
-          В этом разделе вы можете<br />изменить свои персональные данные
+          В этом разделе вы можете<br />{isOrders?'просмотреть свою историю заказов':'изменить свои персональные данные'}
         </p>
       </div>
-      <form className={pageStyles.container} onSubmit={handleSaveClick}>
-        <Input
-          type="text"
-          onChange={onChangeName}
-          value={name}
-          name={'name'}
-          placeholder="Имя"
-          icon="EditIcon"
-          onIconClick={() => { setEditName(true); nameRef.current?.focus() }}
-          onBlur={() => setEditName(false)}
-          disabled={!editName}
-          ref={nameRef}
-        />
-        <Input
-          type="text"
-          onChange={onChangeEmail}
-          value={email}
-          name={'email'}
-          placeholder="Логин"
-          icon="EditIcon"
-          onIconClick={() => { setEditEmail(true); emailRef.current?.focus() }}
-          onBlur={() => setEditEmail(false)}
-          disabled={!editEmail}
-          ref={emailRef}
-        />
-        <Input
-          type="password"
-          onChange={onChangePassword}
-          value={password}
-          name={'password'}
-          placeholder="Пароль"
-          icon="EditIcon"
-          onIconClick={() => { setEditPassword(true); passwordRef.current?.focus() }}
-          onBlur={() => setEditPassword(false)}
-          disabled={!editPassword}
-          ref={passwordRef}
-        />
-        {showButtons &&
-          <div className={styles.buttons}>
-            <Button type="primary" size="medium">
-              Сохранить
-            </Button>
-            <Button type="primary" size="medium" onClick={handleCancelClick}>
-              Отмена
-            </Button>
-          </div>
-        }
-      </form>
-      <div className={styles.side} />
+      {isOrders ?
+        <Orders/> :
+        <>
+          <form className={pageStyles.container} onSubmit={handleSaveClick}>
+            <Input
+              type="text"
+              onChange={onChangeName}
+              value={name}
+              name={'name'}
+              placeholder="Имя"
+              icon="EditIcon"
+              onIconClick={() => { setEditName(true); nameRef.current?.focus() }}
+              onBlur={() => setEditName(false)}
+              disabled={!editName}
+              ref={nameRef}
+            />
+            <Input
+              type="text"
+              onChange={onChangeEmail}
+              value={email}
+              name={'email'}
+              placeholder="Логин"
+              icon="EditIcon"
+              onIconClick={() => { setEditEmail(true); emailRef.current?.focus() }}
+              onBlur={() => setEditEmail(false)}
+              disabled={!editEmail}
+              ref={emailRef}
+            />
+            <Input
+              type="password"
+              onChange={onChangePassword}
+              value={password}
+              name={'password'}
+              placeholder="Пароль"
+              icon="EditIcon"
+              onIconClick={() => { setEditPassword(true); passwordRef.current?.focus() }}
+              onBlur={() => setEditPassword(false)}
+              disabled={!editPassword}
+              ref={passwordRef}
+            />
+            {showButtons &&
+              <div className={styles.buttons}>
+                <Button type="primary" size="medium">
+                  Сохранить
+                </Button>
+                <Button type="primary" size="medium" onClick={handleCancelClick}>
+                  Отмена
+                </Button>
+              </div>
+            }
+          </form>
+          <div className={styles.side} />
+        </>
+      }
+
+
     </div>
   );
 }

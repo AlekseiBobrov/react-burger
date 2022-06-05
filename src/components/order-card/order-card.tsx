@@ -42,7 +42,7 @@ const OrderCard: FC<IOrderCardProp> = (props) => {
     <Link
       className={styles['order-card']}
       to={{
-        pathname: `/feed/${props.number}`,
+        pathname: `${window.location.pathname}/${props.number}`,
         state: { background: location },
       }}
     >
