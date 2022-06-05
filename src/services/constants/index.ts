@@ -22,22 +22,29 @@ export { GET_ORDER_SUCCESS } from './order';
 export { GET_ORDER_FAILED } from './order';
 export { GET_ORDER_RESET } from './order';
 
-export {  REGISTER_REQUEST } from './auth';
-export {  REGISTER_SUCCESS } from './auth';
-export {  REGISTER_FAILED } from './auth';
+export { REGISTER_REQUEST } from './auth';
+export { REGISTER_SUCCESS } from './auth';
+export { REGISTER_FAILED } from './auth';
 
-export {  LOGIN_REQUEST } from './auth';
-export {  LOGIN_SUCCESS } from './auth';
-export {  LOGIN_FAILED } from './auth';
+export { LOGIN_REQUEST } from './auth';
+export { LOGIN_SUCCESS } from './auth';
+export { LOGIN_FAILED } from './auth';
 
-export {  LOGOUT_REQUEST } from './auth';
-export {  LOGOUT_SUCCESS } from './auth';
-export {  LOGOUT_FAILED } from './auth';
+export { LOGOUT_REQUEST } from './auth';
+export { LOGOUT_SUCCESS } from './auth';
+export { LOGOUT_FAILED } from './auth';
 
-export {  GET_USER_REQUEST } from './auth';
-export {  GET_USER_SUCCESS } from './auth';
-export {  GET_USER_FAILED } from './auth';
+export { GET_USER_REQUEST } from './auth';
+export { GET_USER_SUCCESS } from './auth';
+export { GET_USER_FAILED } from './auth';
 
-export {  SET_USER_REQUEST } from './auth';
-export {  SET_USER_SUCCESS } from './auth';
-export {  SET_USER_FAILED } from './auth';
+export { SET_USER_REQUEST } from './auth';
+export { SET_USER_SUCCESS } from './auth';
+export { SET_USER_FAILED } from './auth';
+
+export { WS_CONNECTION_START } from './web-socket';
+export { WS_CONNECTION_SUCCESS } from './web-socket';
+export { WS_CONNECTION_ERROR } from './web-socket';
+export { WS_CONNECTION_CLOSED } from './web-socket';
+export { WS_GET_MESSAGE } from './web-socket';
+export { WS_SEND_MESSAGE } from './web-socket';

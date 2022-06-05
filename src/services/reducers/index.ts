@@ -6,6 +6,7 @@ import { orderReducer } from './order'
 import { forgotPasswordReducer } from './forgot-password'
 import { authReducer } from './auth'
 import { tabReducer } from './tab'
+import { wsReducer } from './web-socket';
 
 export const rootReducer = combineReducers({
   menu: ingredientReducer,
@@ -13,5 +14,6 @@ export const rootReducer = combineReducers({
   cart: cartReducer,
   order: orderReducer,
   reset: forgotPasswordReducer,
-  auth: authReducer, 
+  auth: authReducer,
+  ws: wsReducer,
 });

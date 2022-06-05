@@ -1,19 +1,47 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
+import { useDispatch, useSelector } from '../../utils/hooks';
+import { wsConnectionStart, wsConnectionError } from '../../services/actions/web-socket'
 import FeedOrders from '../feed/feed-orders';
 import FeedInfo from '../feed/feed-info';
+import { RootState, IOrder } from '../../utils/types';
 
 import styles from './feed-page.module.css';
 
 const FeedPage: FC = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(wsConnectionStart('/orders/all'));
+
+    return () => {
+      dispatch(wsConnectionError());
+    };
+  }, [dispatch]);
+
+  const { messages } = useSelector((state: RootState) => state.ws);
+  const parsing = messages.length > 0?JSON.parse(messages.slice(-1)[0]):null;
+  let orders: IOrder[] = [];
+  let totalToday: number = 0;
+  let total: number = 0;
+  if (parsing){
+    orders = parsing.orders;
+    totalToday = parsing.totalToday;
+    total = parsing.total;
+  }
+
   return (
     <>
       <div className={`text text_type_main-large ${styles.title}`}>
         Лента заказов
       </div>
       <main className={styles.main}>
-        <FeedOrders />
+        <FeedOrders orders={orders}/>
         <div className={styles.middle}/>
-        <FeedInfo />
+        <FeedInfo
+          orders={orders}
+          totalToday = {totalToday}
+          total = { total }
+        />
       </main>
     </>
   )

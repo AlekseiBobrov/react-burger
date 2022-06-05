@@ -1,21 +1,28 @@
 import { FC } from 'react'
 import { OrderCard } from '../order-card';
+import { IOrder } from '../../utils/types';
 import styles from './feed-orders.module.css'
-import { FEED_DATA } from "./feed-data";
 
-const FeedOrders: FC = () => {
-  const orderCards = FEED_DATA.orders.map(order => (
+interface IFeedOrders {
+  orders: IOrder[];
+}
+
+const FeedOrders: FC<IFeedOrders> = ({ orders }) => {
+
+  const orderCards = orders.map(order => (
     <OrderCard
-      { ...order }
-      name="Супер пупер мега"
+      {...order}
+      name={order.name}
       key={order.number}
     />
   ))
+
   return (
     <div className={styles.container}>
       {orderCards}
     </div>
   )
+
 }
 
 export default FeedOrders
