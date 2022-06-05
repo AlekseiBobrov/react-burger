@@ -1,27 +1,38 @@
-import { FC } from 'react'
+import { FC, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { DateString } from '../date-string'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useSelector } from '../../utils/hooks';
+import { useSelector, useDispatch } from '../../utils/hooks';
 import IngredientInfo from './ingredient-info'
-import { RootState, IngredientShape } from '../../utils/types'
-import styles from './order-info.module.css'
-import { FEED_DATA } from "../feed/feed-data";
+import { wsConnectionStart, wsConnectionError } from '../../services/actions/web-socket'
+import { RootState, IngredientShape, IOrder } from '../../utils/types'
+import styles from './order-info.module.css';
 
 interface IFeedParams{
   id: string;
 }
 
 const OrderInfo: FC = () => {
+
   const { id } = useParams<IFeedParams>();
   const menu = useSelector((state: RootState) => state.menu.ingredients);
-  const order = FEED_DATA.orders.find( el => el.number === Number(id) );
-  
+  const dispatch = useDispatch();
 
+  useEffect(() => {
+    dispatch(wsConnectionStart('/orders/all'));
+
+    return () => {
+      dispatch(wsConnectionError());
+    };
+  }, [dispatch]);
+
+  const { messages } = useSelector((state: RootState) => state.ws);
+  const orders: IOrder[] = messages.length > 0?JSON.parse(messages.slice(-1)[0]).orders:[];
+  const order = orders.find( el => el.number === Number(id) );
+  
   if (order){
     
-    const { number, createdAt, ingredients, status} = order;
-    const name  = "Супер Пупер Мега";
+    const { number, createdAt, ingredients, status, name} = order;
 
     const totalPrice: number = ingredients.reduce((summ, idIngredient) => {
       const ingredient = menu?.find((el: IngredientShape) => el._id === idIngredient);
