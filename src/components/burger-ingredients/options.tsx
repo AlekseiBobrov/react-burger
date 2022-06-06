@@ -6,7 +6,7 @@ import {switchTab, clickTab } from '../../services/actions/tab'; // DISPLAY_INGR
 import Ingredient from './ingredient';
 import Separator from './separator';
 
-import type { IngredientShape, TabType } from '../../utils/types.js'
+import type { TabType } from '../../utils/types.js'
 import styles from './burger-ingredients.module.css';
 
 type Sections = {
@@ -74,7 +74,7 @@ const Options: FC = () => {
   const sections = { 'bun': null, 'sauce': null, 'main': null } as Sections;
   if (ingredients) {
     Object.keys(sections).forEach(section => {
-      sections[section as keyof Sections] = ingredients.filter((el: IngredientShape) => el.type === section).map((el: IngredientShape, i: number) =>
+      sections[section as keyof Sections] = ingredients.filter( el => el.type === section).map( el =>
         <Ingredient
           {...el}
           count={[...cart.buns, ...cart.middle].filter(item => item._id === el._id).length}

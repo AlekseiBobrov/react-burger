@@ -2,7 +2,6 @@ import { FC } from 'react'
 import { useSelector } from '../../utils/hooks';
 import { useParams } from 'react-router'
 import Fact from './fact'
-import type { IngredientShape } from '../../utils/types.js'
 
 import styles from './ingredient-details.module.css';
 
@@ -13,7 +12,7 @@ interface ParamsType {
 const IngredientDetails: FC = () => {
   const { ingredients } = useSelector( state => state.menu );
   const { ingredientId } = useParams<ParamsType>();
-  const ingredient = ingredients?.find( (el:IngredientShape) => el._id === ingredientId )
+  const ingredient = ingredients?.find( el => el._id === ingredientId )
   const NUTRIENTS = ['calories', 'proteins', 'fat', 'carbohydrates'] as const;
   const facts = NUTRIENTS.map( 
     name => (

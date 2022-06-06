@@ -10,7 +10,7 @@ import { Ordering, OrderDetails } from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { getOrder, getOrderResetAction } from '../../services/actions/order';
 import { addIngredient, updateCart } from '../../services/actions/cart';
-import type { IngredientShape, CartIngredient, BunType } from '../../utils/types.js'
+import type { IngredientShape, BunType } from '../../utils/types.js'
 
 import styles from './burger-constructor.module.css';
 
@@ -73,7 +73,7 @@ const BurgerConstructor: FC = () => {
   }
 
   const bunIngrediets = cart.buns.map(
-    (bun: CartIngredient, i: number) => {
+    (bun, i) => {
       const bType = (i ? "bottom" : "top") as BunType;
       return (
         <BunIngredient
@@ -86,7 +86,7 @@ const BurgerConstructor: FC = () => {
   )
 
   const middleIngredients = cart.middle.map(
-    (ingredient: CartIngredient, i: number) => {
+    (ingredient, i) => {
       return (
         <MiddleIngredient
           id={ingredient.uuid}

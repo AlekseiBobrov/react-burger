@@ -5,7 +5,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useSelector, useDispatch } from '../../utils/hooks';
 import IngredientInfo from './ingredient-info'
 import { wsConnectionStart, wsConnectionError } from '../../services/actions/web-socket'
-import { IngredientShape, IOrder } from '../../utils/types'
+import { IOrder } from '../../utils/types'
 import styles from './order-info.module.css';
 
 interface IFeedParams{
@@ -35,12 +35,12 @@ const OrderInfo: FC = () => {
     const { number, createdAt, ingredients, status, name} = order;
 
     const totalPrice: number = ingredients.reduce((summ, idIngredient) => {
-      const ingredient = menu?.find((el: IngredientShape) => el._id === idIngredient);
+      const ingredient = menu?.find( el => el._id === idIngredient);
       return summ + (ingredient ? ingredient.price : 0);
     }, 0);
 
     const orderIngredients = Array.from(new Set(ingredients)).map((idIngredient, ix, arr) => {
-      const ingredient = menu?.find((el: IngredientShape) => el._id === idIngredient);
+      const ingredient = menu?.find( el => el._id === idIngredient);
       return (
         <IngredientInfo
           img={ingredient ? ingredient.image_mobile : ''}

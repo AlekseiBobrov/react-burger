@@ -4,7 +4,6 @@ import { useSelector } from '../../utils/hooks';
 import IngredientIcon from './ingredient-icon'
 import { DateString } from '../date-string'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { IngredientShape } from '../../utils/types'
 import styles from './order-card.module.css'
 
 interface IOrderCardProp {
@@ -22,12 +21,12 @@ const OrderCard: FC<IOrderCardProp> = (props) => {
   const { ingredients } = useSelector(state => state.menu);
 
   const totalPrice: number = props.ingredients.reduce((summ, id) => {
-    const ingredient = ingredients?.find((el: IngredientShape) => el._id === id);
+    const ingredient = ingredients?.find( el => el._id === id);
     return summ + (ingredient ? ingredient.price : 0);
   }, 0)
 
   const icons = Array.from(new Set(props.ingredients)).map((id, ix, arr) => {
-    const ingredient = ingredients?.find((el: IngredientShape) => el._id === id);
+    const ingredient = ingredients?.find( el => el._id === id);
     return (
       <IngredientIcon
         img={ingredient ? ingredient.image_mobile : ''}
