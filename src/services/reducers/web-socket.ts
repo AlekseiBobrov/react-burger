@@ -5,7 +5,7 @@ import {
   WS_GET_MESSAGE
 } from '../constants';
 import type { TWSActions } from '../actions'
-import type { TMessage,  IWSState } from '../../utils/types';
+import type { IWSState } from '../../utils/types';
 
 const initialState: IWSState = {
   wsConnected: false,
