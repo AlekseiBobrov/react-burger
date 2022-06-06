@@ -1,14 +1,10 @@
 import { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from '../../utils/hooks';
-import { wsConnectionStart, wsConnectionError } from '../../services/actions/web-socket'
+import { wsConnectionStart, wsConnectionClosed } from '../../services/actions/web-socket'
 import { getCookie } from '../../utils';
 import { OrderCard } from '../order-card'
 import { IOrder } from '../../utils/types';
 import styles from './orders.module.css'
-
-interface IOrdersProps {
-
-}
 
 const Orders: FC = () => {
   const dispatch = useDispatch();
@@ -23,7 +19,7 @@ const Orders: FC = () => {
     dispatch(wsConnectionStart(`/orders?token=${accessToken}`));
 
     return () => {
-      dispatch(wsConnectionError());
+      dispatch(wsConnectionClosed());
     };
   }, [dispatch]);
 
