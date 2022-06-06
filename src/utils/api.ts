@@ -59,21 +59,23 @@ export const getIngredientsRequest = () => {
 }
 
 export const getOrderRequest = (ingredients: IngredientShape[]) => {
-  return fetch(
+  const accessToken = getCookie('accessToken');
+
+  return fetchWithRefresh(
     `${API_URL}/orders`,
     {
       method: 'POST',
       body: JSON.stringify({ "ingredients": ingredients }),
       headers: {
+        authorization: (accessToken && 'Bearer ' + accessToken) as string,
         'Content-Type': 'application/json;charset=utf-8'
       }
     }
   )
-    .then(checkResponse)
-    .then(data => {
-      if (data?.success) return data.order.number;
-      return Promise.reject(data);
-    })
+  .then(data => {
+    if (data?.success) return data.order.number;
+    return Promise.reject(data);
+  })
 }
 
 export const resetPasswordRequest = (email:string) => {
