@@ -1,4 +1,5 @@
 import { FC } from 'react'
+import { Link } from 'react-router-dom'
 import { Logo, BurgerIcon, ListIcon, ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import MenuItem from './menu-item';
 import styles from './app-header.module.css';
@@ -21,7 +22,9 @@ const AppHeader: FC = () => {
         />
       </div>
       <div className={styles.third}>
-        <Logo />
+        <Link to='/'>
+          <Logo />
+        </Link>
       </div>
       <div className={styles.third}>
         <MenuItem
