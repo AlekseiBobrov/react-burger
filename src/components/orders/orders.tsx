@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import { wsConnectionStart, wsConnectionError } from '../../services/actions/web-socket'
 import { getCookie } from '../../utils';
 import { OrderCard } from '../order-card'
-import { RootState, IOrder } from '../../utils/types';
+import { IOrder } from '../../utils/types';
 import styles from './orders.module.css'
 
 interface IOrdersProps {
@@ -27,7 +27,7 @@ const Orders: FC = () => {
     };
   }, [dispatch]);
 
-  const { messages } = useSelector((state: RootState) => state.ws);
+  const { messages } = useSelector(state => state.ws);
 
   if (messages.length > 0){
     const orders = JSON.parse(messages.slice(-1)[0]).orders as IOrder[];

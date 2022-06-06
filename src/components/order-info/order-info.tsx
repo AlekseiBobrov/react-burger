@@ -5,7 +5,7 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { useSelector, useDispatch } from '../../utils/hooks';
 import IngredientInfo from './ingredient-info'
 import { wsConnectionStart, wsConnectionError } from '../../services/actions/web-socket'
-import { RootState, IngredientShape, IOrder } from '../../utils/types'
+import { IngredientShape, IOrder } from '../../utils/types'
 import styles from './order-info.module.css';
 
 interface IFeedParams{
@@ -15,7 +15,7 @@ interface IFeedParams{
 const OrderInfo: FC = () => {
 
   const { id } = useParams<IFeedParams>();
-  const menu = useSelector((state: RootState) => state.menu.ingredients);
+  const menu = useSelector(state => state.menu.ingredients);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const OrderInfo: FC = () => {
     };
   }, [dispatch]);
 
-  const { messages } = useSelector((state: RootState) => state.ws);
+  const { messages } = useSelector(state => state.ws);
   const orders: IOrder[] = messages.length > 0?JSON.parse(messages.slice(-1)[0]).orders:[];
   const order = orders.find( el => el.number === Number(id) );
   

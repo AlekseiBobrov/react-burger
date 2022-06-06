@@ -3,7 +3,6 @@ import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { updatePasswordThunk } from '../../services/actions/forgot-password';
-import { RootState } from '../../utils/types';
 
 import styles from './index.module.css';
 
@@ -13,8 +12,8 @@ interface StateType {
 
 const ResetPasswordPage: FC = () => {
   const dispatch = useDispatch();
-  const isAuth = useSelector((state: RootState) => state.auth.isAuth);
-  const message = useSelector((state: RootState) => state.reset.message);
+  const isAuth = useSelector(state => state.auth.isAuth);
+  const message = useSelector(state => state.reset.message);
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [code, setCode] = useState('');

@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import Tabs from './tabs'
 import Options from './options'
 import { switchTab, clickTab } from '../../services/actions/tab'
-import { TabType, RootState } from '../../utils/types';
+import { TabType } from '../../utils/types';
 import styles from './burger-ingredients.module.css';
 
 const BurgerIngredients: FC = () => {
-  const { currentTab } = useSelector( (state: RootState) => state.tab );
+  const { currentTab } = useSelector( state => state.tab );
   const dispatch = useDispatch();
   
   const setCurrent = (tab:TabType) => {

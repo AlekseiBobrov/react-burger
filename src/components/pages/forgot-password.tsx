@@ -3,7 +3,6 @@ import { Link, useHistory, Redirect, useLocation } from 'react-router-dom';
 import { useSelector, useDispatch } from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { resetPasswordThunk } from '../../services/actions/forgot-password';
-import { RootState } from '../../utils/types';
 
 import styles from './index.module.css';
 
@@ -14,10 +13,10 @@ interface StateType {
 const ForgotPasswordPage: FC = () => {
   const { state } = useLocation<StateType>();
   const dispatch = useDispatch();
-  const isAuth = useSelector( (state: RootState) => state.auth.isAuth );
+  const isAuth = useSelector( state => state.auth.isAuth );
   const history = useHistory();
   const [email, setEmail] = useState('');
-  const { message } = useSelector((state: RootState) => state.reset);
+  const { message } = useSelector(state => state.reset);
   
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)

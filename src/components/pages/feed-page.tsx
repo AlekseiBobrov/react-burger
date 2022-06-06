@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import { wsConnectionStart, wsConnectionError } from '../../services/actions/web-socket'
 import FeedOrders from '../feed/feed-orders';
 import FeedInfo from '../feed/feed-info';
-import { RootState, IOrder } from '../../utils/types';
+import { IOrder } from '../../utils/types';
 
 import styles from './feed-page.module.css';
 
@@ -18,7 +18,7 @@ const FeedPage: FC = () => {
     };
   }, [dispatch]);
 
-  const { messages } = useSelector((state: RootState) => state.ws);
+  const { messages } = useSelector(state => state.ws);
   const parsing = messages.length > 0?JSON.parse(messages.slice(-1)[0]):null;
   let orders: IOrder[] = [];
   let totalToday: number = 0;

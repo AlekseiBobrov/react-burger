@@ -1,5 +1,6 @@
 import type { Middleware, MiddlewareAPI } from 'redux';
 import type { TWSActions } from '../actions/web-socket'
+
 import {
   WS_CONNECTION_START,
   WS_SEND_MESSAGE,
@@ -11,6 +12,7 @@ import {
   wsGetMessage,
   wsConnectionClosed,
 } from '../actions/web-socket'
+
 import type { AppDispatch, RootState } from '../../utils/types';
 
 export const socketMiddleware = (wsUrl: string): Middleware => {

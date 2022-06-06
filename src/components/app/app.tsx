@@ -12,7 +12,6 @@ import Modal from '../modal/modal';
 import { MainPage, FeedPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../pages'
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderInfo from '../order-info/order-info';
-import { RootState } from '../../utils/types';
 import styles from './app.module.css';
 
 import { Location } from "history";
@@ -21,7 +20,7 @@ interface LocationState {
 }
 
 const App: FC = () => {
-  const { ingredients } = useSelector((state: RootState) => state.menu);
+  const { ingredients } = useSelector(state => state.menu);
   const dispatch = useDispatch();
 
   React.useEffect(

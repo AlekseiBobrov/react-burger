@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import { Link, Redirect, useLocation } from 'react-router-dom';
 import { Input, PasswordInput, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { makeLogin } from '../../services/actions/auth';
-import { RootState } from '../../utils/types';
 
 import styles from './index.module.css';
 
@@ -14,7 +13,7 @@ interface StateType {
 const LoginPage: FC = () => {
   const { state } = useLocation<StateType>();
   const dispatch = useDispatch();
-  const isAuth = useSelector((state: RootState) => state.auth.isAuth)
+  const isAuth = useSelector(state => state.auth.isAuth)
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 

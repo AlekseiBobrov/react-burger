@@ -1,16 +1,14 @@
 import React, { useState, useRef, useEffect, FC } from 'react'
-import { useRouteMatch } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { setUserData } from '../../services/actions/auth';
-import { RootState } from '../../utils/types';
 
 import styles from './profile.module.css';
 
 const Profile: FC = () => {
   const dispatch = useDispatch();
-  const serverName = useSelector((state: RootState) => state.auth.name);
-  const serverEmail = useSelector((state: RootState) => state.auth.email);
+  const serverName = useSelector(state => state.auth.name);
+  const serverEmail = useSelector(state => state.auth.email);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);

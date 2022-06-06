@@ -6,7 +6,7 @@ import {switchTab, clickTab } from '../../services/actions/tab'; // DISPLAY_INGR
 import Ingredient from './ingredient';
 import Separator from './separator';
 
-import type { IngredientShape, TabType, RootState } from '../../utils/types.js'
+import type { IngredientShape, TabType } from '../../utils/types.js'
 import styles from './burger-ingredients.module.css';
 
 type Sections = {
@@ -17,9 +17,9 @@ type Sections = {
 
 const Options: FC = () => {
 
-  const { ingredients } = useSelector((state: RootState) => state.menu);
-  const { cart } = useSelector((state: RootState) => state);
-  const { currentTab, isClick } = useSelector((state: RootState) => state.tab);
+  const { ingredients } = useSelector(state => state.menu);
+  const { cart } = useSelector(state => state);
+  const { currentTab, isClick } = useSelector(state => state.tab);
   const dispatch = useDispatch();
 
   const bunRef = React.useRef<HTMLDivElement>(null);
