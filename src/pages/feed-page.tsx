@@ -1,9 +1,9 @@
 import { FC, useEffect } from 'react'
-import { useDispatch, useSelector } from '../../utils/hooks';
-import { wsConnectionStart, wsConnectionError } from '../../services/actions/web-socket'
-import FeedOrders from '../feed/feed-orders';
-import FeedInfo from '../feed/feed-info';
-import { IOrder } from '../../utils/types';
+import { useDispatch, useSelector } from '../utils/hooks';
+import { wsConnectionStart, wsConnectionError } from '../services/actions/web-socket'
+import FeedOrders from '../components/feed/feed-orders';
+import FeedInfo from '../components/feed/feed-info';
+import { IOrder } from '../utils/types';
 
 import styles from './feed-page.module.css';
 

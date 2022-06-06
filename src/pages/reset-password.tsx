@@ -1,8 +1,8 @@
 import React, { useState, useEffect, FC } from 'react'
 import { Link, Redirect, useLocation, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from '../../utils/hooks';
+import { useDispatch, useSelector } from '../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { updatePasswordThunk } from '../../services/actions/forgot-password';
+import { updatePasswordThunk } from '../services/actions/forgot-password';
 
 import styles from './index.module.css';
 

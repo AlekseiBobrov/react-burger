@@ -9,7 +9,7 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { getUserData } from '../../services/actions/auth';
 import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
-import { MainPage, FeedPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../pages'
+import { MainPage, FeedPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../../pages'
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import OrderInfo from '../order-info/order-info';
 import styles from './app.module.css';
