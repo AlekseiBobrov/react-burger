@@ -3,27 +3,19 @@ import {
   GET_ORDER_SUCCESS,
   GET_ORDER_FAILED,
   GET_ORDER_RESET,
-} from '../actions/order';
+} from '../constants';
 
+import { TGetOrderActions } from '../actions';
 
-interface OrderActionType {
-  type: string,
-  orderNumber?: string
-}
+import { IOrderState } from '../../utils/types'
 
-interface OrderStateType {
-    orderNumber: undefined | string,
-    orderRequest: boolean,
-    orderFailed: boolean,
-  }
-
-const initialState = {
+const initialState: IOrderState = {
   orderNumber: undefined,
   orderRequest: false,
   orderFailed: false,
 };
 
-export const orderReducer = (state:OrderStateType = initialState, action: OrderActionType):OrderStateType => {
+export const orderReducer = (state = initialState, action: TGetOrderActions): IOrderState => {
   switch (action.type) {
     case GET_ORDER_REQUEST: {
       return { ...state, orderRequest: true };

@@ -52,3 +52,7 @@ export function deleteTokens() {
   deleteCookie('accessToken');
   window.localStorage.removeItem('refreshToken');
 }
+
+export function addZero(val: number):string {
+  return val < 10? "0" + val:String(val)
+}

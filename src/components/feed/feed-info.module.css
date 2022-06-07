@@ -1,0 +1,40 @@
+.container {
+    width: calc( (100% - 40px)/2 );
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+    text-align: left;
+}
+
+.lists {
+    display: flex;
+    width: 100%;
+}
+
+.list {
+    min-width: 240px;
+    width: calc((100% - 140px)/2);
+}
+
+.columns_sep {
+    width: 36px;
+    height: 100%;
+}
+
+.columns {
+    margin-top: 30px;
+    height: 160px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 8px 8px;
+    overflow: hidden;
+}
+
+.done{
+    color: #00CCCC
+}

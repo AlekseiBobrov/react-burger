@@ -1,5 +1,5 @@
 import React, { useCallback, FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { useDrop } from "react-dnd";
 import { useHistory } from 'react-router-dom';
 
@@ -8,9 +8,9 @@ import MiddleIngredient from './middle-ingredient';
 import Modal from '../modal/modal';
 import { Ordering, OrderDetails } from '../order-details';
 import { CurrencyIcon, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { getOrder, GET_ORDER_RESET } from '../../services/actions/order';
-import { addIngredient, UPDATE_CART } from '../../services/actions/cart';
-import type { CartIngredient, BunType } from '../../utils/types.js'
+import { getOrder, getOrderResetAction } from '../../services/actions/order';
+import { addIngredient, updateCart } from '../../services/actions/cart';
+import type { IngredientShape, BunType } from '../../utils/types.js'
 
 import styles from './burger-constructor.module.css';
 
@@ -19,18 +19,18 @@ import styles from './burger-constructor.module.css';
 const BurgerConstructor: FC = () => {
   const history = useHistory();
   const dispatch = useDispatch();
-  const isAuth = useSelector((state: any) => state.auth.isAuth)
-  const { cart } = useSelector((state: any) => state);
-  const { orderRequest, orderNumber } = useSelector((state: any) => state.order);
+  const isAuth = useSelector(state => state.auth.isAuth)
+  const { cart } = useSelector(state => state);
+  const { orderRequest, orderNumber } = useSelector(state => state.order);
 
   const [showDetails, setShowDetails] = React.useState(false);
 
-  const [{ isHover }, dropTarget] = useDrop({
+  const [{ isHover }, dropTarget] = useDrop<IngredientShape, void, { isHover: boolean }>({
     accept: "ingredient",
     collect: monitor => ({
       isHover: monitor.isOver(),
     }),
-    drop(ingredient) {
+    drop( ingredient) {
       dispatch(addIngredient(ingredient))
     },
   });
@@ -53,10 +53,7 @@ const BurgerConstructor: FC = () => {
     middle.splice(dragIndex, 1)
     middle.splice(hoverIndex, 0, dragCard)
 
-    dispatch({
-      type: UPDATE_CART,
-      middle,
-    })
+    dispatch( updateCart(middle) )
   }, [cart, dispatch]);
 
 
@@ -72,13 +69,11 @@ const BurgerConstructor: FC = () => {
 
   const hideDetails = () => {
     setShowDetails(false);
-    dispatch({
-      type: GET_ORDER_RESET
-    })
+    dispatch( getOrderResetAction() )
   }
 
   const bunIngrediets = cart.buns.map(
-    (bun: CartIngredient, i: number) => {
+    (bun, i) => {
       const bType = (i ? "bottom" : "top") as BunType;
       return (
         <BunIngredient
@@ -91,7 +86,7 @@ const BurgerConstructor: FC = () => {
   )
 
   const middleIngredients = cart.middle.map(
-    (ingredient: CartIngredient, i: number) => {
+    (ingredient, i) => {
       return (
         <MiddleIngredient
           id={ingredient.uuid}

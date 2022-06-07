@@ -1,12 +1,12 @@
 import React, { FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 
-import {SWITCH_TAB, CLICK_TAB } from '../../services/actions'; // DISPLAY_INGREDIENT, HIDE_INGREDIENT, 
+import {switchTab, clickTab } from '../../services/actions/tab'; // DISPLAY_INGREDIENT, HIDE_INGREDIENT, 
 
 import Ingredient from './ingredient';
 import Separator from './separator';
 
-import type { IngredientShape, TabType } from '../../utils/types.js'
+import type { TabType } from '../../utils/types.js'
 import styles from './burger-ingredients.module.css';
 
 type Sections = {
@@ -17,9 +17,9 @@ type Sections = {
 
 const Options: FC = () => {
 
-  const { ingredients } = useSelector((state: any) => state.menu);
-  const { cart } = useSelector((state: any) => state);
-  const { currentTab, tabClick } = useSelector((state: any) => state.tab);
+  const { ingredients } = useSelector(state => state.menu);
+  const { cart } = useSelector(state => state);
+  const { currentTab, isClick } = useSelector(state => state.tab);
   const dispatch = useDispatch();
 
   const bunRef = React.useRef<HTMLDivElement>(null);
@@ -27,25 +27,22 @@ const Options: FC = () => {
   const sauceRef = React.useRef<HTMLDivElement>(null);
   const containerRef = React.useRef<HTMLDivElement>(null);
 
-  const switchTab = () => {
+  const switchTabOnScroll = () => {
     const containerTop = containerRef.current ? containerRef.current.getBoundingClientRect().top : 0;
     const distance = [
       ['Булки', Math.abs(containerTop - (bunRef.current ? bunRef.current.getBoundingClientRect().top : 0))],
       ['Соусы', Math.abs(containerTop - (sauceRef.current ? sauceRef.current.getBoundingClientRect().top : 0))],
       ['Начинки', Math.abs(containerTop - (mainRef.current ? mainRef.current.getBoundingClientRect().top : 0))],
     ]
-    const tab = distance.reduce((min, el) => el[1] < min[1] ? el : min, ['', window.innerHeight])[0];
-    dispatch({
-      type: SWITCH_TAB,
-      tab
-    })
+    const tab = distance.reduce((min, el) => el[1] < min[1] ? el : min, ['', window.innerHeight])[0] as TabType;
+    dispatch( switchTab(tab) )
   }
 
   React.useEffect(
     () => {
-      containerRef.current?.addEventListener("scroll", switchTab);
+      containerRef.current?.addEventListener("scroll", switchTabOnScroll);
       return () => {
-        containerRef.current?.removeEventListener("scroll", switchTab)
+        containerRef.current?.removeEventListener("scroll", switchTabOnScroll)
       }
     },
     []
@@ -66,21 +63,18 @@ const Options: FC = () => {
         default:
           break;
       }
-      dispatch({
-        type: CLICK_TAB,
-        isClick: false,
-      })
+      dispatch( clickTab(false) )
     }
   }
 
   React.useEffect(
-    () => { tabScroll(currentTab, tabClick) },
+    () => { tabScroll(currentTab, isClick) },
     [currentTab]
   )
   const sections = { 'bun': null, 'sauce': null, 'main': null } as Sections;
   if (ingredients) {
     Object.keys(sections).forEach(section => {
-      sections[section as keyof Sections] = ingredients.filter((el: IngredientShape) => el.type === section).map((el: IngredientShape, i: number) =>
+      sections[section as keyof Sections] = ingredients.filter( el => el.type === section).map( el =>
         <Ingredient
           {...el}
           count={[...cart.buns, ...cart.middle].filter(item => item._id === el._id).length}

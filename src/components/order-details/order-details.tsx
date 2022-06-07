@@ -4,7 +4,7 @@ import OrderConfirmImg from './order_confirm_img';
 import styles from './order-details.module.css';
 
 interface OrderDetailsProps {
-  orderNum: number | null,
+  orderNum: number | undefined,
 }
 
 const OrderDetails: FC<OrderDetailsProps> = ({orderNum}) => {

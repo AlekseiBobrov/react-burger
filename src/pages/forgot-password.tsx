@@ -1,8 +1,8 @@
 import React, { useEffect, useState, FC } from 'react'
 import { Link, useHistory, Redirect, useLocation } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from '../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { resetPassword } from '../../services/actions/forgot-password';
+import { resetPasswordThunk } from '../services/actions/forgot-password';
 
 import styles from './index.module.css';
 
@@ -13,10 +13,10 @@ interface StateType {
 const ForgotPasswordPage: FC = () => {
   const { state } = useLocation<StateType>();
   const dispatch = useDispatch();
-  const isAuth = useSelector( (state:any) => state.auth.isAuth );
+  const isAuth = useSelector( state => state.auth.isAuth );
   const history = useHistory();
   const [email, setEmail] = useState('');
-  const { message } = useSelector((state: any) => state.reset);
+  const { message } = useSelector(state => state.reset);
   
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value)
@@ -33,7 +33,7 @@ const ForgotPasswordPage: FC = () => {
   const handleButtonClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     if (email) {
-      dispatch(resetPassword(email))
+      dispatch( resetPasswordThunk(email) )
     }
   }
 

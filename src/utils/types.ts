@@ -1,3 +1,16 @@
+import { Dispatch, Action, ActionCreator } from 'redux';
+import { ThunkAction } from 'redux-thunk';
+import {
+  TCartActions,
+  TIngredientsActions,
+  TTabActions,
+  TForgotPasswordActions,
+  TGetOrderActions,
+  TAuthActions,
+  TWSActions
+} from '../services/actions';
+import store from '../services/store';
+
 export interface IngredientShape {
   "_id": string,
   "name": string,
@@ -13,28 +26,78 @@ export interface IngredientShape {
   "__v": number
 }
 
-export interface CartIngredient extends IngredientShape {
-  uuid: string;
-}
-export interface CartType {
-  buns: CartIngredient[],
-  middle: CartIngredient[], 
-}
-
 export type BunType = "top" | "bottom";
 
 export type TabType = 'Булки' | 'Соусы' | 'Начинки';
-
-export interface IngredientState {
-  ingredients: null | undefined | IngredientShape[],
-  ingredientsRequest: boolean,
-  ingredientsFailed: boolean,
+export interface CartIngredient extends IngredientShape {
+  uuid: string;
+}
+export interface ICartState {
+  readonly buns: ReadonlyArray<CartIngredient>,
+  readonly middle: ReadonlyArray<CartIngredient>,
 }
 
-export interface RootState {
-  ingredients: IngredientState,
+export interface IIngredientState {
+  readonly ingredients: null | undefined | ReadonlyArray<IngredientShape>,
+  readonly ingredientsRequest: boolean,
+  readonly ingredientsFailed: boolean,
 }
 
+export interface ITabState {
+  readonly currentTab: TabType,
+  readonly isClick: boolean,
+}
+
+export interface IForgotPasswordState {
+  message: string,
+  resetPasswordRequest: boolean,
+  resetPasswordFailed: boolean,
+  updatePasswordRequest: boolean,
+  updatePasswordFailed: boolean,
+}
+
+export interface IOrderState {
+  orderNumber: undefined | number,
+  orderRequest: boolean,
+  orderFailed: boolean,
+}
+
+export interface IAuthState {
+  isAuth: boolean,
+  email: string,
+  name: string,
+  registerRequest: boolean,
+  registerFailed: boolean,
+  loginRequest: boolean,
+  loginFailed: boolean,
+  logoutRequest: boolean,
+  logoutFailed: boolean,
+  getUserRequest: boolean,
+  getUserFailed: boolean,
+}
+
+export interface IWSState {
+  wsConnected: boolean;
+  messages: TMessage[];
+  error?: Event;
+}
+
+export type RootState = ReturnType<typeof store.getState>;
+
+export type TApplicationActions =
+  | TCartActions
+  | TIngredientsActions
+  | TTabActions
+  | TForgotPasswordActions
+  | TGetOrderActions
+  | TAuthActions
+  | TWSActions;
+
+export type AppDispatch = Dispatch<TApplicationActions>;
+
+export type AppThunk<TReturn = void> = ActionCreator<
+  ThunkAction<TReturn, Action, RootState, TApplicationActions>
+>
 export interface authResponse {
   success: boolean,
   accessToken: string,
@@ -43,4 +106,15 @@ export interface authResponse {
     email: string,
     name: string
   }
-} 
+}
+export type TMessage = string;
+
+export interface IOrder  {
+  ingredients: string[]
+  _id: string;
+  status: string;
+  name: string;
+  number: number;
+  createdAt: string;
+  updatedAt: string;
+}

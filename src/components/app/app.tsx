@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import { Switch, Route, useHistory, useLocation } from 'react-router-dom';
@@ -9,9 +9,9 @@ import { getIngredients } from '../../services/actions/ingredients';
 import { getUserData } from '../../services/actions/auth';
 import AppHeader from '../app-header/app-header';
 import Modal from '../modal/modal';
-import { MainPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../pages'
+import { MainPage, FeedPage, LoginPage, RegisterPage, ForgotPasswordPage, ResetPasswordPage, ProfilePage, NotFound404 } from '../../pages'
 import IngredientDetails from '../ingredient-details/ingredient-details';
-
+import OrderInfo from '../order-info/order-info';
 import styles from './app.module.css';
 
 import { Location } from "history";
@@ -20,13 +20,13 @@ interface LocationState {
 }
 
 const App: FC = () => {
-  const { ingredients } = useSelector((state: any) => state.menu);
+  const { ingredients } = useSelector(state => state.menu);
   const dispatch = useDispatch();
 
   React.useEffect(
     () => {
-      dispatch( getIngredients() );
-      dispatch( getUserData() );
+      dispatch(getIngredients());
+      dispatch(getUserData());
     },
     [dispatch]
   );
@@ -37,17 +37,23 @@ const App: FC = () => {
 
   const history = useHistory();
   const location = useLocation<LocationState>();
-  const background =  location.state?.background;
+  const background = location.state?.background;
 
   if (ingredients) {
     return (
       <div className={styles.app}>
         <AppHeader />
-        <Switch location={ background || location } >
+        <Switch location={background || location} >
           <Route exact path="/">
             <DndProvider backend={HTML5Backend}>
               <MainPage />
             </DndProvider>
+          </Route>
+          <Route exact path="/feed">
+            <FeedPage />
+          </Route>
+          <Route exact path='/feed/:id'>
+            <OrderInfo />
           </Route>
           <Route exact path="/login">
             <LoginPage />
@@ -61,11 +67,11 @@ const App: FC = () => {
           <Route exact path="/reset-password">
             <ResetPasswordPage />
           </Route>
-          <ProtectedRoute exact path="/profile">
-            <ProfilePage />
+          <ProtectedRoute exact path='/profile/orders/:id'>
+            <OrderInfo />
           </ProtectedRoute>
-          <ProtectedRoute exact path="/profile/orders">
-            <NotFound404 />
+          <ProtectedRoute path="/profile">
+            <ProfilePage />
           </ProtectedRoute>
           <Route exact path='/ingredients/:ingredientId'>
             <IngredientDetails />
@@ -76,12 +82,24 @@ const App: FC = () => {
         </Switch>
 
         {background && (
+          <>
             <Route path='/ingredients/:ingredientId'>
               <Modal closeModal={hideModal} className={styles["ingredient-details"]}>
                 <IngredientDetails />
               </Modal>
             </Route>
-          )}
+            <Route path='/feed/:id'>
+              <Modal closeModal={hideModal} className={styles.order_info}>
+                <OrderInfo />
+              </Modal>
+            </Route>
+            <ProtectedRoute path='/profile/orders/:id'>
+              <Modal closeModal={hideModal} className={styles.order_info}>
+                <OrderInfo />
+              </Modal>
+            </ProtectedRoute>
+          </>
+        )}
 
       </div>
     );

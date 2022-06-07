@@ -1,8 +1,8 @@
 import { useRef, FC } from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../utils/hooks';
 import { useDrag, useDrop } from "react-dnd";
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { REMOVE_INGREDIENT } from '../../services/actions/cart';
+import { removeIngredient } from '../../services/actions/cart';
 import type { IngredientShape } from '../../utils/types.js'
 import type { Identifier, XYCoord } from 'dnd-core'
 import styles from './burger-constructor.module.css';
@@ -95,7 +95,7 @@ const MiddleIngredient:FC<MiddleIngredientProps> = ({id, orderIndex, isLocked, m
         text={ingredient.name}
         price={ingredient.price}
         thumbnail={ingredient.image}
-        handleClose={() => dispatch({ type: REMOVE_INGREDIENT, ingredient, orderIndex })}
+        handleClose={() => dispatch( removeIngredient(ingredient, orderIndex ) )}
       />
     </div>
   )

@@ -1,16 +1,14 @@
-import React, { useState,  useRef, useEffect, FC } from 'react'
-import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState, useRef, useEffect, FC } from 'react'
+import { useDispatch, useSelector } from '../../utils/hooks';
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
-import { makeLogout, setUserData } from '../../services/actions/auth';
+import { setUserData } from '../../services/actions/auth';
 
-import pageStyles from './index.module.css';
 import styles from './profile.module.css';
 
-const ProfilePage: FC = () => {
+const Profile: FC = () => {
   const dispatch = useDispatch();
-  const serverName = useSelector( (state:any) => state.auth.name );
-  const serverEmail = useSelector( (state:any) => state.auth.email );
+  const serverName = useSelector(state => state.auth.name);
+  const serverEmail = useSelector(state => state.auth.email);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const emailRef = useRef<HTMLInputElement>(null);
@@ -40,7 +38,7 @@ const ProfilePage: FC = () => {
         name !== serverName ||
         email !== serverEmail ||
         password !== ''
-      ){
+      ) {
         setShowButtons(true)
       } else {
         setShowButtons(false)
@@ -61,10 +59,6 @@ const ProfilePage: FC = () => {
     setPassword(e.target.value)
   }
 
-  const handleLogoutClick = () => {
-    dispatch(makeLogout());
-  }
-
   const handleSaveClick = (e: React.SyntheticEvent) => {
     e.preventDefault();
     dispatch(setUserData(name, email, password));
@@ -77,17 +71,10 @@ const ProfilePage: FC = () => {
     setPassword('');
   }
 
+
   return (
-    <div className="page">
-      <div className={styles.side}>
-        <NavLink to="/profile" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">Профиль</NavLink>
-        <NavLink to="/profile/orders" className="text text_type_main-medium text_color_inactive" activeClassName="disable-link">История заказов</NavLink>
-        <p className={`text text_type_main-medium text_color_inactive ${styles.clickable}`} onClick={handleLogoutClick}>Выйти</p>
-        <p className={`text text_type_main-default text_color_inactive ${pageStyles.bottom} ${styles.bottom}`}>
-          В этом разделе вы можете<br/>изменить свои персональные данные
-        </p>
-      </div>
-      <form className={pageStyles.container} onSubmit={handleSaveClick}>
+    <>
+      <form className={styles.container} onSubmit={handleSaveClick}>
         <Input
           type="text"
           onChange={onChangeName}
@@ -95,7 +82,7 @@ const ProfilePage: FC = () => {
           name={'name'}
           placeholder="Имя"
           icon="EditIcon"
-          onIconClick={() => { setEditName(true);  nameRef.current?.focus()}}
+          onIconClick={() => { setEditName(true); nameRef.current?.focus() }}
           onBlur={() => setEditName(false)}
           disabled={!editName}
           ref={nameRef}
@@ -107,7 +94,7 @@ const ProfilePage: FC = () => {
           name={'email'}
           placeholder="Логин"
           icon="EditIcon"
-          onIconClick={() => {setEditEmail(true);  emailRef.current?.focus()}}
+          onIconClick={() => { setEditEmail(true); emailRef.current?.focus() }}
           onBlur={() => setEditEmail(false)}
           disabled={!editEmail}
           ref={emailRef}
@@ -119,12 +106,12 @@ const ProfilePage: FC = () => {
           name={'password'}
           placeholder="Пароль"
           icon="EditIcon"
-          onIconClick={() => {setEditPassword(true);  passwordRef.current?.focus()}}
+          onIconClick={() => { setEditPassword(true); passwordRef.current?.focus() }}
           onBlur={() => setEditPassword(false)}
           disabled={!editPassword}
           ref={passwordRef}
         />
-        { showButtons &&
+        {showButtons &&
           <div className={styles.buttons}>
             <Button type="primary" size="medium">
               Сохранить
@@ -136,8 +123,8 @@ const ProfilePage: FC = () => {
         }
       </form>
       <div className={styles.side} />
-    </div>
-  );
+    </>
+  )
 }
 
-export default ProfilePage;
+export default Profile
