@@ -15,7 +15,7 @@ import {
 export const wsActions = {
   wsStart: wsConnectionStart,
   onOpen: wsConnectionSuccess,
-  onClose:  wsConnectionClosed,
+  onClose: wsConnectionClosed,
   onError: wsConnectionError,
   wsGetMessage: wsGetMessage,
   wsSendMessage: wsSendMessage
@@ -30,6 +30,6 @@ const composeEnhancers =
 
 const enhancer = composeEnhancers(applyMiddleware(thunk, socketMiddleware(wsUrl, wsActions)));
 
-const store = createStore(rootReducer, enhancer); 
+const store = createStore(rootReducer, enhancer);
 
 export default store;
