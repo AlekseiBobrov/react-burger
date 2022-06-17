@@ -20,7 +20,7 @@ import { TAuthActions } from '../actions/auth'
 
 import { IAuthState } from '../../utils/types'
 
-const initialState: IAuthState = {
+export const initialState: IAuthState = {
   isAuth: false,
   email: '',
   name: '',
@@ -32,6 +32,8 @@ const initialState: IAuthState = {
   logoutFailed: false,
   getUserRequest: false,
   getUserFailed: false,
+  setUserRequest: false,
+  setUserFailed: false,
 }
 
 export const authReducer = (state = initialState, action: TAuthActions): IAuthState => {
@@ -73,13 +75,13 @@ export const authReducer = (state = initialState, action: TAuthActions): IAuthSt
       return { ...state, getUserFailed: true, getUserRequest: false };
     }
     case SET_USER_REQUEST: {
-      return { ...state, getUserRequest: true };
+      return { ...state, setUserRequest: true };
     }
     case SET_USER_SUCCESS: {
-      return { ...state, getUserFailed: false, getUserRequest: false, ...action.payload};
+      return { ...state, setUserFailed: false, setUserRequest: false, ...action.payload};
     }
     case  SET_USER_FAILED: {
-      return { ...state, getUserFailed: true, getUserRequest: false };
+      return { ...state, setUserFailed: true, setUserRequest: false };
     }
     default: {
       return state;

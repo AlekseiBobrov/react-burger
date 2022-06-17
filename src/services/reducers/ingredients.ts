@@ -8,7 +8,7 @@ import { TIngredientsActions } from '../actions';
 
 import type { IIngredientState } from '../../utils/types.js'
 
-const initialState: IIngredientState = {
+export const initialState: IIngredientState = {
   ingredients: null,
   ingredientsRequest: false,
   ingredientsFailed: false,
@@ -23,7 +23,7 @@ export const ingredientReducer = (state = initialState, action: TIngredientsActi
       };
     }
     case GET_INGREDIENTS_SUCCESS: {
-      return { ...state, ingredientsFailed: false, ingredientsRequest: false, ingredients: action.ingredients };
+      return { ...state, ingredientsFailed: false, ingredientsRequest: false, ingredients: action.payload.ingredients };
     }
     case GET_INGREDIENTS_FAILED: {
       return { ...state, ingredientsFailed: true, ingredientsRequest: false };

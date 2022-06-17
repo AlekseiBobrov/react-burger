@@ -57,7 +57,7 @@ export interface IForgotPasswordState {
 }
 
 export interface IOrderState {
-  orderNumber: undefined | number,
+  orderNumber: null | number,
   orderRequest: boolean,
   orderFailed: boolean,
 }
@@ -74,6 +74,8 @@ export interface IAuthState {
   logoutFailed: boolean,
   getUserRequest: boolean,
   getUserFailed: boolean,
+  setUserRequest: boolean,
+  setUserFailed: boolean,
 }
 
 export interface IWSState {

@@ -68,7 +68,7 @@ export interface ILogoutSuccessAction {
   }
 }
 
-export interface ILogoutrFailedAction {
+export interface ILogoutFailedAction {
   readonly type: typeof LOGOUT_FAILED
 }
 
@@ -114,7 +114,7 @@ export type TAuthActions =
   | ILoginFailedAction
   | ILogoutRequestAction
   | ILogoutSuccessAction
-  | ILogoutrFailedAction
+  | ILogoutFailedAction
   | IGetUserRequestAction
   | IGetUserSuccessAction
   | IGetUserFailedAction
@@ -135,6 +135,20 @@ export const registerFailedAction = (): IRegisterFailedAction => ({
   type: REGISTER_FAILED
 })
 
+export const makeRegister: AppThunk = (email: string, password: string, name: string) => (dispatch: AppDispatch) => {
+  dispatch(registerRequestAction());
+
+  return registerRequest(email, password, name)
+    .then(data => {
+      saveTokens(data);
+      dispatch(registerSuccessAction(data));
+    })
+    .catch(err => {
+      console.log('makeRegister ERROR:', err);
+      dispatch(registerFailedAction());
+    });
+}
+
 export const loginRequestAction = (): ILoginRequestAction => ({
   type: LOGIN_REQUEST
 })
@@ -148,6 +162,20 @@ export const loginFailedAction = (): ILoginFailedAction => ({
   type: LOGIN_FAILED
 })
 
+export const makeLogin: AppThunk = (email: string, password: string) => (dispatch: AppDispatch) => {
+  dispatch(loginRequestAction());
+
+  return loginRequest(email, password)
+    .then(data => {
+      saveTokens(data);
+      dispatch(loginSuccessAction(data));
+    })
+    .catch(err => {
+      console.log('makeLogin ERROR:', err);
+      dispatch(loginFailedAction());
+    });
+}
+
 export const logoutRequestAction = (): ILogoutRequestAction => ({
   type: LOGOUT_REQUEST
 })
@@ -157,9 +185,22 @@ export const logoutSuccessAction = (): ILogoutSuccessAction => ({
   payload: { name: '', email: '', isAuth: false }
 })
 
-export const logoutFailedAction = (): ILogoutrFailedAction => ({
+export const logoutFailedAction = (): ILogoutFailedAction => ({
   type: LOGOUT_FAILED
 })
+
+export const makeLogout: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch(logoutRequestAction());
+  return logoutRequest()
+    .then(data => {
+      dispatch(logoutSuccessAction());
+      deleteTokens();
+    })
+    .catch(err => {
+      console.log('makeLogout ERROR:', err);
+      dispatch(logoutFailedAction());
+    });
+}
 
 export const getUserRequestAction = (): IGetUserRequestAction => ({
   type: GET_USER_REQUEST
@@ -174,10 +215,21 @@ export const getUserFailedAction = (): IGetUserFailedAction => ({
   type: GET_USER_FAILED
 })
 
+export const getUserData: AppThunk = () => (dispatch: AppDispatch) => {
+  dispatch(getUserRequestAction());
+  return getUserDataRequest()
+    .then(data => {
+      dispatch(getUserSuccessAction(data));
+    })
+    .catch(err => {
+      console.log('getUserData ERROR:', err);
+      dispatch(getUserFailedAction());
+    });
+}
+
 export const setUserRequestAction = (): ISetUserRequestAction => ({
   type: SET_USER_REQUEST
 })
-
 
 export const setUserSuccessAction = (response: authResponse['user']): ISetUserSuccessAction => ({
   type: SET_USER_SUCCESS,
@@ -188,65 +240,10 @@ export const setUserFailedAction = (): ISetUserFailedAction => ({
   type: SET_USER_FAILED
 })
 
-
-export const makeRegister: AppThunk = (email: string, password: string, name: string) => (dispatch: AppDispatch) => {
-  dispatch(registerRequestAction());
-
-  registerRequest(email, password, name)
-    .then(data => {
-      saveTokens(data);
-      dispatch(registerSuccessAction(data));
-    })
-    .catch(err => {
-      console.log('makeRegister ERROR:', err);
-      dispatch(registerFailedAction());
-    });
-}
-
-export const makeLogin: AppThunk = (email: string, password: string) => (dispatch: AppDispatch) => {
-  dispatch(loginRequestAction());
-
-  loginRequest(email, password)
-    .then(data => {
-      saveTokens(data);
-      dispatch(loginSuccessAction(data));
-    })
-    .catch(err => {
-      console.log('makeLogin ERROR:', err);
-      dispatch(loginFailedAction());
-    });
-}
-
-export const makeLogout: AppThunk = () => (dispatch: AppDispatch) => {
-  dispatch(logoutRequestAction());
-  logoutRequest()
-    .then(data => {
-      dispatch(logoutSuccessAction());
-      deleteTokens();
-    })
-    .catch(err => {
-      console.log('makeLogout ERROR:', err);
-      dispatch(logoutFailedAction());
-    });
-}
-
-export const getUserData: AppThunk = () => (dispatch: AppDispatch) => {
-  dispatch(getUserRequestAction());
-  getUserDataRequest()
-    .then(data => {
-      dispatch(getUserSuccessAction(data));
-    })
-    .catch(err => {
-      console.log('getUserData ERROR:', err);
-      dispatch(getUserFailedAction());
-    });
-}
-
 export const setUserData: AppThunk = (name: string, email: string, password: string) => (dispatch: AppDispatch) => {
   dispatch(setUserRequestAction());
-  setUserDataRequest(name, email, password)
+  return setUserDataRequest(name, email, password)
     .then(data => {
-      console.log(data)
       dispatch(setUserSuccessAction(data));
     })
     .catch(err => {
