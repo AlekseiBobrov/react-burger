@@ -18,7 +18,7 @@ describe('service is available', () => {
 
   it("After click 'Начинки' options should scroll to 'Начинки'", () => {
     cy.get("*[class^='tab_tab__']").contains('Начинки').click();
-    cy.get("*[class^='burger-ingredients_options']").should('contain', 'Начинки');
+    cy.get("*[class^='burger-ingredients_options']").should('be.visible');
   });
 
   it("After click ingredient in options should open modal window with clicked ingredient and closing by clicked close",
@@ -73,6 +73,7 @@ describe('service is available', () => {
       }
     })
 
+    cy.get("*[class^='order-details_order__']").should('exist');
   })  
 
 })
