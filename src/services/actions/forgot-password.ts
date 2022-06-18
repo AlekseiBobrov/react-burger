@@ -17,7 +17,9 @@ export interface IResetPassRequest {
 
 export interface IResetPassSuccess {
   readonly type: typeof RESET_PASSWORD_SUCCESS;
-  readonly message: string;
+  readonly payload: {
+    readonly message: string;
+  }
 }
 
 export interface IResetPassFailed {
@@ -30,7 +32,9 @@ export interface IUpdatePassRequest {
 
 export interface IUpdatePassSuccess {
   readonly type: typeof UPDATE_PASSWORD_SUCCESS;
-  readonly message: string;
+  readonly payload: {
+    readonly message: string;
+  }
 }
 
 export interface IUpdatePassFailed {
@@ -49,32 +53,21 @@ export const resetPasswordRequestAction = (): IResetPassRequest => ({
   type: RESET_PASSWORD_REQUEST
 })
 
-export const resetPasswordSuccessAction = (respData: string): IResetPassSuccess => ({
+export const resetPasswordSuccessAction = (message: string): IResetPassSuccess => ({
   type: RESET_PASSWORD_SUCCESS,
-  message: respData
+  payload: {
+    message: message
+  }
 })
 
 export const resetPasswordFailedAction = (): IResetPassFailed => ({
   type: RESET_PASSWORD_FAILED
 })
 
-export const updatePasswordRequestAction = (): IUpdatePassRequest => ({
-  type: UPDATE_PASSWORD_REQUEST
-})
-
-export const updatePasswordSuccessAction = (respData: string): IUpdatePassSuccess => ({
-  type: UPDATE_PASSWORD_SUCCESS,
-  message: respData
-})
-
-export const updatePasswordFailedAction = (): IUpdatePassFailed => ({
-  type: UPDATE_PASSWORD_FAILED
-})
-
 export const resetPasswordThunk: AppThunk = (email: string) => (dispatch: AppDispatch) => {
   dispatch(resetPasswordRequestAction());
 
-  resetPasswordRequest(email)
+  return resetPasswordRequest(email)
     .then(data => {
       dispatch(resetPasswordSuccessAction(data));
     })
@@ -85,11 +78,26 @@ export const resetPasswordThunk: AppThunk = (email: string) => (dispatch: AppDis
 
 }
 
+export const updatePasswordRequestAction = (): IUpdatePassRequest => ({
+  type: UPDATE_PASSWORD_REQUEST
+})
+
+export const updatePasswordSuccessAction = (respData: string): IUpdatePassSuccess => ({
+  type: UPDATE_PASSWORD_SUCCESS,
+  payload: {
+    message: respData
+  }
+})
+
+export const updatePasswordFailedAction = (): IUpdatePassFailed => ({
+  type: UPDATE_PASSWORD_FAILED
+})
+
 export const updatePasswordThunk: AppThunk = (password: string, token: string): (dispatch: AppDispatch) => void => {
   return function (dispatch) {
     dispatch(updatePasswordRequestAction());
 
-    updatePasswordRequest(password, token)
+    return updatePasswordRequest(password, token)
       .then(data => {
         dispatch( updatePasswordSuccessAction(data) );
       })

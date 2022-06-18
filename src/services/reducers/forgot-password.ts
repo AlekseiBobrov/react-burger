@@ -11,7 +11,7 @@ import { TForgotPasswordActions } from '../actions'
 
 import { IForgotPasswordState } from '../../utils/types';
 
-const initialState:  IForgotPasswordState = {
+export const initialState:  IForgotPasswordState = {
   message: '',
   resetPasswordRequest: false,
   resetPasswordFailed: false,
@@ -25,7 +25,7 @@ export const forgotPasswordReducer = (state = initialState, action: TForgotPassw
       return { ...state, message: '', resetPasswordRequest: true };
     }
     case RESET_PASSWORD_SUCCESS: {
-      return { ...state, resetPasswordFailed: false, resetPasswordRequest: false, message: action.message };
+      return { ...state, resetPasswordFailed: false, resetPasswordRequest: false, ...action.payload };
     }
     case RESET_PASSWORD_FAILED: {
       return { ...state, resetPasswordFailed: true, resetPasswordRequest: false };
@@ -34,7 +34,7 @@ export const forgotPasswordReducer = (state = initialState, action: TForgotPassw
       return { ...state, message: '', updatePasswordRequest: true };
     }
     case UPDATE_PASSWORD_SUCCESS: {
-      return { ...state, updatePasswordFailed: false, updatePasswordRequest: false, message: action.message };
+      return { ...state, updatePasswordFailed: false, updatePasswordRequest: false, ...action.payload };
     }
     case UPDATE_PASSWORD_FAILED: {
       return { ...state, updatePasswordFailed: true, updatePasswordRequest: false };

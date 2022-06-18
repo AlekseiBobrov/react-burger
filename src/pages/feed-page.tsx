@@ -1,6 +1,6 @@
 import { FC, useEffect } from 'react'
 import { useDispatch, useSelector } from '../utils/hooks';
-import { wsConnectionStart, wsConnectionError, wsConnectionClosed } from '../services/actions/web-socket'
+import { wsConnectionStart, wsConnectionClosed } from '../services/actions/web-socket'
 import FeedOrders from '../components/feed/feed-orders';
 import FeedInfo from '../components/feed/feed-info';
 import { IOrder } from '../utils/types';

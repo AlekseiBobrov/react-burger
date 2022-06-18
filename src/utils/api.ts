@@ -195,7 +195,6 @@ export const setUserDataRequest = (name:string, email:string, password:string) =
     email: email,
     ...(password && { password: password })
   }
-  console.log('setUserDataRequest user:', user)
   return fetchWithRefresh(
     `${API_URL}/auth/user`,
     {

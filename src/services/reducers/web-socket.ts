@@ -7,7 +7,7 @@ import {
 import type { TWSActions } from '../actions'
 import type { IWSState } from '../../utils/types';
 
-const initialState: IWSState = {
+export const initialState: IWSState = {
   wsConnected: false,
   messages: []
 };

@@ -16,7 +16,9 @@ export interface IGetOrderRequestAction {
 
 export interface IGetOrderSuccessAction {
   readonly type: typeof GET_ORDER_SUCCESS;
-  readonly orderNumber: number
+  readonly payload: {
+    readonly orderNumber: number
+  }
 }
 
 export interface IGetOrderFailedAction {
@@ -39,7 +41,9 @@ export const getOrderRequestAction = (): IGetOrderRequestAction => ({
 
 export const getOrderSuccessAction = (orderNumber: number): IGetOrderSuccessAction => ({
   type: GET_ORDER_SUCCESS,
-  orderNumber: orderNumber
+  payload: {
+    orderNumber
+  }
 })
 
 export const getOrderFailedAction = (): IGetOrderFailedAction => ({
@@ -53,7 +57,7 @@ export const getOrderResetAction = (): IGetOrderResetAction => ({
 export const getOrder: AppThunk = (ingredients) => (dispatch: AppDispatch) => {
   dispatch(getOrderRequestAction());
 
-  getOrderRequest(ingredients)
+  return getOrderRequest(ingredients)
     .then(data => {
       dispatch(getOrderSuccessAction(data));
       dispatch(dropCart());

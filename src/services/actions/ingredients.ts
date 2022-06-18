@@ -14,7 +14,9 @@ interface IRequestIngredintsAction {
 
 interface ISuccessIngredintsAction {
   readonly type: typeof GET_INGREDIENTS_SUCCESS
-  readonly ingredients: ReadonlyArray<IngredientShape>
+  readonly payload: {
+    readonly ingredients: ReadonlyArray<IngredientShape>
+  }
 }
 
 interface IFailedIngredintsAction {
@@ -32,7 +34,9 @@ export const requestIngredientsAction = ():IRequestIngredintsAction =>({
 
 export const successIngredientsAction = (ingredients: IngredientShape[]):ISuccessIngredintsAction =>({
   type: GET_INGREDIENTS_SUCCESS,
-  ingredients: ingredients
+  payload: {
+    ingredients: ingredients
+  }
 })
 
 export const failedIngredientsAction = ():IFailedIngredintsAction =>({
@@ -43,7 +47,7 @@ export function getIngredients() {
   return function (dispatch: AppDispatch) {
     dispatch( requestIngredientsAction() );
 
-    getIngredientsRequest()
+    return getIngredientsRequest()
       .then(data => {
         dispatch( successIngredientsAction(data) );
       })

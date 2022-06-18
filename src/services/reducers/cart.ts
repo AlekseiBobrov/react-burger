@@ -2,7 +2,7 @@ import { ADD_INGREDIENT, REMOVE_INGREDIENT, UPDATE_CART, DROP_CART } from '../co
 import { TCartActions } from '../actions/cart';
 import type { ICartState } from '../../utils/types.js'
 
-const initialState: ICartState = {
+export const initialState: ICartState = {
   buns: [],
   middle: [],
 };
@@ -10,32 +10,34 @@ const initialState: ICartState = {
 export const cartReducer = (state = initialState, action: TCartActions): ICartState => {
   switch (action.type) {
     case ADD_INGREDIENT: {
-      if (action.ingredient.type === 'bun'){
-          return { ...state, buns: [action.ingredient, action.ingredient]};
+      const { ingredient } = action.payload;
+      if (ingredient.type === 'bun') {
+        return { ...state, buns: [ingredient, ingredient] };
       } else {
         const middle = state.middle.slice();
-        middle.push(action.ingredient)
-        return { ...state, middle: middle};
+        middle.push(ingredient)
+        return { ...state, middle: middle };
       }
     }
 
     case REMOVE_INGREDIENT: {
-      if (action.ingredient.type === 'bun'){
-          return { ...state, buns: []};
+      const { ingredient } = action.payload;
+      const index = action.payload.orderIndex;
+      if (ingredient.type === 'bun') {
+        return { ...state, buns: [] };
       } else {
-        const index = action.orderIndex;
         const middle = state.middle.slice();
         middle.splice(index, 1);
-        return { ...state, middle: middle};
+        return { ...state, middle: middle };
       }
     }
 
     case UPDATE_CART: {
-      return action.middle?{ ...state, middle: action.middle}:state;
+      return { ...state, middle: action.payload.middle };
     }
 
     case DROP_CART: {
-      return { ...state, ...initialState};
+      return { ...state, ...initialState };
     }
 
     default: {

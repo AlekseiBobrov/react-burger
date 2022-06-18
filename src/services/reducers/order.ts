@@ -9,8 +9,8 @@ import { TGetOrderActions } from '../actions';
 
 import { IOrderState } from '../../utils/types'
 
-const initialState: IOrderState = {
-  orderNumber: undefined,
+export const initialState: IOrderState = {
+  orderNumber: null,
   orderRequest: false,
   orderFailed: false,
 };
@@ -21,13 +21,13 @@ export const orderReducer = (state = initialState, action: TGetOrderActions): IO
       return { ...state, orderRequest: true };
     }
     case GET_ORDER_SUCCESS: {
-      return { ...state, orderFailed: false, orderRequest: false, orderNumber: action.orderNumber };
+      return { ...state, orderFailed: false, orderRequest: false, ...action.payload };
     }
     case  GET_ORDER_FAILED: {
       return { ...state, orderFailed: true, orderRequest: false };
     }
     case GET_ORDER_RESET: {
-      return { ...state, orderNumber: undefined };
+      return { ...state, orderNumber: null };
     }
     default: {
       return state;
